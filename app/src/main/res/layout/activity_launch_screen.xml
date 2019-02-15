@@ -1,89 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/transitions_container"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
+  android:layout_height="750dp"
+  android:background="@color/colorPrimary"
   tools:context=".LaunchScreen">
 
-  <LinearLayout
-    android:id="@+id/linearLayout"
-    android:layout_width="368dp"
-    android:layout_height="551dp"
+  <FrameLayout
+    android:layout_width="542dp"
+    android:layout_height="260dp"
     android:layout_marginStart="8dp"
-    android:layout_marginLeft="8dp"
     android:layout_marginTop="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginBottom="8dp"
-    android:orientation="vertical"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.0"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.0">
+    app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.constraintlayout.ConstraintLayout
-      android:layout_width="match_parent"
-      android:layout_height="259dp"
-      tools:layout_editor_absoluteX="100dp"
-      tools:layout_editor_absoluteY="100dp">
-
-      <EditText
-        android:id="@+id/tvTest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="308dp"
-        android:layout_marginLeft="308dp"
-        android:layout_marginTop="40dp"
-
-        android:ems="10"
-        android:hint="@string/name"
-        android:inputType="textPersonName"
-        android:text="@string/name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="Autofill" />
-
-      <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="148dp"
-        android:layout_height="183dp"
-        android:layout_marginStart="308dp"
-        android:layout_marginLeft="308dp"
-        android:layout_marginTop="12dp"
-        android:background="@color/colorAccent"
-        android:contentDescription="@string/todo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTest"
-        tools:srcCompat="@tools:sample/avatars[2]" />
-    </androidx.constraintlayout.ConstraintLayout>
-
-    <Button
-      android:id="@+id/btnSignUp"
-      style="@style/Widget.AppCompat.Button.Colored"
-      android:layout_width="match_parent"
+    <EditText
+      android:id="@+id/tvTest"
+      android:layout_width="166dp"
       android:layout_height="wrap_content"
-      android:layout_marginTop="80dp"
-      android:text="@string/sign_up" />
+      android:layout_gravity="right"
+      android:layout_marginTop="90dp"
+      android:ems="10"
+      android:hint="@string/name"
+      android:inputType="textPersonName"
+      android:text="@string/name" />
 
-    <TextView
-      android:id="@+id/tvNewUser"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center"
-      android:text="@string/new_user" />
+    <ImageView
+      android:id="@+id/imagev"
+      android:layout_width="184dp"
+      android:layout_height="201dp"
+      android:layout_gravity="top"
+      android:layout_marginStart="108dp"
+      android:background="@color/colorAccent"
+      android:contentDescription="@string/todo" />
+
+  </FrameLayout>
+
+  <FrameLayout
+    android:layout_width="368dp"
+    android:layout_height="362dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginBottom="119dp"
+    android:background="@color/colorPrimary"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent">
 
     <Button
       android:id="@+id/btnLogIn"
       style="@android:style/Widget.DeviceDefault.Button.Colored"
-      android:layout_width="match_parent"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_marginTop="10dp"
       android:text="@string/log_in"
       android:theme="@style/Widget.MaterialComponents.BottomAppBar" />
 
-  </LinearLayout>
+    <TextView
+      android:id="@+id/tvNewUser"
+      android:layout_width="240dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="60dp"
+      android:gravity="center"
+      android:text="@string/new_user"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
 
-</androidx.constraintlayout.ConstraintLayout>
+    <Button
+      android:id="@+id/btnSignUp"
+      style="@style/Widget.AppCompat.Button.Colored"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="80dp"
+      android:text="@string/sign_up" />
+  </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
