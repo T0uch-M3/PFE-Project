@@ -11,12 +11,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -30,12 +33,15 @@ import java.util.Objects;
 public class LaunchScreen extends AppCompatActivity {
 
   TextView tvNewUser, tvTest;
-  Button btnLogIn, btnSignUp;
+  Button btnLogIn, btnSignUp, btnConLogIn;
+  FrameLayout topShelf;
   ImageView imageV;
-//  ViewGroup transitionsContainer;
+  //ViewGroup transitionsContainer;
   Boolean isReturnAnimation = true;
   Boolean isReturnAnimation2 = true;
   Boolean visible = false;
+  Boolean inLaucher = true;
+  int wiidth;
 
 
   @Override
@@ -49,19 +55,20 @@ public class LaunchScreen extends AppCompatActivity {
     btnSignUp = (Button) findViewById(R.id.btnSignUp);
     tvTest = (TextView) findViewById(R.id.tvTest);
     imageV = (ImageView) findViewById(R.id.imagev);
+    topShelf = (FrameLayout) findViewById(R.id.topShelf);
+    btnConLogIn = (Button) findViewById(R.id.btnConLogIn);
 
-    btnLogIn.setOnClickListener(new View.OnClickListener(){
+    btnLogIn.setOnClickListener(new View.OnClickListener() {
 
       @Override
       public void onClick(View v) {
         loginMeth(v, transitionsContainer, false);
       }
     });
-    btnSignUp.setOnClickListener(new View.OnClickListener(){
+    btnSignUp.setOnClickListener(new View.OnClickListener() {
 
       @Override
       public void onClick(final View v) {
-
 
 
         final Handler handler = new Handler();
@@ -78,84 +85,88 @@ public class LaunchScreen extends AppCompatActivity {
     });
   }
 
-  public void loginMeth(View view, ViewGroup tc,boolean visible){
-//    startActivity(new Intent(LaunchScreen.this, LoginAct.class));
-/////////////////////////////////////////////PRAISE BE TO THE LORD////////////////////////////////////////////////////////////////
+  public void loginMeth(View view, ViewGroup tc, boolean visible) {
+    animateIt(btnLogIn, 800, tc, Gravity.TOP|Gravity.CENTER, Gravity.BOTTOM|Gravity.CENTER);
+    animateIt(btnSignUp, 1000, tc, Gravity.TOP|Gravity.CENTER, Gravity.BOTTOM|Gravity.CENTER);
+    animateIt(tvNewUser, 1000, tc, Gravity.TOP|Gravity.CENTER, Gravity.BOTTOM|Gravity.CENTER);
+    animateIt(topShelf, 800, tc, Gravity.END, Gravity.START);
+    animateIt(btnConLogIn, 800, tc, Gravity.BOTTOM|Gravity.CENTER, Gravity.TOP|Gravity.CENTER);
 
-      TransitionSet set = new TransitionSet()
-        .addTransition(new Scale(0.7f))
-        .addTransition(new Fade())
-        .setInterpolator(visible ? new LinearOutSlowInInterpolator() : new FastOutLinearInInterpolator());
-      TransitionManager.beginDelayedTransition(tc, set);
-      tvNewUser.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
-
+    ///RESIZING STUFF////
+//    superFade(tc, imageV);
+//    DisplayMetrics display = this.getResources().getDisplayMetrics();
+//    wiidth = display.widthPixels;
+//    tvNewUser.setText(String.valueOf(imageV.getWidth()));
+//    imageV.getLayoutParams().width += ((wiidth - imageV.getWidth()));
+//    imageV.requestLayout();
 
 
   }
-  public void signupMeth(final View v, final ViewGroup tc){
-    animateIt(btnSignUp, 800, tc, Gravity.RIGHT, Gravity.LEFT);
-//    animateIt(tvNewUser, 800, tc, Gravity.RIGHT, Gravity.LEFT);
-//    fadeIt(tvNewUser,200, tc);
-//    animateIt(imageV, 800, tc, Gravity.BOTTOM, Gravity.TOP);
-    animateIt(tvTest, 800, tc, Gravity.LEFT, Gravity.RIGHT);
-//    fadeIt2(imageV, tc);
-//    hideWithFadeView(true, tc,imageV);
+
+  public void signupMeth(final View v, final ViewGroup tc) {
+
+
+
+    superFade(tc, imageV);
 
     final Handler handler = new Handler();
     handler.postDelayed(new Runnable() {
       @Override
       public void run() {
         // Do something after 5s = 5000ms
-
-//        animateIt2(btnLogIn, 800, tc, Gravity.RIGHT, Gravity.LEFT);
       }
     }, 1000);
 
-    }
+  }
 
-    public void animateIt(View obj, int time, ViewGroup tc, int startPoint, int endPoint){
+  public void superFade(ViewGroup tc, View v) {
+    TransitionSet set = new TransitionSet()
+      .addTransition(new Scale(0.7f))
+      .addTransition(new Fade())
+      .setInterpolator(visible ? new LinearOutSlowInInterpolator() : new FastOutLinearInInterpolator());
+    TransitionManager.beginDelayedTransition(tc, set);
+    if (v.getVisibility() == View.VISIBLE) {
+      v.setVisibility(View.INVISIBLE);
+    } else {
+      v.setVisibility(View.VISIBLE);
+    }
+  }
+
+  public void animateIt(View obj, int time, ViewGroup tc, int startPoint, int endPoint) {
     Boolean state = true;
-      Transition CB = new ChangeBounds();
-      CB.setPathMotion(new ArcMotion());
-      CB.setDuration(time);
-      TransitionManager.beginDelayedTransition(tc, CB);
-      FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) obj.getLayoutParams();
-      if (state && params.gravity!=startPoint){
-        params.gravity = (startPoint);
-        state = false;
-      }
-      else{
-        params.gravity = (endPoint);
-        state = true;
-      }
-
-      obj.setLayoutParams(params);
-
-    }
-
-    public void fadeIt(View obj, int time, ViewGroup tc){
-      TransitionSet set = new TransitionSet().addTransition(new Scale(0.7f))
-
-
-        .setInterpolator(new FastOutLinearInInterpolator());
-
-//      .setInterpolator(visible ? new LinearOutSlowInInterpolator() :
-//        new FastOutLinearInInterpolator());
-
-      TransitionManager.beginDelayedTransition(tc, set);
-//      obj.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
-    }
-  public void animateIt2(View obj, int time, ViewGroup tc, int startPoint, int endPoint){
     Transition CB = new ChangeBounds();
     CB.setPathMotion(new ArcMotion());
     CB.setDuration(time);
     TransitionManager.beginDelayedTransition(tc, CB);
     FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) obj.getLayoutParams();
-    if (isReturnAnimation){
+
+    if (state && params.gravity != startPoint) {
+      params.gravity = (startPoint);
+      state = false;
+    } else {
+      params.gravity = (endPoint);
+      state = true;
+    }
+
+    obj.setLayoutParams(params);
+
+    if (obj.equals(btnLogIn)) {
+      inLaucher = false;
+    }
+
+  }
+
+
+  public void animateIt2(View obj, int time, ViewGroup tc, int startPoint, int endPoint) {
+    Transition CB = new ChangeBounds();
+    CB.setPathMotion(new ArcMotion());
+    CB.setDuration(time);
+    TransitionManager.beginDelayedTransition(tc, CB);
+    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) obj.getLayoutParams();
+    if (isReturnAnimation) {
       params.gravity = (startPoint);
       isReturnAnimation2 = false;
-    }
-    else{
+    } else {
       params.gravity = (endPoint);
       isReturnAnimation2 = true;
     }
@@ -164,30 +175,22 @@ public class LaunchScreen extends AppCompatActivity {
 
   }
 
-  public void fadeIt2(View obj, ViewGroup tc){
+  @Override
+  public void onBackPressed() {
+    if (inLaucher) {
+      finish();
+    } else {
+      final ViewGroup tc = (ViewGroup) findViewById(R.id.transitions_container);
 
-      TransitionSet transition = (TransitionSet) new TransitionSet().addTransition(new Fade(Fade.OUT)).addTransition(new ChangeBounds()).addTransition(new Fade(Fade.IN)).setDuration(1000);
-      TransitionManager.beginDelayedTransition(tc, transition);
-      obj.setVisibility(View.VISIBLE);
-
-  }
-  public static void hideWithFadeView(boolean on, ViewGroup rootView, View view) {
-
-      Fade fade = new Fade();
-      fade.setDuration(5000);
-
-      ChangeBounds changeBounds = new ChangeBounds();
-      changeBounds.setDuration(5000);
-
-      TransitionSet transitionSet = new TransitionSet();
-      transitionSet.addTransition(fade);
-      transitionSet.addTransition(changeBounds);
-      transitionSet.setOrdering(TransitionSet.ORDERING_TOGETHER);
-      TransitionManager.beginDelayedTransition(rootView, transitionSet);
-
-    view.setVisibility(on ? View.GONE : View.VISIBLE);
+      animateIt(btnLogIn, 800, tc, Gravity.TOP|Gravity.CENTER, Gravity.BOTTOM|Gravity.CENTER);
+      animateIt(btnSignUp, 1000, tc, Gravity.TOP|Gravity.CENTER, Gravity.BOTTOM|Gravity.CENTER);
+      animateIt(tvNewUser, 1000, tc, Gravity.TOP|Gravity.CENTER, Gravity.BOTTOM|Gravity.CENTER);
+      animateIt(topShelf, 800, tc, Gravity.END, Gravity.START);
+      animateIt(btnConLogIn, 800, tc, Gravity.BOTTOM|Gravity.CENTER, Gravity.TOP|Gravity.CENTER);
+      inLaucher = true;
+    }
   }
 
 
-  }
+}
 
