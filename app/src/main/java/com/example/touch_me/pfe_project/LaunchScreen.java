@@ -1,5 +1,7 @@
 package com.example.touch_me.pfe_project;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 
 /*import android.support.transition.Transition;*/
@@ -9,6 +11,7 @@ import androidx.transition.*;
 import androidx.appcompat.app.AppCompatActivity;
 /*import android.support.v7.app.AppCompatActivity;*/
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -21,6 +24,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 
 import com.transitionseverywhere.extra.Scale;
@@ -34,8 +38,9 @@ public class LaunchScreen extends AppCompatActivity {
 
   TextView tvNewUser, tvTest;
   Button btnLogIn, btnSignUp, btnConLogIn;
-  FrameLayout topShelf;
+  FrameLayout topShelf, mainContainer;
   ImageView imageV;
+
   //ViewGroup transitionsContainer;
   Boolean isReturnAnimation = true;
   Boolean isReturnAnimation2 = true;
@@ -50,6 +55,15 @@ public class LaunchScreen extends AppCompatActivity {
     setContentView(R.layout.activity_launch_screen);
 
     final ViewGroup transitionsContainer = (ViewGroup) findViewById(R.id.transitions_container);
+
+    VideoView videoview = (VideoView) findViewById(R.id.videoView);
+    Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.test);
+    videoview.setVideoURI(uri);
+    videoview.start();
+
+    colorChange(transitionsContainer);/////////////////<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
     tvNewUser = (TextView) findViewById(R.id.tvNewUser);
     btnLogIn = (Button) findViewById(R.id.btnLogIn);
     btnSignUp = (Button) findViewById(R.id.btnSignUp);
@@ -57,6 +71,7 @@ public class LaunchScreen extends AppCompatActivity {
     imageV = (ImageView) findViewById(R.id.imagev);
     topShelf = (FrameLayout) findViewById(R.id.topShelf);
     btnConLogIn = (Button) findViewById(R.id.btnConLogIn);
+//    mainContainer = (FrameLayout) findViewById(R.id.transitions_container);
 
     btnLogIn.setOnClickListener(new View.OnClickListener() {
 
@@ -86,11 +101,11 @@ public class LaunchScreen extends AppCompatActivity {
   }
 
   public void loginMeth(View view, ViewGroup tc, boolean visible) {
-    animateIt(btnLogIn, 800, tc, Gravity.TOP|Gravity.CENTER, Gravity.BOTTOM|Gravity.CENTER);
-    animateIt(btnSignUp, 1000, tc, Gravity.TOP|Gravity.CENTER, Gravity.BOTTOM|Gravity.CENTER);
-    animateIt(tvNewUser, 1000, tc, Gravity.TOP|Gravity.CENTER, Gravity.BOTTOM|Gravity.CENTER);
+    animateIt(btnLogIn, 800, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
+    animateIt(btnSignUp, 1000, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
+    animateIt(tvNewUser, 1000, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
     animateIt(topShelf, 800, tc, Gravity.END, Gravity.START);
-    animateIt(btnConLogIn, 800, tc, Gravity.BOTTOM|Gravity.CENTER, Gravity.TOP|Gravity.CENTER);
+    animateIt(btnConLogIn, 800, tc, Gravity.BOTTOM | Gravity.CENTER, Gravity.TOP | Gravity.CENTER);
 
     ///RESIZING STUFF////
 //    superFade(tc, imageV);
@@ -104,7 +119,6 @@ public class LaunchScreen extends AppCompatActivity {
   }
 
   public void signupMeth(final View v, final ViewGroup tc) {
-
 
 
     superFade(tc, imageV);
@@ -175,6 +189,23 @@ public class LaunchScreen extends AppCompatActivity {
 
   }
 
+
+  public void colorChange(final ViewGroup tc) {
+    int colorFrom = getResources().getColor(R.color.design_default_color_primary);
+    int colorTo = getResources().getColor(R.color.colorAccent);
+    ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+    colorAnimation.setDuration(250); // milliseconds
+    colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+      @Override
+      public void onAnimationUpdate(ValueAnimator animator) {
+        tc.setBackgroundColor((int) animator.getAnimatedValue());
+      }
+
+    });
+    colorAnimation.start();
+  }
+
   @Override
   public void onBackPressed() {
     if (inLaucher) {
@@ -182,13 +213,20 @@ public class LaunchScreen extends AppCompatActivity {
     } else {
       final ViewGroup tc = (ViewGroup) findViewById(R.id.transitions_container);
 
-      animateIt(btnLogIn, 800, tc, Gravity.TOP|Gravity.CENTER, Gravity.BOTTOM|Gravity.CENTER);
-      animateIt(btnSignUp, 1000, tc, Gravity.TOP|Gravity.CENTER, Gravity.BOTTOM|Gravity.CENTER);
-      animateIt(tvNewUser, 1000, tc, Gravity.TOP|Gravity.CENTER, Gravity.BOTTOM|Gravity.CENTER);
+      animateIt(btnLogIn, 800, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
+      animateIt(btnSignUp, 1000, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
+      animateIt(tvNewUser, 1000, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
       animateIt(topShelf, 800, tc, Gravity.END, Gravity.START);
-      animateIt(btnConLogIn, 800, tc, Gravity.BOTTOM|Gravity.CENTER, Gravity.TOP|Gravity.CENTER);
+      animateIt(btnConLogIn, 800, tc, Gravity.BOTTOM | Gravity.CENTER, Gravity.TOP | Gravity.CENTER);
       inLaucher = true;
     }
+  }
+
+  public void playVid() {
+//    VideoView videoview = (VideoView) findViewById(R.id.videoView);
+//    Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+res.raw.demoVid);
+//    videoview.setVideoURI(uri);
+//    videoview.start();
   }
 
 
