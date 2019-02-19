@@ -4,8 +4,27 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/transitions_container"
   android:layout_width="match_parent"
-  android:layout_height="750dp"
+  android:layout_height="764dp"
+  android:background="@drawable/background_color_animation"
   tools:context=".LaunchScreen">
+
+  <LinearLayout
+    android:id="@+id/bgdemo"
+    android:layout_width="360dp"
+    android:layout_height="640dp"
+    android:background="@drawable/bgtest2"
+    android:orientation="vertical"
+    android:visibility="gone"></LinearLayout>
+
+  <ImageView
+    android:id="@+id/imagev"
+    android:layout_width="216dp"
+    android:layout_height="176dp"
+    android:layout_gravity="start"
+    android:layout_marginLeft="80dp"
+    android:contentDescription="@string/todo"
+    android:src="@drawable/cloud01"
+    android:visibility="visible" />
 
   <VideoView
     android:id="@+id/videoView"
@@ -20,15 +39,6 @@
     android:layout_width="730dp"
     android:layout_height="369dp"
     android:layout_gravity="top">
-
-    <ImageView
-      android:id="@+id/imagev"
-      android:layout_width="231dp"
-      android:layout_height="match_parent"
-      android:layout_gravity="start"
-      android:background="@color/colorAccent"
-      android:contentDescription="@string/todo"
-      android:visibility="invisible" />
 
     <FrameLayout
       android:id="@+id/topShelf"
@@ -50,7 +60,8 @@
           android:layout_height="wrap_content"
           android:paddingTop="10dp"
           android:paddingBottom="10dp"
-          android:text="Username" />
+          android:text="Username"
+          android:textColor="@android:color/white" />
 
         <EditText
           android:id="@+id/tvTest"
@@ -74,7 +85,8 @@
           android:layout_height="wrap_content"
           android:paddingTop="10dp"
           android:paddingBottom="10dp"
-          android:text="Password" />
+          android:text="Password"
+          android:textColor="@android:color/white" />
 
         <EditText
           android:id="@+id/editText3"
@@ -106,8 +118,8 @@
       android:layout_width="300dp"
       android:layout_height="wrap_content"
       android:layout_gravity="top|center"
-      android:layout_marginTop="10dp"
-      android:background="@drawable/rect_button"
+      android:layout_marginTop="90dp"
+      android:background="@drawable/rect_button_selector"
       android:text="@string/log_in" />
 
     <TextView
@@ -115,9 +127,10 @@
       android:layout_width="300dp"
       android:layout_height="wrap_content"
       android:layout_gravity="top|center"
-      android:layout_marginTop="60dp"
+      android:layout_marginTop="140dp"
       android:gravity="center"
       android:text="@string/new_user"
+      android:textColor="@android:color/white"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />
 
@@ -127,8 +140,8 @@
       android:layout_width="300dp"
       android:layout_height="wrap_content"
       android:layout_gravity="top|center"
-      android:layout_marginTop="80dp"
-      android:background="@drawable/rect_button"
+      android:layout_marginTop="160dp"
+      android:background="@drawable/rect_button_border"
       android:text="@string/sign_up" />
 
     <Button
@@ -138,7 +151,7 @@
       android:layout_height="wrap_content"
       android:layout_gravity="bottom|center"
       android:layout_marginTop="50dp"
-      android:background="#96001b"
+      android:background="@drawable/rect_button"
       android:text="@string/sign_up" />
 
   </FrameLayout>

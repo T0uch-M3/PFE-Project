@@ -2,16 +2,22 @@ package com.example.touch_me.pfe_project;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
+import android.app.LauncherActivity;
 import android.content.Intent;
 
 /*import android.support.transition.Transition;*/
+import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 import androidx.transition.*;
 import androidx.appcompat.app.AppCompatActivity;
 /*import android.support.v7.app.AppCompatActivity;*/
 import android.graphics.Color;
+import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -19,14 +25,18 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 
+import com.thekhaeng.pushdownanim.PushDownAnim;
 import com.transitionseverywhere.extra.Scale;
 
 import org.w3c.dom.Text;
@@ -46,6 +56,7 @@ public class LaunchScreen extends AppCompatActivity {
   Boolean isReturnAnimation2 = true;
   Boolean visible = false;
   Boolean inLaucher = true;
+  Boolean cantStopMeNow = true;
   int wiidth;
 
 
@@ -56,13 +67,25 @@ public class LaunchScreen extends AppCompatActivity {
 
     final ViewGroup transitionsContainer = (ViewGroup) findViewById(R.id.transitions_container);
 
+
     VideoView videoview = (VideoView) findViewById(R.id.videoView);
     Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.test);
     videoview.setVideoURI(uri);
     videoview.start();
 
+    setStatusBarTrasparent();
     colorChange(transitionsContainer);/////////////////<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//    setStatusBarColored(LaunchScreen.this);
+    Button button = findViewById( R.id.btnLogIn );
 
+    PushDownAnim.setPushDownAnimTo( button)
+        .setOnClickListener( new View.OnClickListener(){
+      @Override
+      public void onClick( View view ){
+        Toast.makeText( LaunchScreen.this, "PUSH DOWN !!", Toast.LENGTH_SHORT ).show();
+      }
+
+    }).setScale( PushDownAnim.MODE_STATIC_DP, 8  ) ;
 
     tvNewUser = (TextView) findViewById(R.id.tvNewUser);
     btnLogIn = (Button) findViewById(R.id.btnLogIn);
@@ -98,6 +121,26 @@ public class LaunchScreen extends AppCompatActivity {
 
       }
     });
+  }
+
+  public static void setStatusBarColored(Activity context) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      Window w = context.getWindow();
+      w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//      int statusBarHeight = getStatusBarHeight(context);
+
+      View view = new View(context);
+      view.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//      view.getLayoutParams().height = statusBarHeight;
+      ((ViewGroup) w.getDecorView()).addView(view);
+//      view.setBackground(context.getResources().getDrawable(R.drawable.navibg));
+    }
+  }
+  public void setStatusBarTrasparent(){
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      Window w = getWindow();
+      w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    }
   }
 
   public void loginMeth(View view, ViewGroup tc, boolean visible) {
@@ -191,20 +234,25 @@ public class LaunchScreen extends AppCompatActivity {
 
 
   public void colorChange(final ViewGroup tc) {
-    int colorFrom = getResources().getColor(R.color.design_default_color_primary);
-    int colorTo = getResources().getColor(R.color.colorAccent);
-    ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-    colorAnimation.setDuration(250); // milliseconds
-    colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+    final TransitionDrawable transition = (TransitionDrawable) tc.getBackground();
 
+
+//    while(cantStopMeNow){
+      transition.startTransition(5000);
+
+
+    final Handler handler = new Handler();
+    handler.postDelayed(new Runnable() {
       @Override
-      public void onAnimationUpdate(ValueAnimator animator) {
-        tc.setBackgroundColor((int) animator.getAnimatedValue());
+      public void run() {
+        // Do something after 5s = 5000ms
+        transition.reverseTransition(5000);
       }
+    }, 5000);
 
-    });
-    colorAnimation.start();
   }
+
+//  }
 
   @Override
   public void onBackPressed() {
@@ -228,6 +276,8 @@ public class LaunchScreen extends AppCompatActivity {
 //    videoview.setVideoURI(uri);
 //    videoview.start();
   }
+
+
 
 
 }
