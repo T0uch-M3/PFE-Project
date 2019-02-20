@@ -2,6 +2,6 @@
   android:shape="rectangle">
   <!--<solid android:color="" />-->
   <corners android:radius="20dp" />
-  <stroke android:width="5px" android:color="#673AB7" />
+  <stroke android:width="5px" android:color="#A79C93" />
 </shape>
 
