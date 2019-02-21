@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-<item android:drawable="@drawable/rect_button_pressed"
-  android:state_pressed="true" />
+<!--<item android:drawable="@drawable/rect_button_pressed"-->
+  <!--android:state_pressed="true" />-->
 
-<!--<item android:drawable="@drawable/button_green_focused"-->
-<!--android:state_focused="true" />-->
+  <item android:drawable="@drawable/rect_button_disabled" android:state_enabled="true"/>
 
-<item android:drawable="@drawable/rect_button" />
+<item android:drawable="@drawable/rect_button" android:state_enabled="false" />
 
 </selector>

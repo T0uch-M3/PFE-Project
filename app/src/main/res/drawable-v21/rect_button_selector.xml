@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ripple xmlns:android="http://schemas.android.com/apk/res/android"
-  android:color="#0294A5">
-  <item
-    android:id="@android:id/mask"
-    android:drawable="@drawable/rect_button" />
-  <item android:drawable="@drawable/rect_button" />
-</ripple>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:drawable="@drawable/rect_button_disabled" android:state_enabled="false" />
+  <!--<item android:drawable="@drawable/rect_button_pressed"-->
+    <!--android:state_pressed="true" />-->
+<item android:drawable="@drawable/rect_button" />
+</selector>

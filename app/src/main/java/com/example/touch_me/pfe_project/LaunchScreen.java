@@ -1,66 +1,49 @@
 package com.example.touch_me.pfe_project;
 
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
-import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.LauncherActivity;
-import android.content.Intent;
-
-/*import android.support.transition.Transition;*/
-import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
-import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
-import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
-import androidx.transition.*;
-import androidx.appcompat.app.AppCompatActivity;
-/*import android.support.v7.app.AppCompatActivity;*/
+import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.DisplayMetrics;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
-
-import com.google.android.material.tabs.TabLayout;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 import com.transitionseverywhere.Recolor;
 import com.transitionseverywhere.extra.Scale;
 
-import org.w3c.dom.Text;
-
-import java.io.ObjectInput;
-import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
+import androidx.transition.ArcMotion;
+import androidx.transition.ChangeBounds;
+import androidx.transition.Fade;
+import androidx.transition.Transition;
+import androidx.transition.TransitionManager;
+import androidx.transition.TransitionSet;
 
 public class LaunchScreen extends AppCompatActivity {
 
@@ -69,6 +52,7 @@ public class LaunchScreen extends AppCompatActivity {
   FrameLayout topShelf, mainContainer;
   ImageView imageV;
   TableLayout goldenShower;
+  EditText et_Pwd, et_Login;
   //ViewGroup transitionsContainer;
   Boolean isReturnAnimation = true;
   Boolean isReturnAnimation2 = true;
@@ -80,6 +64,8 @@ public class LaunchScreen extends AppCompatActivity {
   Boolean isDown2 = false;
   TableRow highestShoot;
   Boolean isColorsInverted = true;
+  Boolean mColorsInverted = true;
+
   int wiidth;
 
 
@@ -90,30 +76,22 @@ public class LaunchScreen extends AppCompatActivity {
 
     final ViewGroup transitionsContainer = (ViewGroup) findViewById(R.id.transitions_container);
 
-
-//    VideoView videoview = (VideoView) findViewById(R.id.videoView);
-//    Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.test);
-//    videoview.setVideoURI(uri);
-//    videoview.start();
-
     setStatusBarTrasparent();
     colorChange(transitionsContainer);/////////////////<<<<<<<<<<<<<<<<<<<<<<<<<<<
-//    setStatusBarColored(LaunchScreen.this);
-//    Button button = findViewById(R.id.btnLogIn);
-
-
 
     tvNewUser = (TextView) findViewById(R.id.tvNewUser);
     btnLogIn = (Button) findViewById(R.id.btnLogIn);
     btnSignUp = (Button) findViewById(R.id.btnSignUp);
-    tvTest = (TextView) findViewById(R.id.tvTest);
     imageV = (ImageView) findViewById(R.id.imageV);
     topShelf = (FrameLayout) findViewById(R.id.topShelf);
     btnConLogIn = (Button) findViewById(R.id.btnConLogIn);
     goldenShower = (TableLayout) findViewById(R.id.goldenShower);
-    theShower = (LinearLayout)  findViewById(R.id.theShower);
+    theShower = (LinearLayout) findViewById(R.id.theShower);
     highestShoot = (TableRow) findViewById(R.id.highestShit);
-    tv_S = (TextView)  findViewById(R.id.tv_S);
+    et_Login = (EditText) findViewById(R.id.et_Login);
+    et_Pwd = (EditText) findViewById(R.id.et_Pwd);
+    tv_S = (TextView) findViewById(R.id.tv_S);
+
 //    mainContainer = (FrameLayout) findViewById(R.id.transitions_container);
 
     buttonAnimation(btnLogIn);
@@ -125,6 +103,7 @@ public class LaunchScreen extends AppCompatActivity {
       @Override
       public void onClick(View v) {
         loginMeth(v, transitionsContainer, false);
+        btnConLogIn.setEnabled(false);
       }
     });
     btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -142,18 +121,62 @@ public class LaunchScreen extends AppCompatActivity {
       }
     });
 
+    et_Login.addTextChangedListener(new TextWatcher() {
+      @Override
+      public void afterTextChanged(Editable s) {
 
+      }
+
+      @Override
+      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+      }
+
+      @Override
+      public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if(et_Login.getText().length()>=5 && et_Pwd.getText().length()>=5){
+          btnConLogIn.setEnabled(true);
+        }
+        if(et_Login.getText().length()<5 || et_Pwd.getText().length()<5){
+          btnConLogIn.setEnabled(false);
+        }
+      }
+    });
+
+    et_Pwd.addTextChangedListener(new TextWatcher() {
+      @Override
+      public void afterTextChanged(Editable s) {
+
+      }
+
+      @Override
+      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+      }
+
+      @Override
+      public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if(et_Login.getText().length()>=5 && et_Pwd.getText().length()>=5){
+          btnConLogIn.setEnabled(true);
+        }
+        if(et_Login.getText().length()<5 || et_Pwd.getText().length()<5){
+          btnConLogIn.setEnabled(false);
+        }
+      }
+    });
   }
-  public void buttonAnimation(View v){
+
+
+  public void buttonAnimation(View v) {
     PushDownAnim.setPushDownAnimTo(v)
       .setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-          Toast.makeText(LaunchScreen.this, "PUSH DOWN !!", Toast.LENGTH_SHORT).show();
         }
 
       }).setScale(PushDownAnim.MODE_STATIC_DP, 8);
   }
+
   public static void setStatusBarColored(Activity context) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
       Window w = context.getWindow();
@@ -182,20 +205,14 @@ public class LaunchScreen extends AppCompatActivity {
     animateIt(topShelf, 800, tc, Gravity.END, Gravity.START);
     animateIt(btnConLogIn, 800, tc, Gravity.BOTTOM | Gravity.CENTER, Gravity.TOP | Gravity.CENTER);
 //    theShower.setPadding(0,20,0,0);
-    animateIt3(imageV,500,tc,120,20);
-    animateIt2(highestShoot,500,tc,0,-300);//PRAISE THE SUUUUUUUUN \O/
+    animateIt3(imageV, 500, tc, 120, 20);
+    animateIt2(highestShoot, 500, tc, 0, -300);//PRAISE THE SUUUUUUUUN \O/
 
 //    superFade(tc, goldenShower);
 
 //    animateIt2(goldenShower, 800, tc,0,40);
 
 //    goldenShower.setPadding(0,190,0,0);
-
-
-
-
-
-
 
 
     ///RESIZING STUFF////
@@ -264,7 +281,7 @@ public class LaunchScreen extends AppCompatActivity {
   }
 
 
-  public void animateIt2(View obj,int time,ViewGroup tc,int startPoint, int endPoint) {
+  public void animateIt2(View obj, int time, ViewGroup tc, int startPoint, int endPoint) {
 //    Boolean state = true;
     Log.wtf("WHAAAA", "TTHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
     Transition CB = new ChangeBounds();
@@ -275,7 +292,7 @@ public class LaunchScreen extends AppCompatActivity {
 
     if (!isDown) {
       params.topMargin = endPoint;
-      isDown=true;
+      isDown = true;
     } else {
       params.topMargin = startPoint;
       isDown = false;
@@ -284,8 +301,8 @@ public class LaunchScreen extends AppCompatActivity {
     obj.setLayoutParams(params);
 
 
-
   }
+
   public void animateIt3(final View obj, int time, ViewGroup tc, int startPoint, int endPoint) {
     ViewGroup tc2 = (ViewGroup) findViewById(R.id.theShower);
     Transition CB2 = new ChangeBounds();
@@ -296,7 +313,7 @@ public class LaunchScreen extends AppCompatActivity {
 
     if (!isDown2) {
       params.topMargin = endPoint;
-      isDown2=true;
+      isDown2 = true;
     } else {
       params.topMargin = startPoint;
       isDown2 = false;
@@ -342,9 +359,9 @@ public class LaunchScreen extends AppCompatActivity {
       animateIt(topShelf, 600, tc, Gravity.END, Gravity.START);
       animateIt(btnConLogIn, 600, tc, Gravity.BOTTOM | Gravity.CENTER, Gravity.TOP | Gravity.CENTER);
 //      theShower.setPadding(0,100,0,0);
-      animateIt3(imageV,500,tc,120,20);
+      animateIt3(imageV, 500, tc, 120, 20);
 
-      animateIt2(highestShoot,500,tc,0,-300);
+      animateIt2(highestShoot, 500, tc, 0, -300);
 
 
 //      goldenShower.setPadding(0,0,0,0);
