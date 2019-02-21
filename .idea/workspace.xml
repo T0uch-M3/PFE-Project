@@ -29,20 +29,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="396795a7-569d-43e9-af03-01c93090f3d0" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v21/rect_button.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/rect_button_disabled.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit_selector.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit_unfocused.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_welcome_screen.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/LaunchScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/LaunchScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v21/rect_button_selector.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v21/rect_button_selector.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/rect_button_selector.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/rect_button_selector.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/LoginAct.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/WelcomeScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout-v27/activity_launch_screen.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout-v27/activity_launch_screen.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_launch_screen.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_launch_screen.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -87,19 +84,23 @@
       <file leaf-file-name="LaunchScreen.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/LaunchScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="625">
-              <caret line="174" column="9" lean-forward="true" selection-start-line="174" selection-start-column="9" selection-end-line="174" selection-end-column="9" />
+            <state relative-caret-position="632">
+              <caret line="187" column="26" selection-start-line="187" selection-start-column="26" selection-end-line="187" selection-end-column="26" />
               <folding>
                 <element signature="class#4118:4686" />
                 <element signature="class#4726:5294" />
+                <element signature="e#5335#5506#0" expanded="true" />
+                <element signature="e#5505#5506#0" expanded="true" />
+                <element signature="method#buttonAnimation#0;class#LaunchScreen#0" />
                 <element signature="method#setStatusBarColored#0;class#LaunchScreen#0" />
                 <element signature="method#setStatusBarTrasparent#0;class#LaunchScreen#0" />
                 <element signature="method#loginMeth#0;class#LaunchScreen#0" />
-                <element signature="method#signupMeth#0;class#LaunchScreen#0" />
-                <element signature="method#superFade#0;class#LaunchScreen#0" />
                 <element signature="method#animateIt#0;class#LaunchScreen#0" />
+                <element signature="method#animateIt2#0;class#LaunchScreen#0" />
                 <element signature="method#animateIt3#0;class#LaunchScreen#0" />
                 <element signature="method#colorChange#0;class#LaunchScreen#0" />
+                <element signature="e#11284#11568#0" expanded="true" />
+                <element signature="e#11567#11568#0" expanded="true" />
                 <element signature="method#onBackPressed#0;class#LaunchScreen#0" />
               </folding>
             </state>
@@ -112,8 +113,8 @@
             <state />
           </provider>
           <provider editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="449" selection-start-line="449" selection-end-line="449" />
+            <state relative-caret-position="440">
+              <caret line="454" column="50" selection-start-line="454" selection-start-column="10" selection-end-line="454" selection-end-column="50" />
               <folding>
                 <element signature="e#422#13647#0" />
               </folding>
@@ -121,20 +122,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="rect_text_edit.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit.xml">
+      <file leaf-file-name="WelcomeScreen.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/WelcomeScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
+            <state relative-caret-position="425">
+              <caret line="25" column="9" selection-start-line="25" selection-start-column="9" selection-end-line="25" selection-end-column="9" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="colors.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="16" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
+      <file leaf-file-name="activity_welcome_screen.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_welcome_screen.xml">
+          <provider selected="true" editor-type-id="android-designer2">
+            <state />
+          </provider>
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="16" column="50" selection-start-line="16" selection-start-column="50" selection-end-line="16" selection-end-column="50" />
             </state>
           </provider>
         </entry>
@@ -4455,10 +4462,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/rect_button.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/rect_button_border.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/LaunchScreen.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_launch_screen.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout-v27/activity_launch_screen.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/gradient.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/button_pressed.xml" />
@@ -4505,6 +4508,10 @@
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout-v27/activity_launch_screen.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit_selector.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit_unfocused.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_welcome_screen.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/WelcomeScreen.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/LaunchScreen.java" />
       </list>
     </option>
@@ -4515,7 +4522,9 @@
     <option name="width" value="826" />
     <option name="height" value="1040" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -4533,13 +4542,30 @@
             <path>
               <item name="PFEProject" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="PFEProject" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="pfe_project" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PFEProject" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="res" type="d4f16f75:AndroidResFolderNode" />
             </path>
             <path>
               <item name="PFEProject" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
+              <item name="drawable" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
+            <path>
+              <item name="PFEProject" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
             </path>
             <path>
               <item name="PFEProject" type="1abcf292:AndroidViewProjectNode" />
@@ -4565,7 +4591,9 @@
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\adolf\MyApp\platforms\PFEProject\app\src\main\res\drawable" />
+      <recent name="C:\Users\adolf\MyApp\platforms\PFEProject\app\src\main\res\raw" />
       <recent name="C:\Users\adolf\MyApp\platforms\PFEProject\app\src\main\res\values" />
     </key>
     <key name="android.template.packageName">
@@ -4574,9 +4602,7 @@
     <key name="android.template.parentActivityClass">
       <recent name="" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\adolf\MyApp\platforms\PFEProject\app\src\main\res\drawable" />
-      <recent name="C:\Users\adolf\MyApp\platforms\PFEProject\app\src\main\res\raw" />
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\adolf\MyApp\platforms\PFEProject\app\src\main\res\values" />
     </key>
   </component>
@@ -4793,6 +4819,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="Android Profiler" order="1" />
       <window_info anchor="bottom" id="TODO" order="12" weight="0.3278867" />
@@ -4809,8 +4836,9 @@
       <window_info id="Captures" order="7" weight="0.25" />
       <window_info id="Capture Tool" order="3" />
       <window_info id="Designer" order="0" />
-      <window_info active="true" content_ui="combo" id="Project" order="4" sideWeight="0.7590759" visible="true" weight="0.18017058" />
+      <window_info content_ui="combo" id="Project" order="4" sideWeight="0.7590759" visible="true" weight="0.18017058" />
       <window_info anchor="bottom" id="Build" order="0" weight="0.30392158" />
+      <window_info anchor="bottom" id="Find" order="7" weight="0.3278867" />
       <window_info anchor="right" id="Gradle" order="3" weight="0.32462686" />
       <window_info id="Structure" order="5" sideWeight="0.24092409" side_tool="true" weight="0.33521128" />
       <window_info anchor="right" id="Device File Explorer" order="2" side_tool="true" weight="0.32942432" />
@@ -4824,7 +4852,6 @@
       <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="7" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="7" weight="0.32893288" />
     </layout>
     <layout-to-restore>
       <window_info anchor="bottom" id="Build" order="0" weight="0.30392158" />
@@ -4888,10 +4915,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/LoginActivity.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/button.xml.xml" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login2.xml" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-v26/activity_launch_screen.xml" />
     <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-28/android/view/View.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="594">
@@ -4929,13 +4952,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="586">
           <caret line="196" column="42" selection-start-line="196" selection-start-column="42" selection-end-line="196" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/LoginAct.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="48" selection-start-line="2" selection-start-column="48" selection-end-line="2" selection-end-column="48" />
         </state>
       </provider>
     </entry>
@@ -5095,16 +5111,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="36" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -5170,23 +5176,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/rect_button_selector.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/LoginAct.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" selection-start-line="3" selection-start-column="4" selection-end-line="4" selection-end-column="37" />
+        <state relative-caret-position="85">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-v21/rect_button_selector.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="41" selection-start-line="4" selection-start-column="41" selection-end-line="4" selection-end-column="41" />
+        <state relative-caret-position="187">
+          <caret line="11" column="36" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -5197,10 +5203,67 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-v21/rect_button_selector.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="63" selection-start-line="3" selection-start-column="63" selection-end-line="3" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit_selector.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="31" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
+          <caret line="5" column="35" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/rect_button_selector.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="54" selection-start-line="6" selection-start-column="54" selection-end-line="6" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit_unfocused.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
           <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/WelcomeScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="9" selection-start-line="25" selection-start-column="9" selection-end-line="25" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_welcome_screen.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="16" column="50" selection-start-line="16" selection-start-column="50" selection-end-line="16" selection-end-column="50" />
         </state>
       </provider>
     </entry>
@@ -5209,8 +5272,8 @@
         <state />
       </provider>
       <provider editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="449" selection-start-line="449" selection-end-line="449" />
+        <state relative-caret-position="440">
+          <caret line="454" column="50" selection-start-line="454" selection-start-column="10" selection-end-line="454" selection-end-column="50" />
           <folding>
             <element signature="e#422#13647#0" />
           </folding>
@@ -5219,19 +5282,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/LaunchScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="625">
-          <caret line="174" column="9" lean-forward="true" selection-start-line="174" selection-start-column="9" selection-end-line="174" selection-end-column="9" />
+        <state relative-caret-position="632">
+          <caret line="187" column="26" selection-start-line="187" selection-start-column="26" selection-end-line="187" selection-end-column="26" />
           <folding>
             <element signature="class#4118:4686" />
             <element signature="class#4726:5294" />
+            <element signature="e#5335#5506#0" expanded="true" />
+            <element signature="e#5505#5506#0" expanded="true" />
+            <element signature="method#buttonAnimation#0;class#LaunchScreen#0" />
             <element signature="method#setStatusBarColored#0;class#LaunchScreen#0" />
             <element signature="method#setStatusBarTrasparent#0;class#LaunchScreen#0" />
             <element signature="method#loginMeth#0;class#LaunchScreen#0" />
-            <element signature="method#signupMeth#0;class#LaunchScreen#0" />
-            <element signature="method#superFade#0;class#LaunchScreen#0" />
             <element signature="method#animateIt#0;class#LaunchScreen#0" />
+            <element signature="method#animateIt2#0;class#LaunchScreen#0" />
             <element signature="method#animateIt3#0;class#LaunchScreen#0" />
             <element signature="method#colorChange#0;class#LaunchScreen#0" />
+            <element signature="e#11284#11568#0" expanded="true" />
+            <element signature="e#11567#11568#0" expanded="true" />
             <element signature="method#onBackPressed#0;class#LaunchScreen#0" />
           </folding>
         </state>

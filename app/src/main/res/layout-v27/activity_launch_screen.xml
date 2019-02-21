@@ -448,7 +448,7 @@
           android:accessibilityHeading="false"
           android:alpha="0.7"
 
-          android:background="@drawable/rect_text_edit"
+          android:background="@drawable/rect_text_edit_selector"
           android:ems="10"
           android:inputType="textPersonName"
           android:paddingLeft="10dp"
@@ -468,7 +468,7 @@
           android:layout_width="match_parent"
           android:layout_height="50dp"
           android:alpha="0.7"
-          android:background="@drawable/rect_text_edit"
+          android:background="@drawable/rect_text_edit_selector"
           android:ems="10"
           android:inputType="textPassword"
           android:paddingLeft="10dp"

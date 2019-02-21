@@ -1,7 +1,9 @@
 package com.example.touch_me.pfe_project;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
@@ -10,6 +12,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -40,7 +44,6 @@ import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 import androidx.transition.ArcMotion;
 import androidx.transition.ChangeBounds;
-import androidx.transition.Fade;
 import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
 import androidx.transition.TransitionSet;
@@ -73,6 +76,7 @@ public class LaunchScreen extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_launch_screen);
+    setupWindowAnimations();
 
     final ViewGroup transitionsContainer = (ViewGroup) findViewById(R.id.transitions_container);
 
@@ -164,8 +168,26 @@ public class LaunchScreen extends AppCompatActivity {
         }
       }
     });
-  }
 
+
+
+    btnConLogIn.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(new Intent(LaunchScreen.this, WelcomeScreen.class));
+      }
+    });
+  }
+  @SuppressLint("NewApi")
+  private void setupWindowAnimations() {
+//    Fade fade = new Fade();
+//    fade.setDuration(1000);
+//    getWindow().setEnterTransition(fade);
+
+    @SuppressLint({"NewApi", "LocalSuppress"}) Slide slide = new Slide();
+    slide.setDuration(3000);
+    getWindow().setExitTransition(slide);
+  }
 
   public void buttonAnimation(View v) {
     PushDownAnim.setPushDownAnimTo(v)
@@ -227,7 +249,7 @@ public class LaunchScreen extends AppCompatActivity {
   }
 
   public void signupMeth(final View v, final ViewGroup tc) {
-    superFade(tc, imageV);
+//    superFade(tc, imageV);
 
 //    final Handler handler = new Handler();
 //    handler.postDelayed(new Runnable() {
@@ -241,19 +263,20 @@ public class LaunchScreen extends AppCompatActivity {
   }
 
   public void superFade(ViewGroup tc, View v) {
-    TransitionSet set = new TransitionSet()
-      .addTransition(new Scale(0.8f))
-      .addTransition(new Fade())
-      .setDuration(200)
-      .setInterpolator(visible ? new LinearOutSlowInInterpolator() : new FastOutLinearInInterpolator());
-
-
-    TransitionManager.beginDelayedTransition(tc, set);
-    if (v.getVisibility() == View.VISIBLE) {
-      v.setVisibility(View.INVISIBLE);
-    } else {
-      v.setVisibility(View.VISIBLE);
-    }
+    //**********************doesn't work anymore
+//    TransitionSet set = new TransitionSet()
+//      .addTransition(new Scale(0.8f))
+//      .addTransition(new Fade())
+//      .setDuration(200)
+//      .setInterpolator(visible ? new LinearOutSlowInInterpolator() : new FastOutLinearInInterpolator());
+//
+//
+//    TransitionManager.beginDelayedTransition(tc, set);
+//    if (v.getVisibility() == View.VISIBLE) {
+//      v.setVisibility(View.INVISIBLE);
+//    } else {
+//      v.setVisibility(View.VISIBLE);
+//    }
   }
 
   public void animateIt(View obj, int time, ViewGroup tc, int startPoint, int endPoint) {
