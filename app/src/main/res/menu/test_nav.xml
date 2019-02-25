@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:showIn="NavigatinView">
+
+  <item
+    android:menuCategory="container"
+    android:title="Menu01" >
+    <menu >
+      <item android:title="Item01" />
+    </menu>
+  </item>
+  <item
+    android:menuCategory="container"
+    android:title="Menu02">
+    <menu>
+      <item android:title="Item01" />
+      <item android:title="Item02" />
+    </menu>
+  </item>
+</menu>

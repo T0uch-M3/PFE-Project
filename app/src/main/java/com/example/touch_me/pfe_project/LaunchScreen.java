@@ -38,6 +38,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
@@ -72,11 +73,12 @@ public class LaunchScreen extends AppCompatActivity {
   int wiidth;
 
 
+  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_launch_screen);
-    setupWindowAnimations();
+    overridePendingTransition(R.anim.slide_in,R.anim.slide_out);
 
     final ViewGroup transitionsContainer = (ViewGroup) findViewById(R.id.transitions_container);
 
@@ -178,13 +180,13 @@ public class LaunchScreen extends AppCompatActivity {
       }
     });
   }
-  @SuppressLint("NewApi")
+  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   private void setupWindowAnimations() {
-//    Fade fade = new Fade();
-//    fade.setDuration(1000);
-//    getWindow().setEnterTransition(fade);
+    Fade fade = new Fade();
+    fade.setDuration(1000);
+    getWindow().setEnterTransition(fade);
 
-    @SuppressLint({"NewApi", "LocalSuppress"}) Slide slide = new Slide();
+    Slide slide = new Slide();
     slide.setDuration(3000);
     getWindow().setExitTransition(slide);
   }
@@ -228,7 +230,7 @@ public class LaunchScreen extends AppCompatActivity {
     animateIt(btnConLogIn, 800, tc, Gravity.BOTTOM | Gravity.CENTER, Gravity.TOP | Gravity.CENTER);
 //    theShower.setPadding(0,20,0,0);
     animateIt3(imageV, 500, tc, 120, 20);
-    animateIt2(highestShoot, 500, tc, 0, -300);//PRAISE THE SUUUUUUUUN \O/
+    animateIt2(highestShoot, 500, tc, 0, -460);//PRAISE THE SUUUUUUUUN \O/
 
 //    superFade(tc, goldenShower);
 
@@ -306,7 +308,6 @@ public class LaunchScreen extends AppCompatActivity {
 
   public void animateIt2(View obj, int time, ViewGroup tc, int startPoint, int endPoint) {
 //    Boolean state = true;
-    Log.wtf("WHAAAA", "TTHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
     Transition CB = new ChangeBounds();
     CB.setPathMotion(new ArcMotion());
     CB.setDuration(time);

@@ -29,12 +29,58 @@
     <TableLayout
       android:id="@+id/goldenShower"
       android:layout_width="wrap_content"
-      android:layout_height="160dp"
+      android:layout_height="wrap_content"
       android:alpha="0.7"
       android:gravity="top|center">
 
       <TableRow
         android:id="@+id/highestShit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|center">
+
+        <TextView
+          android:id="@+id/textView66"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="7dp"
+          android:layout_marginRight="10dp"
+          android:text="1"
+          android:textAlignment="center"
+          android:textColor="@color/rain" />
+
+        <TextView
+          android:id="@+id/textView55"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="7dp"
+          android:layout_marginRight="10dp"
+          android:text="0"
+          android:textAlignment="center"
+          android:textColor="@color/rain" />
+
+        <TextView
+          android:id="@+id/textView58"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="7dp"
+          android:layout_marginRight="10dp"
+          android:text="1"
+          android:textAlignment="center"
+          android:textColor="@color/rain" />
+
+        <TextView
+          android:id="@+id/textView59"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="7dp"
+          android:layout_marginRight="10dp"
+          android:text="0"
+          android:textAlignment="center"
+          android:textColor="@color/rain" />
+      </TableRow>
+
+      <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="0dp"
@@ -48,7 +94,7 @@
           android:layout_marginRight="10dp"
           android:text="0"
           android:textAlignment="center"
-          android:textColor="#0294A5" />
+          android:textColor="@color/rain" />
 
         <TextView
           android:id="@+id/textView33"
@@ -58,7 +104,7 @@
           android:layout_marginRight="10dp"
           android:text="0"
           android:textAlignment="center"
-          android:textColor="#0294A5" />
+          android:textColor="@color/rain" />
 
         <TextView
           android:id="@+id/textView46"
@@ -68,7 +114,7 @@
           android:layout_marginRight="10dp"
           android:text="H"
           android:textAlignment="center"
-          android:textColor="#d81b60" />
+          android:textColor="@color/company_name" />
 
         <TextView
           android:id="@+id/textView35"
@@ -78,7 +124,7 @@
           android:layout_marginRight="10dp"
           android:text="1"
           android:textAlignment="center"
-          android:textColor="#0294A5" />
+          android:textColor="@color/rain" />
       </TableRow>
 
       <TableRow
@@ -94,7 +140,7 @@
           android:layout_marginRight="10dp"
           android:text="1"
           android:textAlignment="center"
-          android:textColor="#0294A5" />
+          android:textColor="@color/rain" />
 
         <TextView
           android:id="@+id/tv_S"
@@ -104,7 +150,7 @@
           android:layout_marginRight="10dp"
           android:text="S"
           android:textAlignment="center"
-          android:textColor="#d81b60" />
+          android:textColor="@color/company_name" />
 
         <TextView
           android:id="@+id/textView31"
@@ -114,7 +160,7 @@
           android:layout_marginRight="10dp"
           android:text="0"
           android:textAlignment="center"
-          android:textColor="#d81b60" />
+          android:textColor="@color/company_name" />
 
         <TextView
           android:id="@+id/textView36"
@@ -124,7 +170,7 @@
           android:layout_marginRight="10dp"
           android:text="O"
           android:textAlignment="center"
-          android:textColor="#0294A5"
+          android:textColor="@color/rain"
           tools:text="0" />
       </TableRow>
 
@@ -141,7 +187,7 @@
           android:layout_marginRight="10dp"
           android:text="0"
           android:textAlignment="center"
-          android:textColor="#0294A5" />
+          android:textColor="@color/rain" />
 
         <TextView
           android:id="@+id/textView41"
@@ -151,7 +197,7 @@
           android:layout_marginRight="10dp"
           android:text="0"
           android:textAlignment="center"
-          android:textColor="#d81b60" />
+          android:textColor="@color/company_name" />
 
         <TextView
           android:id="@+id/textView18"
@@ -161,7 +207,7 @@
           android:layout_marginRight="10dp"
           android:text="L"
           android:textAlignment="center"
-          android:textColor="#d81b60" />
+          android:textColor="@color/company_name" />
 
         <TextView
           android:id="@+id/textView14"
@@ -171,7 +217,7 @@
           android:layout_marginRight="10dp"
           android:text="4"
           android:textAlignment="center"
-          android:textColor="#0294A5"
+          android:textColor="@color/rain"
           android:visibility="visible" />
 
       </TableRow>
@@ -189,7 +235,7 @@
           android:layout_marginRight="10dp"
           android:text="1"
           android:textAlignment="center"
-          android:textColor="#0294A5" />
+          android:textColor="@color/rain" />
 
         <TextView
           android:id="@+id/textView15"
@@ -199,7 +245,7 @@
           android:layout_marginRight="10dp"
           android:text="F"
           android:textAlignment="center"
-          android:textColor="#d81b60" />
+          android:textColor="@color/company_name" />
 
         <TextView
           android:id="@+id/textView19"
@@ -209,7 +255,7 @@
           android:layout_marginRight="10dp"
           android:text="D"
           android:textAlignment="center"
-          android:textColor="#d81b60" />
+          android:textColor="@color/company_name" />
 
         <TextView
           android:id="@+id/textView17"
@@ -219,7 +265,7 @@
           android:layout_marginRight="10dp"
           android:text="D"
           android:textAlignment="center"
-          android:textColor="#0294A5" />
+          android:textColor="@color/rain" />
 
       </TableRow>
 
@@ -236,7 +282,7 @@
           android:layout_marginRight="10dp"
           android:text="W"
           android:textAlignment="center"
-          android:textColor="#0294A5" />
+          android:textColor="@color/rain" />
 
         <TextView
           android:id="@+id/textView12"
@@ -246,7 +292,7 @@
           android:layout_marginRight="10dp"
           android:text="1"
           android:textAlignment="center"
-          android:textColor="#d81b60" />
+          android:textColor="@color/company_name" />
 
         <TextView
           android:id="@+id/textView8"
@@ -256,7 +302,7 @@
           android:layout_marginRight="10dp"
           android:text="1"
           android:textAlignment="center"
-          android:textColor="#d81b60" />
+          android:textColor="@color/company_name" />
 
         <TextView
           android:id="@+id/textView38"
@@ -266,7 +312,7 @@
           android:layout_marginRight="10dp"
           android:text="0"
           android:textAlignment="center"
-          android:textColor="#0294A5" />
+          android:textColor="@color/rain" />
       </TableRow>
 
       <TableRow
@@ -282,7 +328,7 @@
           android:layout_marginRight="10dp"
           android:text="3"
           android:textAlignment="center"
-          android:textColor="#0294A5" />
+          android:textColor="@color/rain" />
 
         <TextView
           android:id="@+id/textView7"
@@ -292,7 +338,7 @@
           android:layout_marginRight="10dp"
           android:text="4"
           android:textAlignment="center"
-          android:textColor="#d81b60" />
+          android:textColor="@color/company_name" />
 
         <TextView
           android:id="@+id/textView9"
@@ -302,7 +348,7 @@
           android:layout_marginRight="10dp"
           android:text="N"
           android:textAlignment="center"
-          android:textColor="#d81b60" />
+          android:textColor="@color/company_name" />
 
         <TextView
           android:id="@+id/textView51"
@@ -312,7 +358,7 @@
           android:layout_marginRight="10dp"
           android:text="1"
           android:textAlignment="center"
-          android:textColor="#0294A5" />
+          android:textColor="@color/rain" />
       </TableRow>
 
       <TableRow
@@ -328,7 +374,7 @@
           android:layout_marginRight="10dp"
           android:text="3"
           android:textAlignment="center"
-          android:textColor="#0294A5" />
+          android:textColor="@color/rain" />
 
         <TextView
           android:id="@+id/textView20"
@@ -338,7 +384,7 @@
           android:layout_marginRight="10dp"
           android:text="1"
           android:textAlignment="center"
-          android:textColor="#0294A5" />
+          android:textColor="@color/rain" />
 
         <TextView
           android:id="@+id/textView10"
@@ -348,7 +394,7 @@
           android:layout_marginRight="10dp"
           android:text="G"
           android:textAlignment="center"
-          android:textColor="#d81b60" />
+          android:textColor="@color/company_name" />
 
         <TextView
           android:id="@+id/textView21"
@@ -358,7 +404,7 @@
           android:layout_marginRight="10dp"
           android:text="5"
           android:textAlignment="center"
-          android:textColor="#0294A5" />
+          android:textColor="@color/rain" />
 
       </TableRow>
 
@@ -375,7 +421,7 @@
           android:layout_marginRight="10dp"
           android:text="B"
           android:textAlignment="center"
-          android:textColor="#0294A5" />
+          android:textColor="@color/rain" />
 
         <TextView
           android:id="@+id/textView25"
@@ -385,7 +431,7 @@
           android:layout_marginRight="10dp"
           android:text="0"
           android:textAlignment="center"
-          android:textColor="#0294A5" />
+          android:textColor="@color/rain" />
 
         <TextView
           android:id="@+id/textView28"
@@ -395,7 +441,7 @@
           android:layout_marginRight="10dp"
           android:text="0"
           android:textAlignment="center"
-          android:textColor="#0294A5" />
+          android:textColor="@color/rain" />
 
         <TextView
           android:id="@+id/textView29"
@@ -405,7 +451,7 @@
           android:layout_marginRight="10dp"
           android:text="1"
           android:textAlignment="center"
-          android:textColor="#0294A5" />
+          android:textColor="@color/rain" />
       </TableRow>
     </TableLayout>
 

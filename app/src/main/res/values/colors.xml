@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#8de5b9b9</color>
+  <color name="colorPrimary">#e5b9b9</color>
   <color name="colorPrimaryDark">#00574B</color>
   <color name="colorAccent">#090e25</color>
   <color name="startColor">#03353E</color>
   <color name="endColor">#403f3d</color>
   <color name="disabled">#403f3d</color>
+  <color name="company_name">#0bb8cc</color>
+  <color name="rain">#A79C93</color>
 </resources>
