@@ -52,10 +52,6 @@ public class ContentFragment extends Fragment implements ScreenShotable {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-    mImageView = (ImageView) rootView.findViewById(R.id.image_content);
-    mImageView.setClickable(true);
-    mImageView.setFocusable(true);
-    mImageView.setImageResource(res);
     return rootView;
   }
 

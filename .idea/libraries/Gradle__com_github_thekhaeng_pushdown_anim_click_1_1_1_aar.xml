@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.thekhaeng:pushdown-anim-click:1.1.1@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-pushdown-anim-click-1.1.1.aar/b9cece94a063963505af6cfafbaf80b9/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-pushdown-anim-click-1.1.1.aar/b9cece94a063963505af6cfafbaf80b9/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-pushdown-anim-click-1.1.1.aar/b9cece94a063963505af6cfafbaf80b9/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.thekhaeng/pushdown-anim-click/1.1.1/921736f6572dfa001324622550d079b477513ccd/pushdown-anim-click-1.1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
