@@ -49,6 +49,8 @@ import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
 import androidx.transition.TransitionSet;
 
+import static android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
+
 public class LaunchScreen extends AppCompatActivity {
 
   TextView tvNewUser, tvTest, tv_S;
@@ -97,6 +99,7 @@ public class LaunchScreen extends AppCompatActivity {
     et_Login = (EditText) findViewById(R.id.et_Login);
     et_Pwd = (EditText) findViewById(R.id.et_Pwd);
     tv_S = (TextView) findViewById(R.id.tv_S);
+
 
 //    mainContainer = (FrameLayout) findViewById(R.id.transitions_container);
 
@@ -201,7 +204,7 @@ public class LaunchScreen extends AppCompatActivity {
       }).setScale(PushDownAnim.MODE_STATIC_DP, 8);
   }
 
-  public static void setStatusBarColored(Activity context) {
+  public void setStatusBarColored(Activity context) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
       Window w = context.getWindow();
       w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -372,8 +375,9 @@ public class LaunchScreen extends AppCompatActivity {
 
   @Override
   public void onBackPressed() {
+    Log.wtf("tag","onBackPresssssssssed");
     if (inLaucher) {
-      finish();
+      this.finish();
     } else {
       final ViewGroup tc = (ViewGroup) findViewById(R.id.transitions_container);
 

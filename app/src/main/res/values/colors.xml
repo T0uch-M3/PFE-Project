@@ -8,10 +8,12 @@
   <color name="disabled">#403f3d</color>
   <color name="company_name">#0bb8cc</color>
   <color name="rain">#A79C93</color>
-  <color name="transparent">#00ffffff</color>
+  <color name="transparent">#00FFFFFF</color>
   <color name="dark">#04060F</color>
   <color name="darkBlue">#03353E</color>
   <color name="lightBlue">#0294A5</color>
   <color name="grey">#A79C93</color>
   <color name="red">#C1403D</color>
+  <color name="white_ish">#ebebeb</color>
+  <color name="drawerBg">#0F000000</color>
 </resources>

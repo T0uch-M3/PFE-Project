@@ -1,21 +1,27 @@
 package com.example.touch_me.pfe_project;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.view.animation.AccelerateInterpolator;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.touch_me.pfe_project.helper.OnStartDragListener;
+import com.example.touch_me.pfe_project.helper.SimpleItemTouchHelperCallback;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,103 +29,228 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import io.codetail.animation.ViewAnimationUtils;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import yalantis.com.sidemenu.interfaces.Resourceble;
 import yalantis.com.sidemenu.interfaces.ScreenShotable;
 import yalantis.com.sidemenu.model.SlideMenuItem;
 import yalantis.com.sidemenu.util.ViewAnimator;
 
+import static android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
 
-public class WelcomeScreen extends AppCompatActivity implements yalantis.com.sidemenu.util.ViewAnimator.ViewAnimatorListener {
+
+public class WelcomeScreen extends AppCompatActivity implements OnStartDragListener {
 
   private DrawerLayout drawerLayout;
+  private LinearLayout bigdady;
   private LinearLayout linearLayout;
   private List<SlideMenuItem> list = new ArrayList<>();
+  private ArrayList<String> itemList = new ArrayList<String>();
   private ContentFragment contentFragment;
   private ViewAnimator viewAnimator;
   private ActionBarDrawerToggle drawer;
-  private Button btnPullDrawer;
+  private ImageButton btn_settings;
   private DrawerLayout.DrawerListener dl;
   private Toolbar toolbar;
   private TextView toolbarTitle;
+  private View portal;
+  private RecyclerListFragment fragment = null;
+  private ItemTouchHelper mItemTouchHelper;
+  RecyclerView rvFoodItems;
+  RecyclerListAdapter foodAdapter;
+  ArrayList<WidgetObject> foodList;
+  RecyclerView recyclerView;
+  TextView testTV;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.nav_layout);
+    setContentView(R.layout.content_test_nav);
 
     setStatusBarTrasparent();
 //    setupWindowAnimations();
     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-    contentFragment = ContentFragment.newInstance(R.drawable.content_music);
-    getSupportFragmentManager().beginTransaction()
-      .replace(R.id.content_frame, contentFragment)
-      .commit();
+//    contentFragment = ContentFragment.newInstance(R.drawable.content_music);
+//    getSupportFragmentManager().beginTransaction()
+//      .replace(R.id.content_frame, contentFragment)
+//      .commit();
     drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+    View portal = findViewById(R.id.portal);
+    bigdady = (LinearLayout) findViewById(R.id.big_dady);
+    btn_settings = (ImageButton) findViewById(R.id.btn_settings);
 
-    drawerLayout.setScrimColor(Color.TRANSPARENT);
+
     linearLayout = (LinearLayout) findViewById(R.id.left_drawer);
     toolbar = (Toolbar) findViewById(R.id.toolbar);
     toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
 
-
-    linearLayout.setOnClickListener(new View.OnClickListener() {
+    demoHolder();
+    btn_settings.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        drawerLayout.closeDrawers();
+        createCard();
       }
     });
-    setActionBar();
-    createMenuList();
+    testTV = (TextView) findViewById(R.id.testTV);
 
-    viewAnimator = new ViewAnimator<>(this, list, contentFragment, drawerLayout, this);
-    demoHolder();
+
+    //**************************************NEW ERA******************
+
+
+//    foodList = (ArrayList)DataSource.createListItems();
+
+
+    rvFoodItems = (RecyclerView) findViewById(R.id.rvFoodItems);
+//    rvFoodItems.setHasFixedSize(true);
+    rvFoodItems.setLayoutManager(new LinearLayoutManager(this));
+//    rvFoodItems.setItemAnimator(new DefaultItemAnimator());
+
+//    foodList = new ArrayList<String>();
+    foodAdapter = new RecyclerListAdapter(foodList, this);
+    rvFoodItems.setAdapter(foodAdapter);
+
+    ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(foodAdapter);
+    mItemTouchHelper = new ItemTouchHelper(callback);
+    mItemTouchHelper.attachToRecyclerView(rvFoodItems);
+
+    networkthingy2();
+
+    //======================OLD===================================
+//    ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+//
+//      @Override
+//      public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+//        moveItem(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+//        return true;
+//      }
+//
+//      @Override
+//      public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+//        deleteItem(viewHolder.getAdapterPosition());
+//      }
+//
+//    });
+//    itemTouchHelper.attachToRecyclerView(rvFoodItems);
+//=========================OLD===================================
+  }
+
+  void moveItem(int oldPos, int newPos) {
+//    WidgetObject fooditem = foodList.get(oldPos);
+//
+//    foodList.remove(oldPos);
+//    foodList.add(newPos, fooditem);
+//    foodAdapter.notifyItemMoved(oldPos, newPos);
+  }
+
+  void deleteItem(final int position) {
+//    foodList.remove(position);
+//    foodAdapter.notifyItemRemoved(position);
+
+  }
+
+
+  public void createCard() {
+    int i = 0;
+//    obj1.setImgId(R.drawable.ic_menu_camera);
+//    obj1.setFoodItem("Camera");
+//    WidgetObject obj2 = new WidgetObject();
+//    obj2.setFoodItem("Share");
+//    obj2.setImgId(R.drawable.ic_menu_share);
+//    foodList.add(""+i);
+//    foodList.add(""+i+1);
+    i = i + 1;
+    Log.wtf("tag", "list::size::" + foodList.size());
+
+//    foodList.add(obj2);
+    foodAdapter.notifyItemInserted(foodList.size() - 1);
+    Log.wtf("tag", "adapter size??::" + foodAdapter.getItemCount());
+  }
+
+
+  //***************************OLD ERA*********************
+
+  public void networkthingy2() {
+/*************************************/
+    GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+//    Call<List<WidgetObject>> call = service.getAllUsers("13t9mgcgqozdvv1axunet59v91o189ta68hchsuwz88063aqjkhttp://192.168.148.1");
+    Call<WidgetObject> call = service.getAllUsers();
+    call.enqueue(new Callback<WidgetObject>() {
+
+
+
+//Handle a successful response//
+      //      public void onResponse(Call<List<WidgetObject>> call, Response<List<WidgetObject>> response) {
+      @Override
+      public void onResponse(Call<WidgetObject> call, Response<WidgetObject> response) {
+        if (response.isSuccessful()) {
+          testTV.setText("Successful");
+
+          Log.wtf("tag", "code::" + response.code());
+          Log.wtf("tag", "RAWW::" + response.raw());
+          WidgetObject fromJSON = response.body();
+//          Log.wtf("tag", "name::" + response.body().get);
+          Log.wtf("tag", "NNNNNNNNNNNNNAME"+fromJSON.getName());
+//          Log.wtf("tag", "0::"+response.body().get(0).getName());
+//          Log.wtf("tag", "1::"+response.body().get(1).getName());
+//          testTV.setText("successful");
+        } else {
+          testTV.setText("not successful!!!");
+//        loadDataList(response.body());
+          Log.wtf("tag", "error::" + response.raw());
+
+        }
+
+      }
+
+      @Override
+      public void onFailure(Call<WidgetObject> call, Throwable throwable) {
+        testTV.setText("FAILED");
+        Log.wtf("tag", "FAILED CAUSE::" + throwable.getCause());
+        Log.wtf("tag", "error message::" + throwable.getMessage());
+      }
+    });
+
+
   }
 
   public void demoHolder() {
     //make the status bar text color grey(to be visible with light background)
-    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.grey));
+      getWindow().setNavigationBarColor(getResources().getColor(R.color.darkBlue));
+      getWindow().getDecorView().setSystemUiVisibility(FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+
+    }
+
+    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//      getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+
+    }
+
     setSupportActionBar(toolbar);
     getSupportActionBar().setTitle(null);
-    toolbarTitle.setText("<<Title>>");
+    toolbarTitle.setText("REEEE??");
+//    toolbar.setBackgroundColor(getResources().getColor(R.color.white_ish));
+
   }
 
-  private void setActionBar() {
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//    setSupportActionBar(toolbar);
-//    getSupportActionBar().setHomeButtonEnabled(true);
-//    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    dl = new DrawerLayout.DrawerListener() {
-      //    drawer = new ActionBarDrawerToggle(WelcomeScreen.this, drawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close ){
-      @Override
-      public void onDrawerSlide(View drawerView, float slideOffset) {
-//        super.onDrawerSlide(drawerView, slideOffset);
-        if (slideOffset > 0.6 && linearLayout.getChildCount() == 0)
-          viewAnimator.showMenuContent();
-      }
-
-      @Override
-      public void onDrawerOpened(@NonNull View drawerView) {
-
-      }
-
-      public void onDrawerClosed(View view) {
-//        super.onDrawerClosed(view);
-        linearLayout.removeAllViews();
-        linearLayout.invalidate();
-      }
-
-      @Override
-      public void onDrawerStateChanged(int newState) {
-
-      }
-    };
-    drawerLayout.addDrawerListener(dl);
-  }
 
   @Override
   public void onBackPressed() {
-
+    this.finish();
     startActivity(new Intent(WelcomeScreen.this, LaunchScreen.class));
 
   }
@@ -131,100 +262,11 @@ public class WelcomeScreen extends AppCompatActivity implements yalantis.com.sid
     }
   }
 
-  private void createMenuList() {
-    SlideMenuItem menuItem0 = new SlideMenuItem(ContentFragment.CLOSE, R.drawable.icn_close);
-    list.add(menuItem0);
-    SlideMenuItem menuItem = new SlideMenuItem(ContentFragment.BUILDING, R.drawable.icn_close);
-    list.add(menuItem);
-    SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.BOOK, R.drawable.icn_close);
-    list.add(menuItem2);
-//    SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.PAINT, R.drawable.icn_3);
-//    list.add(menuItem3);
-//    SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.CASE, R.drawable.icn_4);
-//    list.add(menuItem4);
-//    SlideMenuItem menuItem5 = new SlideMenuItem(ContentFragment.SHOP, R.drawable.icn_5);
-//    list.add(menuItem5);
-//    SlideMenuItem menuItem6 = new SlideMenuItem(ContentFragment.PARTY, R.drawable.icn_6);
-//    list.add(menuItem6);
-//    SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.MOVIE, R.drawable.icn_7);
-//    list.add(menuItem7);
-  }
-
 
   @Override
-  protected void onPostCreate(Bundle savedInstanceState) {
-    super.onPostCreate(savedInstanceState);
-//    drawerToggle.syncState();
-  }
-
-  @Override
-  public void onConfigurationChanged(Configuration newConfig) {
-    super.onConfigurationChanged(newConfig);
-//    drawerToggle.onConfigurationChanged(newConfig);
-  }
-
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-//    getMenuInflater().inflate(R.menu.menu_main, menu);
-    return true;
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (super.onOptionsItemSelected(item)) {
-      return true;
-    }
-    switch (item.getItemId()) {
-      case R.id.action_settings:
-        return true;
-      default:
-        return super.onOptionsItemSelected(item);
-    }
-
-  }
-
-  private ScreenShotable replaceFragment(ScreenShotable screenShotable, int topPosition) {
-//    this.res = this.res == R.drawable.content_music ? R.drawable.content_films : R.drawable.content_music;
-//    View view = findViewById(R.id.content_frame);
-//    int finalRadius = Math.max(view.getWidth(), view.getHeight());
-//    SupportAnimator animator = ViewAnimationUtils.createCircularReveal(view, 0, topPosition, 0, finalRadius);
-//    animator.setInterpolator(new AccelerateInterpolator());
-//    animator.setDuration(ViewAnimator.CIRCULAR_REVEAL_ANIMATION_DURATION);
-
-    findViewById(R.id.content_overlay).setBackgroundDrawable(new BitmapDrawable(getResources(), screenShotable.getBitmap()));
-//    animator.start();
-//    ContentFragment contentFragment = ContentFragment.newInstance(this.res);
-    getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, contentFragment).commit();
-    return contentFragment;
-  }
-
-  @Override
-  public ScreenShotable onSwitch(Resourceble slideMenuItem, ScreenShotable screenShotable, int position) {
-    switch (slideMenuItem.getName()) {
-      case ContentFragment.CLOSE:
-        return screenShotable;
-      default:
-        return replaceFragment(screenShotable, position);
-    }
-  }
-
-  @Override
-  public void disableHomeButton() {
-//    getSupportActionBar().setHomeButtonEnabled(false);
-
-  }
-
-  @Override
-  public void enableHomeButton() {
-//    getSupportActionBar().setHomeButtonEnabled(true);
-    drawerLayout.closeDrawers();
-
-  }
-
-  @Override
-  public void addViewToContainer(View view) {
-    linearLayout.addView(view);
+  public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+    mItemTouchHelper.startDrag(viewHolder);
   }
 }
+
 

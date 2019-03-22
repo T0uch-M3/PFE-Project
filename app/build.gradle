@@ -36,9 +36,16 @@ dependencies {
         exclude group: 'com.android.support'
     }
 
+  implementation 'androidx.cardview:cardview:1.0.0'
   implementation 'com.github.yalantis:Side-Menu.Android:1.0.1'
   implementation ('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
     transitive = true;
   }
+  implementation 'com.github.lzyzsd:circleprogress:1.2.1'
+  implementation 'com.gauravk.bubblenavigation:bubblenavigation:1.0.4'
+  implementation 'androidx.recyclerview:recyclerview:1.0.0'
+  implementation 'org.mongodb:mongo-java-driver:3.10.1'
+  implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+  implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 
 }

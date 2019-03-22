@@ -551,7 +551,7 @@
       android:layout_gravity="top|center"
       android:layout_marginTop="140dp"
       android:gravity="center"
-      android:text="@string/new_user"
+      android:text="New user? (v27)"
       android:textColor="@android:color/white"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />
