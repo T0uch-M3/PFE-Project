@@ -47,5 +47,11 @@ dependencies {
   implementation 'org.mongodb:mongo-java-driver:3.10.1'
   implementation 'com.squareup.retrofit2:retrofit:2.5.0'
   implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+  implementation 'com.github.biansemao:ThermometerView:1.0.1'
+  implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+  implementation 'com.google.firebase:firebase-core:16.0.8'
+  implementation 'com.google.firebase:firebase-database:16.0.6'
+  implementation 'com.google.android:flexbox:1.1.0'
 
 }
+apply plugin: 'com.google.gms.google-services'

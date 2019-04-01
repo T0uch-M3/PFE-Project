@@ -7,9 +7,40 @@
   android:layout_height="match_parent">
 
   <androidx.cardview.widget.CardView
+    android:id="@+id/_elephant2"
+    android:layout_width="match_parent"
+    android:layout_height="129dp"
+    android:layout_marginTop="8dp"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="0dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true"
+    app:layout_constraintEnd_toStartOf="@+id/toolbar"
+    app:layout_constraintHorizontal_bias="0.038"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/_elephant">
+
+    <com.example.touch_me.pfe_project.widgets.Thermometer xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:layout_width="150dp"
+      android:layout_height="100dp"
+      android:layout_gravity="center|left"
+      android:layout_marginLeft="50dp"
+      app:therm_color="@android:color/holo_blue_light">
+
+    </com.example.touch_me.pfe_project.widgets.Thermometer>
+
+    <TextView
+      android:id="@+id/testTV2"
+      android:layout_width="98dp"
+      android:layout_height="wrap_content"
+      android:text="Temp" />
+
+  </androidx.cardview.widget.CardView>
+
+  <androidx.cardview.widget.CardView
     android:id="@+id/_elephant"
     android:layout_width="match_parent"
-    android:layout_height="191dp"
+    android:layout_height="129dp"
     android:layout_marginTop="124dp"
     app:cardCornerRadius="2dp"
     app:cardElevation="0dp"
@@ -24,7 +55,7 @@
       android:id="@+id/arc_progress"
       android:layout_width="100dp"
       android:layout_height="100dp"
-      android:layout_gravity="center"
+      android:layout_gravity="center|left"
       android:layout_marginLeft="50dp"
       app:arc_bottom_text="MEMORY"
       app:arc_finished_color="@color/lightBlue"
@@ -36,7 +67,9 @@
       android:id="@+id/testTV"
       android:layout_width="98dp"
       android:layout_height="wrap_content"
-      android:text="TextView" />
+      android:text="TextView"
+      tools:layout_editor_absoluteX="325dp"
+      tools:layout_editor_absoluteY="498dp" />
 
   </androidx.cardview.widget.CardView>
 
@@ -71,13 +104,16 @@
 
   <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
-    android:layout_height="267dp"
-    android:layout_marginBottom="136dp"
+    android:layout_height="155dp"
+    android:layout_marginTop="11dp"
+    android:layout_marginBottom="8dp"
     android:background="@color/colorPrimary"
-    app:layout_constraintBottom_toBottomOf="parent"
+    android:visibility="gone"
+    app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintStart_toStartOf="parent">
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/_elephant2">
 
 
     <RelativeLayout
@@ -147,5 +183,17 @@
 
 
   </com.gauravk.bubblenavigation.BubbleNavigationConstraintView>
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/recyclerView"
+    android:layout_width="317dp"
+    android:layout_height="188dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="64dp"
+    app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

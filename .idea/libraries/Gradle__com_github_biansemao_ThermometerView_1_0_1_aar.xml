@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.biansemao:ThermometerView:1.0.1@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-ThermometerView-1.0.1.aar/592bfb74ada0c427b6ee580d40771ece/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-ThermometerView-1.0.1.aar/592bfb74ada0c427b6ee580d40771ece/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

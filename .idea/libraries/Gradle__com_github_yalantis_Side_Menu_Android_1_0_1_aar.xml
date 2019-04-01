@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.yalantis:Side-Menu.Android:1.0.1@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-Side-Menu.Android-1.0.1.aar/c03394a533cb2f87eef597701ebf4ec2/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-Side-Menu.Android-1.0.1.aar/c03394a533cb2f87eef597701ebf4ec2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-Side-Menu.Android-1.0.1.aar/86c11d0f1b5b7b6436994615d9161e18/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-Side-Menu.Android-1.0.1.aar/86c11d0f1b5b7b6436994615d9161e18/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

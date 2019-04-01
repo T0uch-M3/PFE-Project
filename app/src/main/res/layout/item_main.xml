@@ -1,8 +1,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/item"
-  android:layout_width="match_parent"
+  android:layout_width="140dp"
   android:layout_height="?listPreferredItemHeight"
+  android:background="@color/red"
   android:clickable="true"
   android:focusable="true"
   android:foreground="?selectableItemBackground">
@@ -28,4 +30,11 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:srcCompat="@drawable/ic_menu_camera" />
+
+  <ImageView
+    android:id="@+id/icon_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    tools:srcCompat="@tools:sample/avatars" />
 </FrameLayout>
