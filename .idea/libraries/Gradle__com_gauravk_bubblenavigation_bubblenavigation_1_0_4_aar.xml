@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.gauravk.bubblenavigation:bubblenavigation:1.0.4@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-bubblenavigation-1.0.4.aar/9e76ac5f63b6a28e1eca36cad5e75419/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-bubblenavigation-1.0.4.aar/9e76ac5f63b6a28e1eca36cad5e75419/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-bubblenavigation-1.0.4.aar/e75debf1fb5082de781a6bf4f3f86958/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-bubblenavigation-1.0.4.aar/e75debf1fb5082de781a6bf4f3f86958/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

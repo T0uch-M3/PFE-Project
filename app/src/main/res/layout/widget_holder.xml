@@ -5,5 +5,6 @@
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
   android:layout_margin="2dp"
-  app:cardBackgroundColor="@color/colorPrimary"
-  app:cardElevation="2dp" />
+  android:visibility="visible"
+  app:cardBackgroundColor="@color/transparent"
+  app:cardElevation="0dp" />

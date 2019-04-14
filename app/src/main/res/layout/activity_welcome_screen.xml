@@ -15,7 +15,7 @@
     android:background="@color/white_ish"
     android:paddingTop="20dp"
     android:theme="?attr/actionBarTheme"
-    android:visibility="visible"
+    android:visibility="gone"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
@@ -40,14 +40,14 @@
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/recyclerView"
     android:layout_width="match_parent"
-    android:layout_height="343dp"
-    android:layout_marginBottom="8dp"
+    android:layout_height="525dp"
+    android:nestedScrollingEnabled="false"
     android:paddingLeft="1dp"
     android:paddingRight="1dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent" />
 
   <com.gauravk.bubblenavigation.BubbleNavigationConstraintView
     android:id="@+id/bottom_navigation"
@@ -102,8 +102,8 @@
     android:id="@+id/liveData"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="25dp"
-    android:layout_marginTop="47dp"
+    android:layout_marginStart="176dp"
+    android:layout_marginTop="516dp"
     android:text="TextView"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/toolbar" />

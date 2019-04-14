@@ -27,7 +27,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.touch_me.pfe_project.helper.ItemTouchHelperAdapter;
-import com.example.touch_me.pfe_project.helper.ItemTouchHelperViewHolder;
 import com.example.touch_me.pfe_project.helper.OnStartDragListener;
 
 import java.lang.reflect.Array;
@@ -39,7 +38,7 @@ import java.util.List;
 import androidx.core.view.MotionEventCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-
+/*
 public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapter.ItemViewHolder> implements ItemTouchHelperAdapter {
 
   List<WidgetObject> foodItemList;
@@ -80,8 +79,8 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
       return mItems.size();
   }
 
-  @Override
-  public void onBindViewHolder(final ItemViewHolder holder, int position) {
+//  @Override
+//  public void onBindViewHolder(final ItemViewHolder holder, int position) {
 //    holder.textView.setText(mItems.get(position));
 //    WidgetObject foodItemBean = foodItemList.get(position);
 
@@ -97,31 +96,31 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
 //        return false;
 //      }
 //    });
-  }
+//  }
 
-  public static class ItemViewHolder extends RecyclerView.ViewHolder implements
-    ItemTouchHelperViewHolder {
-
-
-    ImageView imgFood;
-    TextView txtFood;
-
-    public ItemViewHolder(View itemView) {
-      super(itemView);
-      imgFood = (ImageView) itemView.findViewById(R.id.imgFood);
-//      txtFood = (TextView) itemView.findViewById(R.id.txtFood);
-    }
-
-    @Override
-    public void onItemSelected() {
-      itemView.setBackgroundColor(Color.LTGRAY);
-    }
-
-    @Override
-    public void onItemClear() {
-      itemView.setBackgroundColor(0);
-    }
-  }
+//  public static class ItemViewHolder extends RecyclerView.ViewHolder implements
+//    ItemTouchHelperViewHolder {
+//
+//
+//    public ImageView imgFood;
+//    public TextView txtFood;
+//
+//    public ItemViewHolder(View itemView) {
+//      super(itemView);
+//      imgFood = (ImageView) itemView.findViewById(R.id.imgFood);
+////      txtFood = (TextView) itemView.findViewById(R.id.txtFood);
+//    }
+//
+//    @Override
+//    public void onItemSelected() {
+//      itemView.setBackgroundColor(Color.LTGRAY);
+//    }
+//
+//    @Override
+//    public void onItemClear() {
+//      itemView.setBackgroundColor(0);
+//    }
+//  }
 
   //+++++++++++++++++++++++OLD---------------
 
@@ -165,3 +164,4 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
 //
 //  }
 }
+*/

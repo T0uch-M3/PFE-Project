@@ -30,3 +30,13 @@ proguard/
 
 # Android Studio captures folder
 captures/
+
+### Firebase ###
+.idea/libraries
+
+**/node_modules/*
+**/.firebaserc
+
+### Firebase Patch ###
+.runtimeconfig.json
+.firebase/

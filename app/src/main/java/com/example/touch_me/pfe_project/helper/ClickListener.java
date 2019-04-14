@@ -24,18 +24,19 @@ import androidx.recyclerview.widget.ItemTouchHelper;
  *
  * @author Paul Burke (ipaulpro)
  */
-public interface ItemTouchHelperViewHolder {
+public interface ClickListener {
 
     /**
      * Called when the {@link ItemTouchHelper} first registers an item as being moved or swiped.
      * Implementations should update the item view to indicate it's active state.
      */
-    void onItemSelected();
+//    void onItemSelected();
+  void onPositionClicked(int postion);
 
 
     /**
      * Called when the {@link ItemTouchHelper} has completed the move or swipe, and the active item
      * state should be cleared.
      */
-    void onItemClear();
+//    void onItemClear();
 }

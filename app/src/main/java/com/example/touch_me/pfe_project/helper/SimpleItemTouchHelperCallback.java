@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
  *
  * @author Paul Burke (ipaulpro)
  */
+/*
 public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     public static final float ALPHA_FULL = 1.0f;
@@ -123,3 +124,4 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
         }
     }
 }
+*/

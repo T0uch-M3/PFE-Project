@@ -427,6 +427,19 @@ public class Thermometer extends View {
       shouldAnimate=false;
 
   }
-
+  public void setOuterLinePaint (int color){
+    mOuterLinePaint.setColor(color);
+    mOuterCirclePaint.setColor(color);
+  }
+public void setmThermometerColor(int color){
+    mThermometerColor = color;
+}
+public void setInnerPaint(int color){
+    mInnerCirclePaint.setColor(color);
+    mInnerLinePaint.setColor(color);
+}
+public void setmStageHeight(int i){
+    mStageHeight = i;
+}
 
 }

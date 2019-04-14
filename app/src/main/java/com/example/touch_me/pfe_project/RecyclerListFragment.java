@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
+/*
 public class RecyclerListFragment extends Fragment implements OnStartDragListener {
 
     private ItemTouchHelper mItemTouchHelper;
@@ -64,3 +64,4 @@ public class RecyclerListFragment extends Fragment implements OnStartDragListene
 //      mItemTouchHelper = new ItemTouchHelper(callback);
     }
 }
+*/
