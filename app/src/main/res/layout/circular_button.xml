@@ -15,6 +15,7 @@
     android:layout_marginBottom="0dp"
     android:rotation="180"
     android:scaleX=".25"
-    android:scaleY=".25" />
+    android:scaleY=".25"
+    app:fab_addButtonColorNormal="@color/optionButton" />
 
 </FrameLayout>

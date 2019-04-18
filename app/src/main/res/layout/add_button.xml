@@ -7,7 +7,10 @@
 
   <Button
     android:id="@+id/button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="+" />
+    android:layout_width="50dp"
+    android:layout_height="30dp"
+    android:background="@drawable/add_button_style"
+    android:text="+"
+    android:textColor="@color/grey"
+    android:textSize="24sp" />
 </FrameLayout>

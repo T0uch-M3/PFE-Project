@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.github.lzyzsd.circleprogress.ArcProgress;
+import com.github.lzyzsd.circleprogress.CircleProgress;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.w3c.dom.Text;
 
@@ -51,6 +54,10 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return 2;
       case "Widget_T":
         return 3;
+      case "Info":
+        return 4;
+      case "TempHolder":
+        return 5;
       default:
         return -1;
     }
@@ -68,15 +75,82 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
   @NonNull
   @Override
   public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    Log.wtf("tag", "inside onCREATEHOLDER");
+//    Log.wtf("tag", "inside onCREATEHOLDER");
     ViewGroup viewGroup = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(R.layout.widget_holder, parent, false);
     LinearLayout ln = new LinearLayout(parent.getContext());
     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(230, 250, Gravity.CENTER);
     ln.setLayoutParams(params);
 
-    switch (viewType) {//thermometer
-      case 3: {
+    switch (viewType) {
+      case 5:{
+        ln.setBackgroundColor(Color.BLACK);
         viewGroup.addView(ln);
+        return new ViewHolderDummy(viewGroup);
+      }
+      case 4: {
+        ln.setBackgroundColor(Color.GREEN);
+        params.width = 460;
+        viewGroup.addView(ln);
+//        Log.wtf("tag","TESTiNG  CLICKING  ");
+        return new ViewHolderDummy(viewGroup);
+      }
+      case 3: {//thermometer
+        /************************************||==>lnVh*$$$****
+         ********************VG==>lnH==>lnV=||*************
+         **********************************||==>tv******/
+        TextView tv = new TextView(parent.getContext());
+//        tv.setBackgroundColor(Color.YELLOW);
+        LinearLayout.LayoutParams paramsTV = new LinearLayout.LayoutParams(199, 40);
+        paramsTV.gravity = Gravity.CENTER;
+
+        ViewGroup rightPanel = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main, parent, false);
+
+        paramsTV.leftMargin = -10;
+//      paramsTV.rightMargin = 8;
+        tv.setLayoutParams(paramsTV);
+        tv.setPadding(10, 0, 0, 0);
+
+        LinearLayout lnH = new LinearLayout(parent.getContext());
+        LinearLayout lnV = null;
+        LinearLayout.LayoutParams paramsH = new LinearLayout.LayoutParams(230, 250);
+        lnH.setLayoutParams(paramsH);
+        lnH.setOrientation(LinearLayout.HORIZONTAL);
+        lnH.setBackgroundColor(lnH.getContext().getResources().getColor(R.color.white_ish));
+
+        lnV = new LinearLayout(parent.getContext());
+        LinearLayout.LayoutParams paramsLnv = new LinearLayout.LayoutParams(150, ViewGroup.LayoutParams.MATCH_PARENT, Gravity.CENTER);
+
+        LinearLayout lnVh = new LinearLayout(parent.getContext());
+        lnVh.setOrientation(LinearLayout.HORIZONTAL);
+//        lnVh.setBackgroundColor(Color.GREEN);
+        lnVh.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        TextView tempValue = new TextView(parent.getContext());
+        tempValue.setText("WHAT??");
+        tempValue.setBackgroundColor(Color.MAGENTA);
+
+//        lnV.setBackgroundColor(lnV.getContext().getResources().getColor(R.color.colorPrimary));
+        paramsLnv.rightMargin = -30;
+        lnV.setLayoutParams(paramsLnv);
+        lnV.setOrientation(LinearLayout.VERTICAL);
+        lnV.addView(tv);
+//        lnVh.addView(tempValue);
+        lnVh.addView(rightPanel);
+        lnV.addView(lnVh);
+
+        lnH.addView(lnV);
+        //setting up the option button and what's under it
+        ViewGroup optionButtonHolder = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(R.layout.circular_button, parent, false);
+        FloatingActionsMenu fMenu = (FloatingActionsMenu) optionButtonHolder.getChildAt(0);
+        final FloatingActionButton testButton = new FloatingActionButton(fMenu.getContext());
+        testButton.setColorNormal(testButton.getContext().getResources().getColor(R.color.optionButton));
+        final FloatingActionButton testButton2 = new FloatingActionButton(fMenu.getContext());
+        testButton2.setColorNormal(testButton.getContext().getResources().getColor(R.color.optionButton));
+        fMenu.addButton(testButton);
+        fMenu.addButton(testButton2);
+        lnH.addView(optionButtonHolder);
+
+        viewGroup.addView(lnH);
         return new ViewHolderDummy(viewGroup);
       }
       case 2: {//Gauge
@@ -84,36 +158,34 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
          * Setting up the TextView for widget title
          */
         TextView tv = new TextView(parent.getContext());
-        tv.setBackgroundColor(Color.YELLOW);
+//        tv.setBackgroundColor(Color.YELLOW);
         LinearLayout.LayoutParams paramsTV = new LinearLayout.LayoutParams(199, ViewGroup.LayoutParams.WRAP_CONTENT);
-        paramsTV.gravity = Gravity.START;
+        paramsTV.gravity = Gravity.CENTER;
+        paramsTV.leftMargin = 10;
 //      paramsTV.rightMargin = 8;
         tv.setLayoutParams(paramsTV);
 
         LinearLayout lnH = new LinearLayout(parent.getContext());
         LinearLayout lnV = null;
         LinearLayout.LayoutParams paramsH = new LinearLayout.LayoutParams(230, 250);
-//      paramsH.bottomMargin = -50;
-//      paramsH.topMargin = -50;
+//        paramsH.leftMargin=30;
         lnH.setLayoutParams(paramsH);
         lnH.setOrientation(LinearLayout.HORIZONTAL);
-        lnH.setBackgroundColor(Color.GRAY);
+        lnH.setBackgroundColor(lnH.getContext().getResources().getColor(R.color.white_ish));
 
         lnV = new LinearLayout(parent.getContext());
         LinearLayout.LayoutParams paramsLnv = new LinearLayout.LayoutParams(150, ViewGroup.LayoutParams.MATCH_PARENT, Gravity.CENTER);
+
         lnV.setBackgroundColor(lnV.getContext().getResources().getColor(R.color.white_ish));
-//        params.b = -150;
-        params.rightMargin = -30;
+        paramsLnv.rightMargin = -30;
         lnV.setLayoutParams(paramsLnv);
         lnV.setOrientation(LinearLayout.VERTICAL);
         lnV.addView(tv);
-//        lnV.addView(wi.getWidget());
 
         lnH.addView(lnV);
-//        FloatingActionsMenu fMenu = (FloatingActionsMenu) LayoutInflater.from(parent.getContext()).inflate(R.layout.circular_button, parent, false);
+        //setting up the option button and what's under it
         ViewGroup optionButtonHolder = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(R.layout.circular_button, parent, false);
         FloatingActionsMenu fMenu = (FloatingActionsMenu) optionButtonHolder.getChildAt(0);
-//        ln.addView(optionButtonHolder);
         final FloatingActionButton testButton = new FloatingActionButton(fMenu.getContext());
         final FloatingActionButton testButton2 = new FloatingActionButton(fMenu.getContext());
         fMenu.addButton(testButton);
@@ -130,6 +202,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return new ViewHolderBtn(viewGroup);
       }
       case 0: {//Dummy
+        ln.setBackgroundColor(Color.CYAN);
         viewGroup.addView(ln);
         return new ViewHolderDummy(viewGroup);
       }
@@ -141,7 +214,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
   @Override
   public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
-    Log.wtf("tag", "inside onBINDVIRWHILDERRR");
+//    Log.wtf("tag", "inside onBINDVIRWHILDERRR");
     final Object nonCastObject = mListObjects.get(position);
     Log.wtf("tag", "position ==>>==" + position + "===Item title HERE=>>=" + mListObjects.get(position).getTilte());
 
@@ -153,36 +226,71 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //    switch (holder.getItemViewType()) {
     switch (wi.getType()) {
       case "Widget_T": {
-
         ViewHolderDummy viewHolder = (ViewHolderDummy) holder;
-        if (wi.getWidget().getParent() != null)
-          ((ViewGroup) wi.getWidget().getParent()).removeView(wi.getWidget());
-        viewHolder.getHolder().addView(wi.getWidget());
-      }
-      break;
-      case "Widget_G": {
-
-        ViewHolderDummy viewHolder = (ViewHolderDummy) holder;
+        //just to bypass an error i was getting
         if (wi.getWidget().getParent() != null)
           ((ViewGroup) wi.getWidget().getParent()).removeView(wi.getWidget());
 
-        Log.wtf("tag", "count" + viewHolder.getvGroup().getChildCount());
+//        Log.wtf("tag", "count" + viewHolder.getvGroup().getChildCount());
         ViewGroup downLvl = (ViewGroup) viewHolder.getvGroup().getChildAt(0);
 
-//        downLvl.addView(LayoutInflater.from(downLvl.getContext()).inflate(R.layout.circular_button, downLvl, false));
-//        ViewGroup optionButtonHolder = (ViewGroup) downLvl.getChildAt(1);
-//        FloatingActionsMenu fMenu = (FloatingActionsMenu) optionButtonHolder.getChildAt(0);
         ViewGroup downLvl2 = (ViewGroup) downLvl.getChildAt(0);
-        Log.wtf("tag", "CLASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSsS" + downLvl.getChildAt(0).getClass());
-        downLvl2.addView(wi.getWidget());
+        ViewGroup downLvl3 = (ViewGroup) downLvl2.getChildAt(1);
+//        Log.wtf("tag", "CLASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSsS" + downLvl.getChildAt(0).getClass());
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+        params.gravity = Gravity.RIGHT;
+//        params.leftMargin = -80;
+        params.rightMargin = -20;
+        params.bottomMargin = -10;
+//        params.setMargins(20,5,20,5);
+        View widget = wi.getWidget();
+//        widget.setBackgroundColor(Color.RED);
+        widget.setLayoutParams(params);
+        downLvl3.addView(widget, 0);
         TextView title = (TextView) downLvl2.getChildAt(0);
         title.setText(wi.getTilte());
         final FloatingActionsMenu optionBtn = ((ViewHolderDummy) holder).getOptionButton();
-//        final FloatingActionButton testButton = new FloatingActionButton(optionBtn.getContext());
-//        final FloatingActionButton testButton2 = new FloatingActionButton(optionBtn.getContext());
-//        optionBtn.addButton(testButton);
-//        optionBtn.addButton(testButton2);
-//        viewHolder.getvGroup().addView(wi.getWidget());
+        if (((ViewHolderDummy) holder).getOptionButton() != null) {
+//          final FloatingActionsMenu optionBtn = ((ViewHolderDummy) holder).getOptionButton();
+          if (optionBtn != null) {
+
+            optionBtn.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+
+                optionBtn.expand();
+
+                listener.onOptionButtonReady(((ViewHolderDummy) holder).getOptionButton(), position);
+              }
+            });
+          }
+        }
+
+      }
+      break;
+      case "Widget_G": {
+        ViewHolderDummy viewHolder = (ViewHolderDummy) holder;
+        //just to bypass an error i was getting
+        if (wi.getWidget().getParent() != null)
+          ((ViewGroup) wi.getWidget().getParent()).removeView(wi.getWidget());
+
+//        Log.wtf("tag", "count" + viewHolder.getvGroup().getChildCount());
+        ViewGroup downLvl = (ViewGroup) viewHolder.getvGroup().getChildAt(0);
+
+        ViewGroup downLvl2 = (ViewGroup) downLvl.getChildAt(0);
+//        Log.wtf("tag", "CLASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSsS" + downLvl.getChildAt(0).getClass());
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, Gravity.CENTER);
+        params.gravity = Gravity.BOTTOM;
+        params.setMargins(15, 5, 15, 5);
+//        View widget = wi.getWidget();
+        ArcProgress widget = (ArcProgress) wi.getWidget();
+        widget.setLayoutParams(params);
+        downLvl2.addView(widget);
+        TextView title = (TextView) downLvl2.getChildAt(0);
+        title.setText(wi.getTilte());
+        final FloatingActionsMenu optionBtn = ((ViewHolderDummy) holder).getOptionButton();
         if (((ViewHolderDummy) holder).getOptionButton() != null) {
 //          final FloatingActionsMenu optionBtn = ((ViewHolderDummy) holder).getOptionButton();
           if (optionBtn != null) {
@@ -202,32 +310,45 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
       break;
       case "Button": {
         ViewHolderBtn viewHolderBtn = (ViewHolderBtn) holder;
-        viewHolderBtn.getButton().setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            if (!clickState) {
+        PushDownAnim.setPushDownAnimTo(viewHolderBtn.getButton())
+          .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              if (!clickState) {
 
-              clickState = true;
+                clickState = true;
 
-              if (listener != null)
-                listener.onObjectReady();
+                if (listener != null)
+                  listener.onObjectReady();
 
-            } else {
-              clickState = false;
+              } else {
+                clickState = false;
 
-              if (listener != null)
-                listener.onObjectReady();
+                if (listener != null)
+                  listener.onObjectReady();
+              }
             }
-          }
-        });
+
+          }).setScale(PushDownAnim.MODE_STATIC_DP, 2);
+//        viewHolderBtn.getButton().setOnClickListener(new View.OnClickListener() {
+//          @Override
+//          public void onClick(View v) {
+//
+//          }
+//        });
       }
       break;
       case "Dummy": {
         ViewHolderDummy viewHolderDummy = (ViewHolderDummy) holder;
 //        viewHolderDummy.getHolder().setVisibility(View.INVISIBLE);
       }
+      case "Info":{
+        ViewHolderDummy viewHolderDummy = (ViewHolderDummy) holder;
+      }
       break;
-
+      case "tempHolder":{
+        ViewHolderDummy viewHolderDummy = (ViewHolderDummy) holder;
+      }
     }
 
 
@@ -309,7 +430,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     if (mObject == null) {
       return;
     }
-    if (position < 0 || position > getItemCount()) {
+    if (position >= 0 && position <= getItemCount()) {
       //Out of bounds
       return;
     }
@@ -317,7 +438,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
       this.mListObjects = new ArrayList<>();
     }
     this.mListObjects.add(position, mObject);
-    Log.wtf("tag", "WE IN  BOYS");
+//    Log.wtf("tag", "WE IN  BOYS");
     this.notifyItemChanged(position);
   }
 
@@ -337,5 +458,16 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
   public List<WidgetItem> getObjectList() {
     return mListObjects;
+  }
+
+  public void updatOneObject(int position, WidgetItem mObject) {
+    if (mObject != null) {
+      return;
+    }
+    if (position >= 0 && position <= getItemCount()) {
+      return;
+    }
+    this.mListObjects.set(position, mObject);
+    this.notifyItemChanged(position);
   }
 }

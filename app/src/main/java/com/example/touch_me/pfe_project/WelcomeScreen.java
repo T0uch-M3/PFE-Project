@@ -1,20 +1,19 @@
 package com.example.touch_me.pfe_project;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -37,22 +36,18 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
-import java.security.cert.PolicyQualifierInfo;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
@@ -61,6 +56,8 @@ import retrofit2.Response;
 import yalantis.com.sidemenu.model.SlideMenuItem;
 import yalantis.com.sidemenu.util.ViewAnimator;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
 
 
@@ -69,9 +66,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   private DrawerLayout drawerLayout;
   private LinearLayout bigdady;
   private LinearLayout linearLayout;
-  private List<SlideMenuItem> list = new ArrayList<>();
   private ArrayList<String> itemList = new ArrayList<String>();
-  private ContentFragment contentFragment;
   private ViewAnimator viewAnimator;
   private ActionBarDrawerToggle drawer;
   private Button itemAddBtn;
@@ -106,6 +101,9 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   boolean firstTime = true;
   CatAdapter ca;
   CustomAdapter ca2;
+  private List<List<String>> devicesName = new ArrayList<>();
+  private int holyRow = 0;
+  int nbrItems = 0; //number of items in the list (not counting button and dummies)
 
 
   @Override
@@ -118,7 +116,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 //    setupWindowAnimations();
     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
-    drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//    drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
     View portal = findViewById(R.id.portal);
     bigdady = (LinearLayout) findViewById(R.id.big_dady);
 
@@ -129,7 +127,6 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
     btn_add = (Button) findViewById(R.id.btn_add);
     liveData = (TextView) findViewById(R.id.liveData);
-
 
 
 /**************************WORKS******************************/
@@ -170,6 +167,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 //    networkthingy();
 
     firebaseConf();
+    firebaseStaticConfig();
 
     //======================OLD===================================
 //    ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -194,6 +192,12 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   public void genesis(CustomAdapter ca) {
 
     final Dialog dialog = new Dialog(this);
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.transparent)));
+
+//    dialog.setTitle("LOL  WTH");
+//    AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+//    dialog.setTitle("LOL  WTH");
     firstDialogLayout(dialog, ca);
 
     dialog.show();
@@ -202,6 +206,8 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 
 
   public void addingWidget(CustomAdapter ca, WidgetItem wItem) {
+    int addingPos = 0;
+    boolean foundRightPost = false;
     Log.wtf("tag", "addingWidget ENTERED");
 //    ca.i = 0;
     /**********************************/
@@ -226,6 +232,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
       btnHolder.setType("Button");
       btnHolder.setTilte("btnHolder");
 
+
       CAT_IMAGE_IDS.add(0, btnHolder);
       CAT_IMAGE_IDS.add(0, dummy);
 
@@ -236,57 +243,60 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     /**********************************/
     else {
       Log.wtf("tag", "ENTERED  THE SECOND TIME >>>>>>>>>>>>>>>>");
-      someMagic(ca);
-      CAT_IMAGE_IDS.add(0, wItem);
+
+//      if (size == 2)
+//        holyRow = holyRow + 2;
+//      else
+//        holyRow++;
+
+      someMagic(ca, wItem);
+
+//      Log.wtf("tag", "number of items::BEFORE LOOP"+nbrItems);
+//      for (int i = 0; i < ca.getItemCount(); i++) {
+//        Log.wtf("tag", "ITEM TYPE::" + i + " :: " + ca.getObjectList().get(i).getType());
+//        if (ca.getObjectList().get(i).isWidget())
+//          nbrItems++;
+////          addingPos = i - 1;
+////        foundRightPost = true;
+//      }
+//      Log.wtf("tag", "number of items::AFTER LOOP"+nbrItems);
+//      if(addingPos<0)
+//      CAT_IMAGE_IDS.add(ca.getItemCount()-2, wItem);
+//      else
+//        CAT_IMAGE_IDS.add(addingPos, wItem);
+//      ca.setListObjects(CAT_IMAGE_IDS);
+
+
+      Log.wtf("tag", "number of items::BEFORE ADDING  ITEMS" + nbrItems);
+      CAT_IMAGE_IDS.add(nbrItems, wItem);
       ca.setListObjects(CAT_IMAGE_IDS);
+
 /*********************************************************************************/
 //      if (testInt == 0) {
-//        WidgetItem dummy = new WidgetItem(true);
-//        dummy.setTilte("dummy01");
-//        CAT_IMAGE_IDS.add(CAT_IMAGE_IDS.size() - 1, dummy);
-//        ca.notifyItemInserted(CAT_IMAGE_IDS.size() - 2);
-//        WidgetItem dummy2 = new WidgetItem(true);
-//        dummy2.setTilte("dummy012");
-//        CAT_IMAGE_IDS.add(CAT_IMAGE_IDS.size() - 1, dummy2);
-//        ca.notifyItemInserted(CAT_IMAGE_IDS.size() - 2);
-//        ca.i = 0;
+//        Log.wtf("tag", "number of items::" + nbrItems);
 //        CAT_IMAGE_IDS.add(0, wItem);
-//        ca.notifyItemInserted(0);
+//        ca.setListObjects(CAT_IMAGE_IDS);
 //      }
 //      if (testInt == 1) {
-//        CAT_IMAGE_IDS.remove(CAT_IMAGE_IDS.size() - 2);
-//        ca.notifyItemRemoved(CAT_IMAGE_IDS.size() - 2);
-//        recyclerView.getRecycledViewPool().clear();
-//        CAT_IMAGE_IDS.add(0, wItem);
-//        ca.notifyItemInserted(0);
+//        Log.wtf("tag", "number of items::" + nbrItems);
+//
+//        CAT_IMAGE_IDS.add(1, wItem);
+//        ca.setListObjects(CAT_IMAGE_IDS);
 //      }
 //      if (testInt == 2) {
-//        CAT_IMAGE_IDS.remove(CAT_IMAGE_IDS.size() - 2);
-//        ca.notifyItemRemoved(CAT_IMAGE_IDS.size() - 2);
-//        recyclerView.getRecycledViewPool().clear();
-//        CAT_IMAGE_IDS.add(0, wItem);//this when it doesn't count (appear)
-//        ca.notifyItemInserted(0);
+//        Log.wtf("tag", "number of items::" + nbrItems);
+//
+//        CAT_IMAGE_IDS.add(3, wItem);
+//        ca.setListObjects(CAT_IMAGE_IDS);
 //      }
 //      if (testInt == 3) {/*************/
-//      ca.j = 0;
-//        WidgetItem dummy22 = new WidgetItem(true);
-//        dummy22.setTilte("dummy01");
-//        CAT_IMAGE_IDS.add(CAT_IMAGE_IDS.size() - 1, dummy22);
-//        ca.notifyItemInserted(CAT_IMAGE_IDS.size() - 2);
+//        Log.wtf("tag", "number of items::" + nbrItems);
 //
-//        recyclerView.getRecycledViewPool().clear();
+//        CAT_IMAGE_IDS.add(4, wItem);
+//        ca.setListObjects(CAT_IMAGE_IDS);
 //
-//        WidgetItem dummy33 = new WidgetItem(true);
-//        dummy33.setTilte("dummy012");
-//        CAT_IMAGE_IDS.add(CAT_IMAGE_IDS.size() - 1, dummy33);
-//        ca.notifyItemInserted(CAT_IMAGE_IDS.size() - 2);
-//
-//        recyclerView.getRecycledViewPool().clear();
-//
-//        ca.i = 0;
-//        CAT_IMAGE_IDS.add(0, wItem);
-//        ca.notifyItemInserted(0);
 //      }
+//      testInt++;
 //      if (testInt == 4) {
 //        CAT_IMAGE_IDS.remove(CAT_IMAGE_IDS.size() - 2);
 //        ca.notifyItemRemoved(CAT_IMAGE_IDS.size() - 2);
@@ -456,51 +466,118 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 
   }
 
-  public void someMagic(CustomAdapter ca) {
+  public void someMagic(CustomAdapter ca, WidgetItem wItem) {
     int nbrDummy = 0;
     int addPos = 0;
-    int nbrItems = 0;
+    nbrItems = 0;
     int weSayJump = 0;
-    boolean foundDummy = false;
+    int foundDummy = 0;
+
+
+
 
     for (int i = 0; i < ca.getItemCount(); i++) {
+      Log.wtf("tag", ":::size inside loop::" + ca.getItemCount());
+
       if (ca.getObjectList().get(i).getType() == "Dummy")
         nbrDummy++;
 
-      if (!(ca.getObjectList().get(i).getType() == "Dummy") && !(ca.getObjectList().get(i).getType() == "Button")) {
+      if (ca.getObjectList().get(i).isWidget() && ca.getObjectList().get(i).getSize() == 1)
         nbrItems++;
-      }
+      if (ca.getObjectList().get(i).getSize() == 2)
+        nbrItems++;
+      if(ca.getObjectList().get(i).getType()=="TempHolder")
+        nbrItems++;
     }
+    Log.wtf("tag", "HOLY  ROW:" + holyRow);
 
-    Log.wtf("tag", "number oooooof dummy:BEFORE  CHANGE:" + nbrDummy);
-    Log.wtf("tag", "number oooooof ITEMS:BEFORE  CHANGE:" + nbrItems);
-
-    if (nbrItems % 3 == 0) {
-
-      for (int i = 0; i < 2; i++) {
-        WidgetItem dummy = new WidgetItem();
-        dummy.setType("Dummy");
-        Log.wtf("tag", "ADDDDDDDING  A FUCKING DUMMY");
-        dummy.setTilte("dummy" + i + nbrItems);
-        CAT_IMAGE_IDS.add(ca.getItemCount() - 2, dummy);
-        ca.setListObjects(CAT_IMAGE_IDS);
-      }
+    if(holyRow==2 && wItem.getSize()==2){
+      WidgetItem tempHolder = new WidgetItem();
+      tempHolder.setType("TempHolder");
+      CAT_IMAGE_IDS.add(nbrItems,tempHolder);
+      ca.setListObjects(CAT_IMAGE_IDS);
+      nbrItems++;
     }
 
 
+//    Log.wtf("tag", "number oooooof ITEMS:BEFORE  CHANGE:" + nbrItems);
 
-    if ((nbrDummy == 3) || (nbrDummy == 2))
-      for (int i = 0; !foundDummy; i++) {
+//    if(size == 2 )//in the case of large widget
+//      nbrItems++;
+
+//    if (nbrItems % 3 == 0) {
+    if(holyRow==0 || holyRow==3){
+
+//        for (int i = 0; i < (2 - Math.sin(Math.PI / wItem.getSize())); i++) {
+        for (int i = 0; i < 3 ; i++) {
+          WidgetItem dummy = new WidgetItem();
+          dummy.setType("Dummy");
+        Log.wtf("tag", "ADDDDDDDDDDDDDING DUMMIES");
+          dummy.setTilte("dummy" + i + nbrItems);
+          CAT_IMAGE_IDS.add(ca.getItemCount() - 2, dummy);
+          ca.setListObjects(CAT_IMAGE_IDS);
+        }
+    }
+
+
+
+
+    if (wItem.getSize() == 2 && (holyRow==0 || holyRow==1 || holyRow==3)) {
+      for (int i = 0; foundDummy != 2; i++) {
         if (ca.getObjectList().get(i).getType() == "Dummy") {
           Log.wtf("tag", "000000000DUMMY  REMOVED YEY AT::" + i);
           ca.removeOneObject(ca.getItemCount() - 2);
-          foundDummy = true;
+          foundDummy++;
         }
-
       }
+    }
+    if (wItem.getSize() == 1) {
+      for (int i = 0; foundDummy != 1; i++) {
+        if (ca.getObjectList().get(i).getType() == "Dummy") {
+          Log.wtf("tag", "000000000DUMMY  REMOVED YEY AT::" + i);
+          ca.removeOneObject(ca.getItemCount() - 2);
+          foundDummy++;
+        }
+      }
+    }
+    /**
+     * BEHOLD..
+     */
+    if (wItem.getSize() == 2) {
+      holyRow = holyRow+2;
+    }
 
+    if (wItem.getSize() == 1)
+      holyRow ++;
+    /**
+     *
+     */
 
-    Log.wtf("tag", "number ooooof dummy:AFTER  CHANGE:" + nbrDummy);
+    if (holyRow > 3){
+      holyRow=wItem.getSize();
+
+    }
+
+//    if ((nbrDummy == 3) || (nbrDummy == 2) || nbrDummy == 1)
+////      for (int h = 0; h < size; h++) {
+//        for (int i = 0; !foundDummy; i++) {
+//          if (ca.getObjectList().get(i).getType() == "Dummy") {
+//            Log.wtf("tag", "000000000DUMMY  REMOVED YEY AT::" + i);
+//            ca.removeOneObject(ca.getItemCount() - 2);
+//            foundDummy = true;
+////          }
+//
+//        }
+
+//      }
+//    nbrItems = 0;
+//    for (int i = 0; i < ca.getItemCount(); i++) {
+//
+//      if (ca.getObjectList().get(i).isWidget())
+//        nbrItems++;
+//    }
+
+//    Log.wtf("tag", "number ooooof dummy:AFTER  CHANGE:" + nbrDummy);
   }
 
   public void dummyNbr(CatAdapter ca) {
@@ -571,14 +648,65 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     Log.wtf("tag", "number of dummies needed::" + neededDummies);
   }
 
+  public void firebaseStaticConfig() {
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef2 = database.getReference();
+
+    myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        Log.wtf("tag", "COUNT  AND IT  SHOULD  BE  5 or something:::" + dataSnapshot.getChildrenCount());
+        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//          devicesName.add(snapshot.getKey());
+
+          List<String> list = new ArrayList<String>(2);
+          list.add(snapshot.getKey());
+          devicesName.add(list);
+
+//          Log.wtf("tag", "name" + snapshot.getValue().toString());
+        }
+//        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//          Log.wtf("tag", "keyValue::" + snapshot.getKey());
+//          try{
+//          String time = snapshot.child("rxInfo/0/time").getValue().toString();
+//
+//          Log.wtf("tag", "time ::" + "" + "::" + time);
+//          }catch (NullPointerException e){
+//            Log.wtf("tag","NUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUULLLLLLLLLLLLLLLL"+snapshot.getKey());
+//          }
+//        }
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError databaseError) {
+
+      }
+    });
+
+
+  }
+
   public void firebaseConf() {
 
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
 //    DatabaseReference myRef = database.getReference("END_DEVICE_1/-LayOAdQUV042yC6hfPE/object");
-    DatabaseReference myRef = database.getReference().child("Salle_Sys1");
-    Query query = myRef.limitToLast(1);
+    DatabaseReference ref_GreenLand = database.getReference().child("Green_Land");
+    DatabaseReference ref_Room1 = database.getReference().child("System_Room_SOFIA");
+    DatabaseReference ref_Room2_ = database.getReference().child("System_Room_SOFIA2");
+    DatabaseReference ref_Station = database.getReference().child("Weather_Station_Final");
 
-    Log.wtf("tag", "size::" + myRef.getKey());
+    Query query1 = ref_GreenLand.limitToLast(1);
+    Query query2 = database.getReference().child("System_Room_SOFIA").limitToLast(1);
+    Query query3 = database.getReference().child("System_Room_SOFIA2").limitToLast(1);
+    Query query4 = database.getReference().child("Weather_Station_Final").limitToLast(1);
+
+    final List<String> listQuery1 = new ArrayList<String>(2);
+    listQuery1.add(0, "Green_Land");
+    List<String> listQuery2 = new ArrayList<String>(2);
+    List<String> listQuery3 = new ArrayList<String>(2);
+    List<String> listQuery4 = new ArrayList<String>(2);
+
+//    Log.wtf("tag", "size::" + myRef.getKey());
 
 
 //    myRef.addValueEventListener(new ValueEventListener() {
@@ -659,28 +787,41 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     });*/
 
 
-    query.addChildEventListener(new ChildEventListener() {
+    query1.addChildEventListener(new ChildEventListener() {
       @Override
       public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
         Log.wtf("tag", "ADDED");
 
         try {
           Log.wtf("tag", "key::" + dataSnapshot.getKey());
-          liveData.setText(dataSnapshot.child("0/temperature").getValue().toString());
+          Log.wtf("tag", "CA2::" + ca2.getItemCount());
+          liveData.setText(dataSnapshot.child("Time").getValue().toString());
 
-          for (int i = 0; i < CAT_IMAGE_IDS.size(); i++) {
-            if ((CAT_IMAGE_IDS.get(i).getDisplayValue() == "Temperature") && (CAT_IMAGE_IDS.get(i).getWidgetType() == "ArcProgress")) {
-              ArcProgress cp = (ArcProgress) CAT_IMAGE_IDS.get(i).getWidget();
+          for (int i = 0; i < ca2.getObjectList().size(); i++) {
+            Log.wtf("tat", "INSDIE  THE FOR LOOP");
+            if ((ca2.getObjectList().get(i).getDisplayValue() == "Temperature" && ca2.getObjectList().get(i).getType() == "Widget_G")) {
+              Log.wtf("tat", "NOW  WE  CHAnGE  THE WIdGET  DATA");
+              ArcProgress cp = (ArcProgress) ca2.getObjectList().get(i).getWidget();
               cp.setBottomText("LMBAO");
               cp.setProgress(6666);
-              CAT_IMAGE_IDS.get(i).setWidget(cp);
-              ca.notifyItemInserted(0);
-              Log.wtf("tag", "WE GOT THEMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM:::" + i);
+              WidgetItem wi = ca2.getObjectList().get(i);
+              wi.setWidget(cp);
+              ca2.updatOneObject(i, wi);
+//              ca.notifyItemInserted(0);
+//              Log.wtf("tag", "WE GOT THEMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM:::" + i);
             }
           }
 
+          try {
+            listQuery1.remove(1);
+          } catch (Exception e) {
+            Log.wtf("tag", "there's nothing to delete in this position");
+          }
 
-          Log.wtf("tag", "temperature::" + dataSnapshot.child("0/temperature").getValue());
+          listQuery1.add(1, dataSnapshot.child("Time").getValue().toString());
+          devicesName.add(listQuery1);
+
+          Log.wtf("tag", "WHAT WE GOT INSDIE???::" + listQuery1);
 
 //          }
         } catch (NullPointerException e) {
@@ -751,6 +892,10 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     int i = 0;
 
     final Dialog dialog = new Dialog(this);
+    dialog.getWindow().setBackgroundDrawableResource(R.drawable.dailog_shape);
+//    View v = dialog.getWindow().getDecorView();
+//    v.setBackground(dialog.getContext().getResources().getDrawable(R.drawable.dailog_shape));
+//
 //    firstDialogLayout(dialog, ca);
 
 
@@ -782,14 +927,15 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     Thermometer th = dialog.findViewById(R.id.thermo);
     final CardView card1 = dialog.findViewById(R.id.card1);
     final CardView card2 = dialog.findViewById(R.id.card2);
-    CardView card3 = dialog.findViewById(R.id.card3);
-    CardView card4 = dialog.findViewById(R.id.card4);
+    final CardView card3 = dialog.findViewById(R.id.card3);
+    final CardView card4 = dialog.findViewById(R.id.card4);
     PushDownAnim.setPushDownAnimTo(card1, card2, card3, card4);
     View.OnClickListener clickAble = new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         if (v.equals(card1)) {
           _selected = 1;
+//          dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
           dialog.setContentView(R.layout.popup_body2);
           secondDialogLayout(dialog, ca);
         }
@@ -799,13 +945,78 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
           dialog.setContentView(R.layout.popup_body2);
           secondDialogLayout(dialog, ca);
         }
+        if (v.equals(card3)) {
+          _selected = 3;
+//          dialog.setContentView(R.layout.popup_body2);
+//          secondDialogLayout(dialog, ca);
+        }
+
+        if (v.equals(card4)) {
+          _selected = 4;
+          dialog.setContentView(R.layout.popup_body_info);
+          infoDialogLayout(dialog, ca);
+        }
+
 
       }
     };
     card1.setOnClickListener(clickAble);
     card2.setOnClickListener(clickAble);
+    card3.setOnClickListener(clickAble);
+    card4.setOnClickListener(clickAble);
 
     th.noAnimation();
+  }
+
+  public void infoDialogLayout(final Dialog dialog, final CustomAdapter ca) {
+    ImageButton btnBack = (ImageButton) dialog.findViewById(R.id.btnBack);
+    Button btn_add = dialog.findViewById(R.id.btn_add);
+    LinearLayout boxHolder = dialog.findViewById(R.id.box_holder);
+    btnBack.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        dialog.setContentView(R.layout.popup_body);
+        firstDialogLayout(dialog, ca);
+      }
+    });
+//    firebaseStaticConfig();
+
+//    if(devicesName!=null && devicesName.size()>0){
+//    for(int i=0; i<8;i++){
+//      Log.wtf("tag","name"+devicesName.get(0));
+//    }
+//      Log.wtf("tag","INDIDE THE LOOP");
+//    for (String deviceName : devicesName) {
+//      CheckBox name = new CheckBox(this);
+//      name.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+//      name.setText(deviceName);
+//      boxHolder.addView(name);
+//      View v = new View(this);
+//      LinearLayout ln = new LinearLayout(this);
+//      ln.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, 5));
+//      ln.setBackgroundColor(Color.GRAY);
+//      v.setLayoutParams(new LinearLayout.LayoutParams(
+//        LinearLayout.LayoutParams.MATCH_PARENT,
+//        5
+//      ));
+//      boxHolder.addView(ln);
+//    }
+
+    btn_add.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+
+        WidgetItem wi = new WidgetItem();
+        wi.setType("Info");
+        wi.isWidget(true);
+        wi.setSize(2);
+
+        addingWidget(ca, wi);
+
+//        for (String)
+      }
+    });
+
   }
 
   public void secondDialogLayout(final Dialog dialog, final CustomAdapter ca) {
@@ -886,14 +1097,16 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
             Thermometer thermo = new Thermometer(WelcomeScreen.this);
             thermo.setThermometerColor(Color.rgb(167, 156, 147));
             thermo.setInnerPaint(Color.rgb(30, 144, 255));
-            thermo.setScaleX(1.2f);
-            thermo.setScaleY(.8f);
+            thermo.setScaleX(.9f);
+            thermo.setScaleY(.7f);
+
             thermo.setOuterLinePaint(Color.rgb(235, 235, 235));
 
 //            thermo.noAnimation();
             wi[0] = new WidgetItem(thermo, editText.getText().toString());
-            wi[0].setWidgetType("Thermometer");
+//            wi[0].setWidgetType("Thermometer");
             wi[0].setType("Widget_T");
+            wi[0].isWidget(true);
 
           }
           break;
@@ -908,8 +1121,9 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
             params.gravity = Gravity.CENTER;
             cp.setLayoutParams(params);
             wi[0] = new WidgetItem(cp, editText.getText().toString());
-            wi[0].setWidgetType("ArcProgress");
+//            wi[0].setWidgetType("ArcProgress");
             wi[0].setType("Widget_G");
+            wi[0].isWidget(true);
           }
 
         }

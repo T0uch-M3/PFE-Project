@@ -4,99 +4,175 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/bh1"
   android:layout_width="250dp"
-  android:layout_height="180dp">
+  android:layout_height="180dp"
+  android:background="@drawable/dailog_shape">
 
   <TextView
     android:id="@+id/textView4"
-    android:layout_width="wrap_content"
-    android:layout_height="18dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginEnd="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="25dp"
+    android:background="@drawable/top_corner_only"
+    android:gravity="center"
     android:text="Add new Widget"
+    android:textSize="18sp"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.502"
+    app:layout_constraintHorizontal_bias="0.503"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
-  <androidx.cardview.widget.CardView
-    android:id="@+id/card2"
-    android:layout_width="60dp"
-    android:layout_height="60dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="28dp"
-    android:background="@color/white_ish"
-    android:clickable="true"
-    android:longClickable="true"
-    app:layout_constraintStart_toEndOf="@+id/card1"
-    app:layout_constraintTop_toTopOf="parent">
-
-    <com.github.lzyzsd.circleprogress.ArcProgress
-      android:id="@+id/arc_progress"
-      android:layout_width="50dp"
-      android:layout_height="50dp"
-      android:layout_gravity="center"
-      android:visibility="visible"
-      app:arc_finished_color="@color/lightBlue"
-      app:arc_stroke_width="2dp"
-      app:arc_suffix_text=""
-      app:arc_suffix_text_size="5dp"
-      app:arc_text_color="@color/grey"
-      app:arc_text_size="30dp"
-      app:arc_unfinished_color="@color/grey" />
-  </androidx.cardview.widget.CardView>
-
-  <androidx.cardview.widget.CardView
-    android:id="@+id/card3"
-    android:layout_width="60dp"
-    android:layout_height="60dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="28dp"
-    android:background="@color/white_ish"
-    android:clickable="true"
-    android:longClickable="true"
-    app:layout_constraintStart_toEndOf="@+id/card2"
-    app:layout_constraintTop_toTopOf="parent" />
-
-  <androidx.cardview.widget.CardView
-    android:id="@+id/card4"
-    android:layout_width="63dp"
-    android:layout_height="60dp"
-    android:layout_marginStart="20dp"
-    android:layout_marginTop="16dp"
-    android:background="@color/white_ish"
-    android:clickable="true"
-    android:longClickable="true"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/card1" />
-
-  <androidx.cardview.widget.CardView
-    android:id="@+id/card1"
-    android:layout_width="60dp"
-    android:layout_height="60dp"
-    android:layout_marginStart="20dp"
-    android:layout_marginTop="28dp"
-    android:background="@color/white_ish"
-    android:clickable="true"
-    android:visibility="visible"
+  <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="32dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    android:orientation="vertical"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
-    <com.example.touch_me.pfe_project.widgets.Thermometer
-      android:id="@+id/thermo"
-      android:layout_width="50dp"
-      android:layout_height="50dp"
-      android:layout_gravity="center"
-      android:layout_marginStart="0dp"
-      android:visibility="visible"
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="60dp"
+      android:gravity="center"
+      android:orientation="horizontal"
       app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.462"
-      app:therm_color="@color/grey">
+      app:layout_constraintStart_toStartOf="parent">
 
-    </com.example.touch_me.pfe_project.widgets.Thermometer>
-  </androidx.cardview.widget.CardView>
+      <androidx.cardview.widget.CardView
+        android:id="@+id/card1"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/white_ish"
+        android:clickable="true"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.example.touch_me.pfe_project.widgets.Thermometer
+          android:id="@+id/thermo"
+          android:layout_width="55dp"
+          android:layout_height="55dp"
+          android:layout_gravity="center"
+          android:layout_marginStart="0dp"
+          android:visibility="visible"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintVertical_bias="0.462"
+          app:therm_color="@color/grey">
+
+        </com.example.touch_me.pfe_project.widgets.Thermometer>
+      </androidx.cardview.widget.CardView>
+
+      <androidx.cardview.widget.CardView
+        android:id="@+id/card2"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/white_ish"
+        android:clickable="true"
+        android:longClickable="true"
+        app:layout_constraintStart_toEndOf="@+id/card1"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.github.lzyzsd.circleprogress.ArcProgress
+          android:id="@+id/arc_progress"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:layout_gravity="center"
+          android:visibility="visible"
+          app:arc_finished_color="@color/lightBlue"
+          app:arc_stroke_width="2.5dp"
+          app:arc_suffix_text=""
+          app:arc_suffix_text_size="5dp"
+          app:arc_text_color="@color/grey"
+          app:arc_text_size="30dp"
+          app:arc_unfinished_color="@color/grey" />
+      </androidx.cardview.widget.CardView>
+
+      <androidx.cardview.widget.CardView
+        android:id="@+id/card3"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/white_ish"
+        android:clickable="true"
+        android:longClickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+          android:id="@+id/imageView3"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:layout_gravity="center"
+          app:srcCompat="@drawable/ic_chart" />
+      </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="60dp"
+      android:gravity="center"
+      android:orientation="horizontal"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent">
+
+      <androidx.cardview.widget.CardView
+        android:id="@+id/card4"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/white_ish"
+        android:clickable="true"
+        android:longClickable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView4">
+
+        <ImageView
+          android:id="@+id/imageView5"
+          android:layout_width="45dp"
+          android:layout_height="45dp"
+          android:layout_gravity="center"
+          app:srcCompat="@drawable/info" />
+      </androidx.cardview.widget.CardView>
+
+      <androidx.cardview.widget.CardView
+        android:id="@+id/card5"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/white_ish"
+        android:clickable="true"
+        android:longClickable="true"
+        app:layout_constraintStart_toEndOf="@+id/card1"
+        app:layout_constraintTop_toBottomOf="@+id/card2" />
+
+      <androidx.cardview.widget.CardView
+        android:id="@+id/card6"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/white_ish"
+        android:clickable="true"
+        android:longClickable="true"
+        app:layout_constraintStart_toEndOf="@+id/card1"
+        app:layout_constraintTop_toBottomOf="@+id/card2">
+
+      </androidx.cardview.widget.CardView>
+    </LinearLayout>
+  </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,24 @@ public class WidgetItem {
   private Boolean dummy = false;
   private Boolean isButton = false;
   private String displayValue = "null";
+  private boolean isWidget = false;
+  private int size = 1;
+
+  public int getSize() {
+    return size;
+  }
+
+  public void setSize(int size) {
+    this.size = size;
+  }
+
+  public boolean isWidget() {
+    return isWidget;
+  }
+
+  public void isWidget(boolean widget) {
+    isWidget = widget;
+  }
 
   public String getWidgetType() {
     return widgetType;

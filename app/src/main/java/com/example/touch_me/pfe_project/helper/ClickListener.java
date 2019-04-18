@@ -31,7 +31,7 @@ public interface ClickListener {
      * Implementations should update the item view to indicate it's active state.
      */
 //    void onItemSelected();
-  void onPositionClicked(int postion);
+  void onPositionClicked(int position);
 
 
     /**
