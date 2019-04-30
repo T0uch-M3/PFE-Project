@@ -2,6 +2,8 @@ package com.example.touch_me.pfe_project;
 
 import android.view.View;
 
+import java.util.List;
+
 public class WidgetItem {
   public View widget;
   public String tilte;
@@ -11,6 +13,15 @@ public class WidgetItem {
   private String displayValue = "null";
   private boolean isWidget = false;
   private int size = 1;
+  private List<List<String>> info = null;
+
+  public List<List<String>> getInfo() {
+    return info;
+  }
+
+  public void setInfo(List<List<String>> info) {
+    this.info = info;
+  }
 
   public int getSize() {
     return size;

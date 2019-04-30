@@ -1,20 +1,18 @@
 package com.example.touch_me.pfe_project;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.content.SharedPreferences;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.Fade;
 import android.transition.Slide;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,34 +26,38 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
-import com.transitionseverywhere.Recolor;
-import com.transitionseverywhere.extra.Scale;
 
+import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
-import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 import androidx.transition.ArcMotion;
 import androidx.transition.ChangeBounds;
 import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
-import androidx.transition.TransitionSet;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
-import static android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class LaunchScreen extends AppCompatActivity {
 
   TextView tvNewUser, tvTest, tv_S;
   Button btnLogIn, btnSignUp, btnConLogIn;
-  FrameLayout topShelf, mainContainer;
+  FrameLayout topShelf, frameLayout;
   ImageView imageV;
   TableLayout goldenShower;
   EditText et_Pwd, et_Login;
@@ -71,7 +73,10 @@ public class LaunchScreen extends AppCompatActivity {
   TableRow highestShoot;
   Boolean isColorsInverted = true;
   Boolean mColorsInverted = true;
-
+  LinearLayout topbox_holder;
+  FrameLayout bottombox;
+  private Realm realm;
+  private static ArrayList<GreenLand> fireBaseList;
   int wiidth;
 
 
@@ -80,16 +85,16 @@ public class LaunchScreen extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_launch_screen);
-    overridePendingTransition(R.anim.slide_in,R.anim.slide_out);
+    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
     final ViewGroup transitionsContainer = (ViewGroup) findViewById(R.id.transitions_container);
 
     setStatusBarTrasparent();
     colorChange(transitionsContainer);/////////////////<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-    tvNewUser = (TextView) findViewById(R.id.tvNewUser);
+//    tvNewUser = (TextView) findViewById(R.id.tvNewUser);
     btnLogIn = (Button) findViewById(R.id.btnLogIn);
-    btnSignUp = (Button) findViewById(R.id.btnSignUp);
+//    btnSignUp = (Button) findViewById(R.id.btnSignUp);
     imageV = (ImageView) findViewById(R.id.imageV);
     topShelf = (FrameLayout) findViewById(R.id.topShelf);
     btnConLogIn = (Button) findViewById(R.id.btnConLogIn);
@@ -99,12 +104,15 @@ public class LaunchScreen extends AppCompatActivity {
     et_Login = (EditText) findViewById(R.id.et_Login);
     et_Pwd = (EditText) findViewById(R.id.et_Pwd);
     tv_S = (TextView) findViewById(R.id.tv_S);
+    topbox_holder = findViewById(R.id.topbox_holder);
+    bottombox = findViewById(R.id.bottombox);
+    frameLayout = findViewById(R.id.frameLayout);
 
 
 //    mainContainer = (FrameLayout) findViewById(R.id.transitions_container);
 
     buttonAnimation(btnLogIn);
-    buttonAnimation(btnSignUp);
+//    buttonAnimation(btnSignUp);
     buttonAnimation(btnConLogIn);
 
     btnLogIn.setOnClickListener(new View.OnClickListener() {
@@ -113,22 +121,10 @@ public class LaunchScreen extends AppCompatActivity {
       public void onClick(View v) {
         loginMeth(v, transitionsContainer, false);
         btnConLogIn.setEnabled(false);
+        btnLogIn.setEnabled(false);
       }
     });
-    btnSignUp.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(final View v) {
-        signupMeth(v, transitionsContainer);
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-          @Override
-          public void run() {
-            // Do something after 5s = 5000ms
 
-          }
-        }, 1000);
-      }
-    });
 
     et_Login.addTextChangedListener(new TextWatcher() {
       @Override
@@ -143,10 +139,10 @@ public class LaunchScreen extends AppCompatActivity {
 
       @Override
       public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if(et_Login.getText().length()>=5 && et_Pwd.getText().length()>=5){
+        if (et_Login.getText().length() >= 5 && et_Pwd.getText().length() >= 5) {
           btnConLogIn.setEnabled(true);
         }
-        if(et_Login.getText().length()<5 || et_Pwd.getText().length()<5){
+        if (et_Login.getText().length() < 5 || et_Pwd.getText().length() < 5) {
           btnConLogIn.setEnabled(false);
         }
       }
@@ -165,24 +161,190 @@ public class LaunchScreen extends AppCompatActivity {
 
       @Override
       public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if(et_Login.getText().length()>=5 && et_Pwd.getText().length()>=5){
+        if (et_Login.getText().length() >= 5 && et_Pwd.getText().length() >= 5) {
           btnConLogIn.setEnabled(true);
         }
-        if(et_Login.getText().length()<5 || et_Pwd.getText().length()<5){
+        if (et_Login.getText().length() < 5 || et_Pwd.getText().length() < 5) {
           btnConLogIn.setEnabled(false);
         }
       }
     });
 
 
-
     btnConLogIn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+
+        SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
+        Boolean boo = mPrefs.getBoolean("offlineFunc", false);
+        if (boo == true) {
+//          firebaseStaticConfig();
+          Log.wtf("tag", "WAiting While loading data from databse");
+        }
+
         startActivity(new Intent(LaunchScreen.this, WelcomeScreen.class));
       }
     });
+
+
+    Display display = getWindowManager().getDefaultDisplay();
+    DisplayMetrics outMetrics = new DisplayMetrics();
+    display.getMetrics(outMetrics);
+
+    float density = getResources().getDisplayMetrics().density;
+    float dpHeight = outMetrics.heightPixels / density;
+    float dpWidth = outMetrics.widthPixels / density;
+    Log.wtf("tag", "WIDTH::" + dpWidth);
+
+    topbox_holder.setLayoutParams(new FrameLayout.LayoutParams((int) dpWidth * 2, WRAP_CONTENT));
+    bottombox.setLayoutParams(new FrameLayout.LayoutParams((int) dpWidth * 2, 650, Gravity.BOTTOM));
+    FrameLayout.LayoutParams topPrams = new FrameLayout.LayoutParams((int) dpWidth * 2, MATCH_PARENT, Gravity.END);
+    topPrams.topMargin = 400;
+    topShelf.setLayoutParams(new FrameLayout.LayoutParams(topPrams));
+    frameLayout.setLayoutParams(new FrameLayout.LayoutParams((int) dpWidth * 4, 800, Gravity.TOP));
+
+//    FrameLayout.LayoutParams btnParams = new FrameLayout.LayoutParams((int) (dpWidth*2)-150,WRAP_CONTENT,Gravity.CENTER);
+//    btnParams.topMargin = -30;
+//    btnLogIn.setLayoutParams(btnParams);
   }
+
+  public void firebaseStaticConfig() {
+//    final GreenLand[] wo = {null};
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference globRef = database.getReference();
+    final DatabaseReference myRef2 = database.getReference().child("Green_Land");
+
+    Realm.init(this);
+
+    final RealmConfiguration realmConfig = new RealmConfiguration.Builder()
+      .name("test1.realm")
+      .schemaVersion(0)
+//      .deleteRealmIfMigrationNeeded()
+      .build();
+
+    Realm.setDefaultConfiguration(realmConfig);
+
+    realm = Realm.getInstance(realmConfig);
+//
+//    realm.executeTransaction(new Realm.Transaction() {
+//      @Override
+//      public void execute(Realm realm) {
+//                  for(int i = 0; i<10;i++){
+//                    final GreenLand wo = realm.createObject(GreenLand.class);
+//                    wo.setTemperature(i+i);
+//                    wo.setHumidity(i+5f);
+//                    realm.insertOrUpdate(wo);
+//                  }
+
+//        realm.deleteAll();//in case of deletion
+//      }
+//    });
+
+
+    RealmResults<GreenLand> result = realm.where(GreenLand.class).findAll();
+    Log.wtf("tag", "WHAT WE got here BG THREAD??" + result.size());
+
+//    realm.close();
+
+
+//    Thread thread = new Thread(new Runnable() {
+//      @Override
+//      public void run() {
+
+    globRef.addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//        realm = Realm.getInstance(realmConfig);
+        Log.wtf("tag", "STATIC  MOFOOOOOOOOOO:::" + dataSnapshot.getChildrenCount());
+        for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+//          devicesName.add(snapshot.getKey());
+
+//          List<String> list = new ArrayList<String>(2);
+//          list.add(snapshot.getKey());
+//          devicesName.add(list);
+
+//              realm.executeTransaction(new Realm.Transaction() {
+//                @Override
+//                public void execute(Realm realm) {
+//                  final GreenLand wo = realm.createObject(GreenLand.class);
+//                  wo.setTemperature(000);
+//                  wo.setHumidity(0000f);
+//                  realm.insertOrUpdate(wo);
+////                  realm.deleteAll();//in case of deletion
+//                }
+//              });
+
+
+//            realm.executeTransaction(new Realm.Transaction() {
+//              @Override
+//              public void execute(Realm realm) {
+          GreenLand wo = new GreenLand();
+          try {
+
+//          if (snapshot.child("Time").getValue().toString() != null && snapshot.child("Temperature") != null) {
+
+            wo.setTime(snapshot.child("Time").getValue().toString());
+            wo.setTemperature(Float.valueOf(snapshot.child("Temperature").getValue().toString()));
+            wo.setBatteryLevel(Double.valueOf(snapshot.child("Battery_Level").getValue().toString()));
+
+//            Log.wtf("tag", "Time:::" + wo.getTime());
+            fireBaseList.add(wo);
+
+//                  wo.setTemperature(69);
+//                  realm.insertOrUpdate(wo);
+//          }
+//                    realm.deleteAll();//in case of deletion
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+//              }
+//            });
+
+//                RealmResults<GreenLand> result = realm.where(GreenLand.class).findAllAsync();
+//                Log.wtf("tag", "WHAT WE got here??" + result.size());
+
+//                if (wo[0].getTime().equals("15 19 46 2019 4 20"))
+//                  Log.wtf("tag", "TIME value????  " + wo[0].getTime());
+
+        }
+//        realm.close();
+
+//        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//          Log.wtf("tag", "keyValue::" + snapshot.getKey());
+//          try{
+//          String time = snapshot.child("rxInfo/0/time").getValue().toString();
+//
+//          Log.wtf("tag", "time ::" + "" + "::" + time);
+//          }catch (NullPointerException e){
+//            Log.wtf("tag","NUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUULLLLLLLLLLLLLLLL"+snapshot.getKey());
+//          }
+//        }
+      }
+
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError databaseError) {
+        Log.wtf("tag", "WHO  CANCELED  ITTTTTTTT????????,," + databaseError);
+      }
+    });
+
+//      }
+
+//    });
+//    thread.start();
+
+//    realm.addChangeListener(new RealmChangeListener<Realm>() {
+//      @Override
+//      public void onChange(Realm realm) {
+//        Log.wtf("tag", "DATABSE CHANGEDDDDD");
+//      }
+//    });
+
+
+  }
+
+
   @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   private void setupWindowAnimations() {
     Fade fade = new Fade();
@@ -227,8 +389,8 @@ public class LaunchScreen extends AppCompatActivity {
 
   public void loginMeth(final View view, final ViewGroup tc, boolean visible) {
     animateIt(btnLogIn, 800, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
-    animateIt(btnSignUp, 1000, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
-    animateIt(tvNewUser, 1000, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
+//    animateIt(btnSignUp, 1000, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
+//    animateIt(tvNewUser, 1000, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
     animateIt(topShelf, 800, tc, Gravity.END, Gravity.START);
     animateIt(btnConLogIn, 800, tc, Gravity.BOTTOM | Gravity.CENTER, Gravity.TOP | Gravity.CENTER);
 //    theShower.setPadding(0,20,0,0);
@@ -358,10 +520,10 @@ public class LaunchScreen extends AppCompatActivity {
       @Override
       public void run() {
         if (cantStopMeNow) {
-          transition.startTransition(5000);
+          transition.startTransition(8000);
           cantStopMeNow = false;
         } else {
-          transition.reverseTransition(5000);
+          transition.reverseTransition(8000);
           cantStopMeNow = true;
         }
 
@@ -369,21 +531,22 @@ public class LaunchScreen extends AppCompatActivity {
     };
 
     final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-    scheduler.scheduleAtFixedRate(runnable, 5, 5, TimeUnit.SECONDS);
+    scheduler.scheduleAtFixedRate(runnable, 5, 7, TimeUnit.SECONDS);
 
   }
 
   @Override
   public void onBackPressed() {
-    Log.wtf("tag","onBackPresssssssssed");
+    btnLogIn.setEnabled(true);
+    Log.wtf("tag", "onBackPresssssssssed");
     if (inLaucher) {
       this.finish();
     } else {
       final ViewGroup tc = (ViewGroup) findViewById(R.id.transitions_container);
 
       animateIt(btnLogIn, 600, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
-      animateIt(btnSignUp, 800, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
-      animateIt(tvNewUser, 800, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
+//      animateIt(btnSignUp, 800, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
+//      animateIt(tvNewUser, 800, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
       animateIt(topShelf, 600, tc, Gravity.END, Gravity.START);
       animateIt(btnConLogIn, 600, tc, Gravity.BOTTOM | Gravity.CENTER, Gravity.TOP | Gravity.CENTER);
 //      theShower.setPadding(0,100,0,0);

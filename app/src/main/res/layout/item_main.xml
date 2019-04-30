@@ -2,7 +2,7 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/item"
-  android:layout_width="60dp"
+  android:layout_width="80dp"
   android:layout_height="100dp"
   android:layout_marginRight="10dp"
   android:background="@android:color/transparent"
@@ -11,9 +11,11 @@
   android:foreground="?selectableItemBackground">
 
   <TableLayout
-    android:layout_width="62dp"
+    android:layout_width="80dp"
     android:layout_height="99dp"
+    app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
     <TableRow
@@ -22,9 +24,10 @@
       android:gravity="center">
 
       <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/upperText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="true"
         android:gravity="center"
         android:text="20"
         android:textSize="40sp"
@@ -32,7 +35,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
       <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/fah"
         android:layout_width="10dp"
         android:layout_height="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +53,7 @@
       android:gravity="center">
 
       <Button
-        android:id="@+id/button3"
+        android:id="@+id/middleLine"
         android:layout_width="40dp"
         android:layout_height="2dp"
         android:layout_gravity="center"
@@ -65,7 +68,7 @@
       android:gravity="center">
 
       <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/lowerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="-4dp"
@@ -76,7 +79,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
       <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/cel"
         android:layout_width="10dp"
         android:layout_height="10dp"
         app:layout_constraintBottom_toBottomOf="parent"

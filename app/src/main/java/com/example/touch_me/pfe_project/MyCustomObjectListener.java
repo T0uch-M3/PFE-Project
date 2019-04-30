@@ -10,6 +10,7 @@ public interface MyCustomObjectListener {
 
   void onOptionButtonReady(View v, int position);
   void onObjectReady();
+  void notifyForRemove(CustomAdapter ca, WidgetItem wItem, boolean add, int dummiesToDelete);
 
 }
 

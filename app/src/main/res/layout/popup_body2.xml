@@ -116,6 +116,7 @@
           android:focusable="auto"
           android:scaleX=".65"
           android:scaleY=".7"
+          android:theme="@style/AppTheme.Picker"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"></NumberPicker>
       </androidx.cardview.widget.CardView>
@@ -148,6 +149,7 @@
           android:fadingEdge="vertical"
           android:scaleX=".65"
           android:scaleY=".7"
+          android:theme="@style/AppTheme.Picker"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"></NumberPicker>
 

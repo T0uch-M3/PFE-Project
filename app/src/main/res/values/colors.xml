@@ -18,4 +18,6 @@
   <color name="drawerBg">#0F000000</color>
   <color name="optionButton">#4db6ac</color>
   <color name="lightBrown">#6A6B6A</color>
+  <color name="orange">#FF5151</color>
+  <color name="semiPink">#fe5e7a</color>
 </resources>

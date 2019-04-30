@@ -2,14 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/the_holder"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@drawable/background4"
+  android:background="@drawable/night02"
   android:fitsSystemWindows="true"
   tools:openDrawer="left">
 
   <ImageButton
-    android:id="@+id/imageButton"
+    android:id="@+id/settingButon"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="end"
@@ -21,39 +22,11 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
-  <androidx.appcompat.widget.Toolbar
-    android:id="@+id/toolbar"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:background="@color/white_ish"
-    android:paddingTop="20dp"
-    android:theme="?attr/actionBarTheme"
-    android:visibility="gone"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
-
-    <TextView
-      android:id="@+id/toolbar_title"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content" />
-
-    <ImageButton
-      android:id="@+id/btn_settings"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="end"
-      android:background="?attr/selectableItemBackgroundBorderless"
-      android:contentDescription="TODO"
-      android:src="@drawable/ic_settings_black_24dp"
-      tools:layout_editor_absoluteX="377dp"
-      tools:layout_editor_absoluteY="26dp" />
-  </androidx.appcompat.widget.Toolbar>
-
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/recyclerView"
     android:layout_width="match_parent"
-    android:layout_height="525dp"
+    android:layout_height="532dp"
+    android:layout_gravity="center_horizontal"
     android:nestedScrollingEnabled="false"
     android:paddingLeft="1dp"
     android:paddingRight="1dp"
@@ -111,15 +84,6 @@
 
   </com.gauravk.bubblenavigation.BubbleNavigationConstraintView>
 
-  <TextView
-    android:id="@+id/liveData"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="176dp"
-    android:layout_marginTop="516dp"
-    android:text="TextView"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

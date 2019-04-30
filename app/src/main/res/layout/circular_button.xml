@@ -16,6 +16,8 @@
     android:rotation="180"
     android:scaleX=".25"
     android:scaleY=".25"
-    app:fab_addButtonColorNormal="@color/optionButton" />
+    app:fab_addButtonColorNormal="@color/optionButton"
+    app:fab_addButtonColorPressed="@color/grey"
+    app:fab_addButtonPlusIconColor="@android:color/transparent" />
 
 </FrameLayout>

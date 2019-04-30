@@ -1,15 +1,20 @@
 package com.example.touch_me.pfe_project;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -35,14 +40,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
+import com.transitionseverywhere.Rotate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -50,18 +58,21 @@ import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.TransitionManager;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import yalantis.com.sidemenu.model.SlideMenuItem;
 import yalantis.com.sidemenu.util.ViewAnimator;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
+import static java.sql.Types.NULL;
 
 
-public class WelcomeScreen extends AppCompatActivity implements OnStartDragListener, CatAdapter.RecyclerViewOnClickListener {
+public class WelcomeScreen extends AppCompatActivity implements OnStartDragListener, CatAdapter.RecyclerViewOnClickListener, ServiceDataReceiver.Receiver {
 
   private DrawerLayout drawerLayout;
   private LinearLayout bigdady;
@@ -78,7 +89,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   private ItemTouchHelper mItemTouchHelper;
   RecyclerView rvFoodItems;
 
-  ArrayList<WidgetObject> foodList;
+  ArrayList<GreenLand> foodList;
   RecyclerView recyclerView;
   TextView testTV;
   private FlexboxLayoutManager flexboxLayoutManager;
@@ -87,13 +98,13 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   /**
    * <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
    */
-
+  ImageButton btn_Settings;
   Button btn_add;
   //  Thermometer thermo;
   DatabaseReference myRef;
   private Query queryObj;
   boolean FireShot = false;
-  private TextView liveData;
+  //  private TextView liveData;
   private int _selected;
   int tempCounter = 0;
   List<WidgetItem> CAT_IMAGE_IDS = new ArrayList<>();
@@ -104,6 +115,17 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   private List<List<String>> devicesName = new ArrayList<>();
   private int holyRow = 0;
   int nbrItems = 0; //number of items in the list (not counting button and dummies)
+  boolean isRotated = false;
+  ViewGroup the_holder;
+  boolean add = true;
+  Realm realm = null;
+  boolean addButtonClicked = false;
+  boolean settingsClicked = false;
+  boolean saveClicked = false;
+  public ServiceDataReceiver mReceiver;
+  Dialog settingsDialog;
+  Boolean cantStopMeNow = true;
+  ScheduledThreadPoolExecutor scheduler;
 
 
   @Override
@@ -120,13 +142,15 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     View portal = findViewById(R.id.portal);
     bigdady = (LinearLayout) findViewById(R.id.big_dady);
 
-    toolbar = (Toolbar) findViewById(R.id.toolbar);
-    toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+//    toolbar = (Toolbar) findViewById(R.id.toolbar);
+//    toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
 
     testTV = (TextView) findViewById(R.id.testTV);
     recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
     btn_add = (Button) findViewById(R.id.btn_add);
-    liveData = (TextView) findViewById(R.id.liveData);
+//    liveData = (TextView) findViewById(R.id.liveData);
+    btn_Settings = (ImageButton) findViewById(R.id.settingButon);
+    the_holder = (ViewGroup) findViewById(R.id.the_holder);
 
 
 /**************************WORKS******************************/
@@ -141,33 +165,111 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 //    mItemTouchHelper = new ItemTouchHelper(callback);
 //    mItemTouchHelper.attachToRecyclerView(rvFoodItems);
 /***********************WORKS*************************/
-    ca2 = new CustomAdapter(this);
-
-
+    ca2 = new CustomAdapter(WelcomeScreen.this, recyclerView);
+//    ca2 = new CustomAdapter(this, recyclerView.getWidth());
+//
+//
     flexlayout(ca2);
     demoHolder();
-
-
-    addingWidget(ca2, null);
-
-    ca2.setCustomObjectListener(new MyCustomObjectListener() {
-      @Override
-      public void onOptionButtonReady(View v, int position) {
-        Log.wtf("tag", "BUTTON PRESSED AT  POSITIoN::" + position);
-      }
-
-      @Override
-      public void onObjectReady() {
-        Log.wtf("tag", "INITIATE LISTENER ONCE???????????");
-        genesis(ca2);
-      }
-    });
+//
+//
+//    addingWidget(ca2, null);
+//
+//    ca2.setCustomObjectListener(new MyCustomObjectListener() {
+//      @Override
+//      public void onOptionButtonReady(View v, int position) {
+//        Log.wtf("tag", "BUTTON PRESSED AT  POSITIoN::" + position);
+//      }
+//
+//      @Override
+//      public void onObjectReady() {
+//        Log.wtf("tag", "INITIATE LISTENER ONCE???????????");
+//        genesis(ca2);
+//      }
+//    });
 
 
 //    networkthingy();
 
+//    Realm.init(this);
+//
+//
+//    RealmConfiguration realmConfig = new RealmConfiguration.Builder()
+//      .name("test1.realm")
+//      .schemaVersion(0)
+////      .deleteRealmIfMigrationNeeded()
+//      .build();
+//
+//    Realm.setDefaultConfiguration(realmConfig);
+//
+////    Realm realm = null;
+//    realm = Realm.getInstance(realmConfig);
+
+
+//    realm.executeTransaction(new Realm.Transaction() {
+//      @Override
+//      public void execute(Realm realm) {
+//        final GreenLand wo = realm.createObject(GreenLand.class);
+//        wo.setTemperature(000);
+//        wo.setHumidity(0000f);
+//        realm.insertOrUpdate(wo);
+//        realm.deleteAll();//in case of deletion
+//      }
+//    });
+
+//
+//    RealmResults<GreenLand> result = realm.where(GreenLand.class)
+//      .findAll();
+//
+//    Log.wtf("tag", "WHAT WE got here??" + result);
+
+//    RealmResults<GreenLand> result = realm.where(GreenLand.class).findAll();
+//
+//
+//    Log.wtf("tag", "WHAT WE got here??" + result);
+
+
+//    realm.addChangeListener(new RealmChangeListener<Realm>() {
+//      @Override
+//      public void onChange(Realm realm) {
+////        Log.wtf("tag", "DATABSE CHANGEDDDDD");
+//        RealmResults<GreenLand> result = realm.where(GreenLand.class).findAll();
+//
+//
+//        Log.wtf("tag", "WHAT WE got here??" + result);
+//      }
+//    });
+
+    //initializing the service receiver
+    mReceiver = new ServiceDataReceiver(new Handler());
+    mReceiver.setReceiver(this);
+
+
     firebaseConf();
-    firebaseStaticConfig();
+//    firebaseStaticConfig();
+
+    btn_Settings.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Thread thread = new Thread(new Runnable() {
+          @Override
+          public void run() {
+            TransitionManager.beginDelayedTransition(the_holder, new Rotate());
+            btn_Settings.setRotation(isRotated ? 0 : 50);
+            if (isRotated)
+              isRotated = false;
+            else
+              isRotated = true;
+            if (!settingsClicked)
+              toggleSettings();
+          }
+        });
+        thread.start();
+
+
+      }
+    });
+
 
     //======================OLD===================================
 //    ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -188,6 +290,147 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 //=========================OLD===================================
   }
 
+  @Override
+  protected void onDestroy() {
+    Log.wtf("tag", "BYEEEEEEEEEE");
+    if (settingsDialog != null)
+      settingsDialog.dismiss();
+    super.onDestroy();
+  }
+
+  @Override
+  protected void onPause() {
+    Log.wtf("tag", "PAUSEEEEE");
+    if (settingsDialog != null)
+      settingsDialog.dismiss();
+    super.onPause();
+  }
+
+  @Override
+  protected void onStart() {
+    Log.wtf("tag", "ONSTART");
+    super.onStart();
+    final Handler handler = new Handler();
+    recyclerView.post(new Runnable() {
+      @Override
+      public void run() {
+        Log.wtf("tag", "RECYCELER  LIST MOFO::" + recyclerView.getWidth());
+
+        if (firstTime)
+          addingWidget(ca2, null);
+
+        ca2.setCustomObjectListener(new MyCustomObjectListener() {
+          @Override
+          public void onOptionButtonReady(View v, int position) {
+            Log.wtf("tag", "BUTTON PRESSED AT  POSITIoN::" + position);
+          }
+
+          @Override
+          public void onObjectReady() {
+            Log.wtf("tag", "INITIATE LISTENER ONCE???????????");
+            if (!addButtonClicked) {
+              genesis(ca2);
+              addButtonClicked = true;
+            }
+
+          }
+
+          @Override
+          public void notifyForRemove(CustomAdapter ca, WidgetItem wItem, boolean add, int dummiesToDelete) {
+            someMagic(ca, wItem, false, dummiesToDelete);
+          }
+        });
+
+
+      }
+
+
+    });
+  }
+
+  @Override
+  public void onReceiveResult(int resultCode, Bundle resultData) {
+    Log.wtf("tag", "here we go:" + resultData.getString("offlineMode"));
+  }
+
+  public void toggleSettings() {
+    new Handler(Looper.getMainLooper()).post(new Runnable() {
+      @Override
+      public void run() {
+        settingsClicked = true;
+
+        settingsDialog = new Dialog(WelcomeScreen.this);
+        settingsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        settingsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.transparent)));
+        settingsDialog.setContentView(R.layout.settings_body);
+        settingsDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+          @Override
+          public void onDismiss(DialogInterface dialog) {
+            if (scheduler != null)
+              scheduler.shutdown();
+            TransitionManager.beginDelayedTransition(the_holder, new Rotate());
+            btn_Settings.setRotation(isRotated ? 0 : 70);
+            if (isRotated) {
+              isRotated = false;
+            } else {
+              isRotated = true;
+            }
+            settingsClicked = false;
+
+          }
+        });
+        settingsDialog.show();
+        final CheckBox offlineFunc = settingsDialog.findViewById(R.id.offlineFunc);
+        SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
+        Boolean boo = mPrefs.getBoolean("offlineFunc", false);
+        if (boo.equals(true)) {
+          offlineFunc.setChecked(true);
+        } else {
+          offlineFunc.setChecked(false);
+        }
+        final Button saveButton = settingsDialog.findViewById(R.id.saveButton);
+        final ViewGroup settingGroupView = (ViewGroup) saveButton.getParent();
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+//            if(!saveClicked){
+            Log.wtf("tag", "earth just got saved");
+            settingsClicked = false;
+            if (offlineFunc.isChecked()) {
+              SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
+              SharedPreferences.Editor editor = mPrefs.edit();
+              editor.putBoolean("offlineFunc", true);
+              editor.commit();
+              //handling intent for Firebase service
+              Intent networkIntent = new Intent(WelcomeScreen.this, FirebasePullService.class);
+              Bundle b = new Bundle();
+              b.putParcelable("offlineMode", mReceiver);
+              b.putString("identifier", "static");
+
+              networkIntent.putExtras(b);
+
+              WelcomeScreen.this.startService(networkIntent);
+
+              cantStopMeNow = false;
+              saveClicked = true;
+              colorChange(settingGroupView, saveButton);
+              saveButton.setClickable(false);
+            } else {
+              SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
+              SharedPreferences.Editor editor = mPrefs.edit();
+              editor.putBoolean("offlineFunc", false);
+              editor.commit();
+            }
+          }
+//          }
+        });
+
+
+      }
+    });
+
+  }
 
   public void genesis(CustomAdapter ca) {
 
@@ -201,6 +444,13 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     firstDialogLayout(dialog, ca);
 
     dialog.show();
+
+    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+      @Override
+      public void onDismiss(DialogInterface dialog) {
+        addButtonClicked = false;
+      }
+    });
 
   }
 
@@ -249,7 +499,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 //      else
 //        holyRow++;
 
-      someMagic(ca, wItem);
+      someMagic(ca, wItem, true, NULL);
 
 //      Log.wtf("tag", "number of items::BEFORE LOOP"+nbrItems);
 //      for (int i = 0; i < ca.getItemCount(); i++) {
@@ -463,41 +713,68 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
       Log.wtf("tag", "13 NAME??::" + "::" + CAT_IMAGE_IDS.get(13).getTilte());
       Log.wtf("tag", "14 NAME??::" + "::" + CAT_IMAGE_IDS.get(14).getTilte());
     }
+    addButtonClicked = false;
 
   }
 
-  public void someMagic(CustomAdapter ca, WidgetItem wItem) {
+  public void someMagic(CustomAdapter ca, WidgetItem wItem, boolean add, int dummies2Delete) {
     int nbrDummy = 0;
     int addPos = 0;
     nbrItems = 0;
     int weSayJump = 0;
     int foundDummy = 0;
 
-
-
-
-    for (int i = 0; i < ca.getItemCount(); i++) {
-      Log.wtf("tag", ":::size inside loop::" + ca.getItemCount());
-
-      if (ca.getObjectList().get(i).getType() == "Dummy")
-        nbrDummy++;
-
-      if (ca.getObjectList().get(i).isWidget() && ca.getObjectList().get(i).getSize() == 1)
-        nbrItems++;
-      if (ca.getObjectList().get(i).getSize() == 2)
-        nbrItems++;
-      if(ca.getObjectList().get(i).getType()=="TempHolder")
-        nbrItems++;
-    }
-    Log.wtf("tag", "HOLY  ROW:" + holyRow);
-
-    if(holyRow==2 && wItem.getSize()==2){
-      WidgetItem tempHolder = new WidgetItem();
-      tempHolder.setType("TempHolder");
-      CAT_IMAGE_IDS.add(nbrItems,tempHolder);
+    if (!add) {//in the case of removal
+      Log.wtf("tag", "IN CASE  OF  REMOVAL");
+      WidgetItem dummy = new WidgetItem();
+      dummy.setType("Dummy");
+      CAT_IMAGE_IDS.add(ca.getItemCount() - 2, dummy);
       ca.setListObjects(CAT_IMAGE_IDS);
-      nbrItems++;
+
+      for (int i = 0; i < ca.getItemCount(); i++) {
+        if (ca.getObjectList().get(i).getType() == "Dummy")
+          nbrDummy++;
+      }
+      if (nbrDummy > 3) {
+        for (int i = 0; i < 3; i++) {
+          ca.removeOneObject(ca.getItemCount() - 2);
+        }
+      }
+
+
+      if (wItem.getSize() == 2) {
+        holyRow = holyRow - 2;
+      }
+      if (wItem.getSize() == 1) {
+        holyRow--;
+      }
+
+
     }
+    if (add) {
+
+      for (int i = 0; i < ca.getItemCount(); i++) {
+        Log.wtf("tag", ":::size inside loop::" + ca.getItemCount());
+
+        if (ca.getObjectList().get(i).getType() == "Dummy")
+          nbrDummy++;
+
+        if (ca.getObjectList().get(i).isWidget() && ca.getObjectList().get(i).getSize() == 1)
+          nbrItems++;
+        if (ca.getObjectList().get(i).getSize() == 2)
+          nbrItems++;
+        if (ca.getObjectList().get(i).getType() == "TempHolder")
+          nbrItems++;
+      }
+      Log.wtf("tag", "HOLY  ROW:" + holyRow);
+
+      if (holyRow == 2 && wItem.getSize() == 2) {
+        WidgetItem tempHolder = new WidgetItem();
+        tempHolder.setType("TempHolder");
+        CAT_IMAGE_IDS.add(nbrItems, tempHolder);
+        ca.setListObjects(CAT_IMAGE_IDS);
+        nbrItems++;
+      }
 
 
 //    Log.wtf("tag", "number oooooof ITEMS:BEFORE  CHANGE:" + nbrItems);
@@ -506,58 +783,56 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 //      nbrItems++;
 
 //    if (nbrItems % 3 == 0) {
-    if(holyRow==0 || holyRow==3){
+      if (holyRow == 0 || holyRow == 3) {
 
 //        for (int i = 0; i < (2 - Math.sin(Math.PI / wItem.getSize())); i++) {
-        for (int i = 0; i < 3 ; i++) {
+        for (int i = 0; i < 3; i++) {
           WidgetItem dummy = new WidgetItem();
           dummy.setType("Dummy");
-        Log.wtf("tag", "ADDDDDDDDDDDDDING DUMMIES");
+          Log.wtf("tag", "ADDDDDDDDDDDDDING DUMMIES");
           dummy.setTilte("dummy" + i + nbrItems);
           CAT_IMAGE_IDS.add(ca.getItemCount() - 2, dummy);
           ca.setListObjects(CAT_IMAGE_IDS);
         }
-    }
+      }
 
 
-
-
-    if (wItem.getSize() == 2 && (holyRow==0 || holyRow==1 || holyRow==3)) {
-      for (int i = 0; foundDummy != 2; i++) {
-        if (ca.getObjectList().get(i).getType() == "Dummy") {
-          Log.wtf("tag", "000000000DUMMY  REMOVED YEY AT::" + i);
-          ca.removeOneObject(ca.getItemCount() - 2);
-          foundDummy++;
+      if (wItem.getSize() == 2 && (holyRow == 0 || holyRow == 1 || holyRow == 3)) {
+        for (int i = 0; foundDummy != 2; i++) {
+          if (ca.getObjectList().get(i).getType() == "Dummy") {
+            Log.wtf("tag", "000000000DUMMY  REMOVED YEY AT::" + i);
+            ca.removeOneObject(ca.getItemCount() - 2);
+            foundDummy++;
+          }
         }
       }
-    }
-    if (wItem.getSize() == 1) {
-      for (int i = 0; foundDummy != 1; i++) {
-        if (ca.getObjectList().get(i).getType() == "Dummy") {
-          Log.wtf("tag", "000000000DUMMY  REMOVED YEY AT::" + i);
-          ca.removeOneObject(ca.getItemCount() - 2);
-          foundDummy++;
+      if (wItem.getSize() == 1) {
+        for (int i = 0; foundDummy != 1; i++) {
+          if (ca.getObjectList().get(i).getType() == "Dummy") {
+            Log.wtf("tag", "000000000DUMMY  REMOVED YEY AT::" + i);
+            ca.removeOneObject(ca.getItemCount() - 2);
+            foundDummy++;
+          }
         }
       }
+      /**
+       * BEHOLD..
+       */
+      if (wItem.getSize() == 2) {
+        holyRow = holyRow + 2;
+      }
+
+      if (wItem.getSize() == 1)
+        holyRow++;
+      /**
+       *
+       */
+
+      if (holyRow > 3) {
+        holyRow = wItem.getSize();
+
+      }
     }
-    /**
-     * BEHOLD..
-     */
-    if (wItem.getSize() == 2) {
-      holyRow = holyRow+2;
-    }
-
-    if (wItem.getSize() == 1)
-      holyRow ++;
-    /**
-     *
-     */
-
-    if (holyRow > 3){
-      holyRow=wItem.getSize();
-
-    }
-
 //    if ((nbrDummy == 3) || (nbrDummy == 2) || nbrDummy == 1)
 ////      for (int h = 0; h < size; h++) {
 //        for (int i = 0; !foundDummy; i++) {
@@ -649,22 +924,100 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   }
 
   public void firebaseStaticConfig() {
+//    final GreenLand[] wo = {null};
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef2 = database.getReference();
+    final DatabaseReference myRef2 = database.getReference().child("Green_Land");
 
-    myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+    Realm.init(WelcomeScreen.this);
+
+    RealmConfiguration realmConfig = new RealmConfiguration.Builder()
+      .name("test1.realm")
+      .schemaVersion(0)
+//      .deleteRealmIfMigrationNeeded()
+      .build();
+
+    Realm.setDefaultConfiguration(realmConfig);
+
+    realm = Realm.getInstance(realmConfig);
+//
+    realm.executeTransaction(new Realm.Transaction() {
       @Override
-      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-        Log.wtf("tag", "COUNT  AND IT  SHOULD  BE  5 or something:::" + dataSnapshot.getChildrenCount());
-        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+      public void execute(Realm realm) {
+//                  for(int i = 0; i<10;i++){
+//                    final GreenLand wo = realm.createObject(GreenLand.class);
+//                    wo.setTemperature(i+i);
+//                    wo.setHumidity(i+5f);
+//                    realm.insertOrUpdate(wo);
+//                  }
+
+//        realm.deleteAll();//in case of deletion
+      }
+    });
+
+//
+    RealmResults<GreenLand> result = realm.where(GreenLand.class).findAll();
+    Log.wtf("tag", "WHAT WE got here UI THREAD??" + result.size());
+
+
+    Thread thread = new Thread(new Runnable() {
+      @Override
+      public void run() {
+
+        myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            Log.wtf("tag", "STATIC  MOFOOOOOOOOOO:::" + dataSnapshot.getChildrenCount());
+            for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
 //          devicesName.add(snapshot.getKey());
 
-          List<String> list = new ArrayList<String>(2);
-          list.add(snapshot.getKey());
-          devicesName.add(list);
+//          List<String> list = new ArrayList<String>(2);
+//          list.add(snapshot.getKey());
+//          devicesName.add(list);
 
-//          Log.wtf("tag", "name" + snapshot.getValue().toString());
-        }
+//              realm.executeTransaction(new Realm.Transaction() {
+//                @Override
+//                public void execute(Realm realm) {
+//                  final GreenLand wo = realm.createObject(GreenLand.class);
+//                  wo.setTemperature(000);
+//                  wo.setHumidity(0000f);
+//                  realm.insertOrUpdate(wo);
+////                  realm.deleteAll();//in case of deletion
+//                }
+//              });
+
+
+              try {
+                realm.executeTransaction(new Realm.Transaction() {
+                  @Override
+                  public void execute(Realm realm) {
+                    GreenLand wo = new GreenLand();
+
+
+                    if (snapshot.child("Time").toString() != null && snapshot.child("Temperature") != null) {
+
+//                      wo.setTime(snapshot.child("Time").getValue().toString());
+//                      wo.setHumidity(Float.valueOf(snapshot.child("Humidity").getValue().toString()));
+//                      wo.setTemperature(Float.valueOf(snapshot.child("Temperature").getValue().toString()));
+//                      wo.setBattery(Double.valueOf(snapshot.child("Battery_Level").getValue().toString()));
+
+
+//                wo.setTemperature(69);
+//                      realm.insertOrUpdate(wo);
+                    }
+//                    realm.deleteAll();//in case of deletion
+                  }
+                });
+
+//                RealmResults<GreenLand> result = realm.where(GreenLand.class).findAllAsync();
+//                Log.wtf("tag", "WHAT WE got here??" + result.size());
+
+//                if (wo[0].getTime().equals("15 19 46 2019 4 20"))
+//                  Log.wtf("tag", "TIME value????  " + wo[0].getTime());
+              } catch (Exception e) {
+                e.printStackTrace();
+              }
+            }
+
 //        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 //          Log.wtf("tag", "keyValue::" + snapshot.getKey());
 //          try{
@@ -675,13 +1028,25 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 //            Log.wtf("tag","NUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUULLLLLLLLLLLLLLLL"+snapshot.getKey());
 //          }
 //        }
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError databaseError) {
+            Log.wtf("tag", "WHO  CANCELED  ITTTTTTTT????????,," + databaseError);
+          }
+        });
+
       }
 
-      @Override
-      public void onCancelled(@NonNull DatabaseError databaseError) {
-
-      }
     });
+    thread.start();
+
+//    realm.addChangeListener(new RealmChangeListener<Realm>() {
+//      @Override
+//      public void onChange(Realm realm) {
+//        Log.wtf("tag", "DATABSE CHANGEDDDDD");
+//      }
+//    });
 
 
   }
@@ -690,21 +1055,11 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
 //    DatabaseReference myRef = database.getReference("END_DEVICE_1/-LayOAdQUV042yC6hfPE/object");
+    DatabaseReference timeRef = database.getReference();
     DatabaseReference ref_GreenLand = database.getReference().child("Green_Land");
-    DatabaseReference ref_Room1 = database.getReference().child("System_Room_SOFIA");
-    DatabaseReference ref_Room2_ = database.getReference().child("System_Room_SOFIA2");
-    DatabaseReference ref_Station = database.getReference().child("Weather_Station_Final");
 
     Query query1 = ref_GreenLand.limitToLast(1);
-    Query query2 = database.getReference().child("System_Room_SOFIA").limitToLast(1);
-    Query query3 = database.getReference().child("System_Room_SOFIA2").limitToLast(1);
-    Query query4 = database.getReference().child("Weather_Station_Final").limitToLast(1);
 
-    final List<String> listQuery1 = new ArrayList<String>(2);
-    listQuery1.add(0, "Green_Land");
-    List<String> listQuery2 = new ArrayList<String>(2);
-    List<String> listQuery3 = new ArrayList<String>(2);
-    List<String> listQuery4 = new ArrayList<String>(2);
 
 //    Log.wtf("tag", "size::" + myRef.getKey());
 
@@ -739,11 +1094,11 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 //        public void onDataChange(DataSnapshot dataSnapshot) {
 //          int i = 0;
 //*************************************************************************
-//        WidgetObject wo = dataSnapshot.getValue(WidgetObject.class);
+//        GreenLand wo = dataSnapshot.getValue(GreenLand.class);
 //        Log.wtf("tag", "something???"+wo.getHumidity());
 //        for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
 //          childDataSnapshot.child("object");
-//          WidgetObject wo = dataSnapshot.getValue(WidgetObject.class);
+//          GreenLand wo = dataSnapshot.getValue(GreenLand.class);
 //          Log.wtf("tag","something:battery:"+wo.getBattery());
 //          Log.wtf("tag","something::"+childDataSnapshot.child("-LayOAdQUV042yC6hfPE").child("object").getKey());
 //        }
@@ -751,7 +1106,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 //          Log.wtf("tag", "size:OLD WAYAAAA:" + dataSnapshot.getChildrenCount());
 //          for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 //            Log.wtf("tag", "keyValue:OLD WAYAAAA:" + snapshot.getKey());
-//            WidgetObject wo = snapshot.child("object").getValue(WidgetObject.class);
+//            GreenLand wo = snapshot.child("object").getValue(GreenLand.class);
 //            Log.wtf("tag", "humidity:OLD WAYAAAA:" + i + "::" + wo.getHumidity());
 //            i++;
 //          }
@@ -769,12 +1124,12 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         Log.wtf("tag","NUMBEEEEEEEEEEEEEEEEER ONE????????????????????????????????????????????????????????????????????????????????????????????????");
 //        Log.wtf("tag","count"+dataSnapshot.getChildrenCount());
-//        WidgetObject wo = dataSnapshot.getValue(WidgetObject.class);
+//        GreenLand wo = dataSnapshot.getValue(GreenLand.class);
         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 //            Log.wtf("tag", "count and it should be 4::" + snapshot.child("object").getChildrenCount());
 
           Log.wtf("tag", "time::" + snapshot.child("rxInfo/0/time").getValue());
-//            WidgetObject wo = snapshot.child("object").getValue(WidgetObject.class);
+//            GreenLand wo = snapshot.child("object").getValue(GreenLand.class);
 //            Log.wtf("tag", "humidity::" +   "::" + wo.getHumidity());
 
         }
@@ -787,6 +1142,86 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     });*/
 
 
+    /**
+     * For retrieving date+time data from each device
+     */
+    timeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        Log.wtf("tag", "it should be 4::" + dataSnapshot.getChildrenCount());
+
+
+        for (final DataSnapshot childNode : dataSnapshot.getChildren()) {
+          DatabaseReference childRef = FirebaseDatabase.getInstance().getReference().child(childNode.getKey());
+          Query query = childRef.limitToLast(1);
+          query.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+              try {
+                //for the sake of maintaining only one copy of each of the devices inside the list, the old value must be removed
+                for (int i = 0; i < devicesName.size(); i++) {
+                  if (devicesName.get(i).get(0) == childNode.getKey()) {
+                    devicesName.remove(i);
+                  }
+                }
+
+                //creating a list each time new data get added, therefore the newly created list will contain the node's name and the "Time" value inside of it
+                List<String> listQuery = new ArrayList<>();
+                listQuery.add(0, childNode.getKey());
+                listQuery.add(1, dataSnapshot.child("Time").getValue().toString());
+
+                devicesName.add(listQuery);
+                Log.wtf("tag", "DEVICE NAME SIZE::" + devicesName.size());
+
+                //creating new WidgetItem and insert the big list inside of it
+                for (int i = 0; i < ca2.getObjectList().size(); i++) {
+                  if (ca2.getObjectList().get(i).getType() == "Info") {
+                    WidgetItem wi = ca2.getObjectList().get(i);
+                    wi.setInfo(devicesName);
+                    ca2.updateOneObject(i, wi);
+                    try {
+
+//                      Log.wtf("tag", "WHAT  We Got iNSIde::" + wi.getInfo());
+                    } catch (IndexOutOfBoundsException e) {
+                      Log.wtf("tag", "SOMETHING NOT RIGHT!!!");
+                    }
+                  }
+                }
+
+              } catch (NullPointerException e) {
+                Log.wtf("tag", "NO TIME  DATA");
+              }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+          });
+        }
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError databaseError) {
+
+      }
+    });
+
     query1.addChildEventListener(new ChildEventListener() {
       @Override
       public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -795,7 +1230,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
         try {
           Log.wtf("tag", "key::" + dataSnapshot.getKey());
           Log.wtf("tag", "CA2::" + ca2.getItemCount());
-          liveData.setText(dataSnapshot.child("Time").getValue().toString());
+//          liveData.setText(dataSnapshot.child("Time").getValue().toString());
 
           for (int i = 0; i < ca2.getObjectList().size(); i++) {
             Log.wtf("tat", "INSDIE  THE FOR LOOP");
@@ -806,22 +1241,22 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
               cp.setProgress(6666);
               WidgetItem wi = ca2.getObjectList().get(i);
               wi.setWidget(cp);
-              ca2.updatOneObject(i, wi);
+              ca2.updateOneObject(i, wi);
 //              ca.notifyItemInserted(0);
 //              Log.wtf("tag", "WE GOT THEMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM:::" + i);
             }
           }
 
-          try {
-            listQuery1.remove(1);
-          } catch (Exception e) {
-            Log.wtf("tag", "there's nothing to delete in this position");
-          }
+//          try {
+//            listQuery1.remove(1);
+//          } catch (Exception e) {
+//            Log.wtf("tag", "there's nothing to delete in this position");
+//          }
+//
+//          listQuery1.add(1, dataSnapshot.child("Time").getValue().toString());
+//          devicesName.add(listQuery1);
 
-          listQuery1.add(1, dataSnapshot.child("Time").getValue().toString());
-          devicesName.add(listQuery1);
-
-          Log.wtf("tag", "WHAT WE GOT INSDIE???::" + listQuery1);
+//          Log.wtf("tag", "WHAT WE GOT INSDIE???::" + listQuery1);
 
 //          }
         } catch (NullPointerException e) {
@@ -908,7 +1343,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 
 //    obj1.setImgId(R.drawable.ic_menu_camera);
 //    obj1.setFoodItem("Camera");
-//    WidgetObject obj2 = new WidgetObject();
+//    GreenLand obj2 = new GreenLand();
 //    obj2.setFoodItem("Share");
 //    obj2.setImgId(R.drawable.ic_menu_share);
 //    foodList.add(""+i);
@@ -931,6 +1366,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     final CardView card4 = dialog.findViewById(R.id.card4);
     PushDownAnim.setPushDownAnimTo(card1, card2, card3, card4);
     View.OnClickListener clickAble = new View.OnClickListener() {
+      @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
       @Override
       public void onClick(View v) {
         if (v.equals(card1)) {
@@ -968,6 +1404,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     th.noAnimation();
   }
 
+  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   public void infoDialogLayout(final Dialog dialog, final CustomAdapter ca) {
     ImageButton btnBack = (ImageButton) dialog.findViewById(R.id.btnBack);
     Button btn_add = dialog.findViewById(R.id.btn_add);
@@ -980,27 +1417,32 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
       }
     });
 //    firebaseStaticConfig();
+//
+//    if (devicesName != null && devicesName.size() > 0) {
+//      for (List list : devicesName) {
+//        Log.wtf("tag", "name" + list);
+//      }
+//      Log.wtf("tag","INSIDE THE LOOP");
+    for (List deviceList : devicesName) {
+//        Log.wtf("tag", "THE REAL  DEAL??"+deviceList.get(0));
+      CheckBox name = new CheckBox(this);
 
-//    if(devicesName!=null && devicesName.size()>0){
-//    for(int i=0; i<8;i++){
-//      Log.wtf("tag","name"+devicesName.get(0));
-//    }
-//      Log.wtf("tag","INDIDE THE LOOP");
-//    for (String deviceName : devicesName) {
-//      CheckBox name = new CheckBox(this);
-//      name.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-//      name.setText(deviceName);
-//      boxHolder.addView(name);
-//      View v = new View(this);
-//      LinearLayout ln = new LinearLayout(this);
-//      ln.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, 5));
-//      ln.setBackgroundColor(Color.GRAY);
-//      v.setLayoutParams(new LinearLayout.LayoutParams(
-//        LinearLayout.LayoutParams.MATCH_PARENT,
-//        5
-//      ));
-//      boxHolder.addView(ln);
-//    }
+      name.setTextColor(getResources().getColor(R.color.lightBrown));
+      int states[][] = {{android.R.attr.state_checked}, {}};
+      int colors[] = {getResources().getColor(R.color.lightBrown), Color.GRAY};
+      name.setButtonTintList(new ColorStateList(states, colors));
+
+      name.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+      name.setText(deviceList.get(0).toString());
+      boxHolder.addView(name);
+      View v = new View(this);
+      LinearLayout ln = new LinearLayout(this);
+      ln.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, 5));
+      ln.setBackgroundColor(Color.GRAY);
+      v.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 5));
+      boxHolder.addView(ln);
+
+    }
 
     btn_add.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -1144,6 +1586,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     flexboxLayoutManager.setAlignItems(AlignItems.STRETCH);
     flexboxLayoutManager.setFlexDirection(FlexDirection.ROW);
     flexboxLayoutManager.setMaxLine(20);
+//    flexboxLayoutManager.setJustifyContent(JustifyContent.CENTER);
     recyclerView.setLayoutManager(flexboxLayoutManager);
 //    recyclerView.setHasFixedSize(true);
 //    catAdapter = ca;
@@ -1163,24 +1606,23 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   public void networkthingy() {
 /*************************************/
     GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-//    Call<List<WidgetObject>> call = service.getAllUsers("13t9mgcgqozdvv1axunet59v91o189ta68hchsuwz88063aqjkhttp://192.168.148.1");
-    Call<WidgetObject> call = service.getObject();
-    call.enqueue(new Callback<WidgetObject>() {
+//    Call<List<GreenLand>> call = service.getAllUsers("13t9mgcgqozdvv1axunet59v91o189ta68hchsuwz88063aqjkhttp://192.168.148.1");
+    Call<GreenLand> call = service.getObject();
+    call.enqueue(new Callback<GreenLand>() {
 
 
       //Handle a successful response//
-      //      public void onResponse(Call<List<WidgetObject>> call, Response<List<WidgetObject>> response) {
+      //      public void onResponse(Call<List<GreenLand>> call, Response<List<GreenLand>> response) {
       @Override
-      public void onResponse(Call<WidgetObject> call, Response<WidgetObject> response) {
+      public void onResponse(Call<GreenLand> call, Response<GreenLand> response) {
         if (response.isSuccessful()) {
 //          testTV.setText("Successful");
 
           Log.wtf("tag", "code::" + response.code());
           Log.wtf("tag", "RAWW::" + response.raw());
-          WidgetObject testObj = response.body();
+          GreenLand testObj = response.body();
           //the below line should be working, but the object class is just modified
 //          Log.wtf("tag", "temp" + testObj.getTemp());
-          Log.wtf("tag", "humidity" + testObj.getHumidity());
           Log.wtf("tag", "pressure" + testObj.getPressure());
         } else {
           testTV.setText("not successful!!!");
@@ -1192,7 +1634,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
       }
 
       @Override
-      public void onFailure(Call<WidgetObject> call, Throwable throwable) {
+      public void onFailure(Call<GreenLand> call, Throwable throwable) {
 //        testTV.setText("FAILED");
         Log.wtf("tag", "FAILED CAUSE::" + throwable.getCause());
         Log.wtf("tag", "error message::" + throwable.getMessage());
@@ -1216,9 +1658,9 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 
     }
 
-    setSupportActionBar(toolbar);
-    getSupportActionBar().setTitle(null);
-    toolbarTitle.setText("REEEE??");
+//    setSupportActionBar(toolbar);
+//    getSupportActionBar().setTitle(null);
+//    toolbarTitle.setText("REEEE??");
 //    toolbar.setBackgroundColor(getResources().getColor(R.color.white_ish));
 
   }
@@ -1249,6 +1691,31 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   public void onItemClicked(View view, int position) {
     Log.wtf("tag", "detect clickkkkkkkkkkkkkkkkkkkkkkkkkk");
   }
+
+  public void colorChange(final ViewGroup tc, final Button btn) {
+
+    btn.setText("SAVING");
+    Runnable runnable = new Runnable() {
+      @Override
+      public void run() {
+        if (cantStopMeNow) {
+          btn.setTextColor(btn.getResources().getColor(R.color.white_ish));
+          btn.setBackground(new ColorDrawable(btn.getResources().getColor(R.color.orange)));
+          cantStopMeNow = false;
+        } else {
+          btn.setTextColor(btn.getResources().getColor(R.color.orange));
+          btn.setBackground(new ColorDrawable(btn.getResources().getColor(R.color.white_ish)));
+          cantStopMeNow = true;
+        }
+
+      }
+    };
+
+    scheduler = new ScheduledThreadPoolExecutor(1);
+    scheduler.scheduleAtFixedRate(runnable, 0, 1, TimeUnit.SECONDS);
+  }
+
+
 }
 
 

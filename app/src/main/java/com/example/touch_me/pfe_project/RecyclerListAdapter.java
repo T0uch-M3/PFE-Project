@@ -41,12 +41,12 @@ import androidx.recyclerview.widget.RecyclerView;
 /*
 public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapter.ItemViewHolder> implements ItemTouchHelperAdapter {
 
-  List<WidgetObject> foodItemList;
+  List<GreenLand> foodItemList;
   //+++++++++++++NEW+++++++++++++++++
   private final List<String> mItems = new ArrayList<>();
   private final OnStartDragListener mDragStartListener;
 
-  public RecyclerListAdapter(List<WidgetObject> foodItemList, OnStartDragListener dragStartListener) {
+  public RecyclerListAdapter(List<GreenLand> foodItemList, OnStartDragListener dragStartListener) {
 //    this.foodItemList = foodItemList;
     mDragStartListener = dragStartListener;
     mItems.addAll(Arrays.asList("1","2","3","4"));
@@ -82,7 +82,7 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
 //  @Override
 //  public void onBindViewHolder(final ItemViewHolder holder, int position) {
 //    holder.textView.setText(mItems.get(position));
-//    WidgetObject foodItemBean = foodItemList.get(position);
+//    GreenLand foodItemBean = foodItemList.get(position);
 
 //    holder.imgFood.setImageResource(foodItemBean.getImgId());
 //    holder.txtFood.setText(foodItemBean.getFoodItem());
@@ -148,7 +148,7 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
 //
 //  @Override
 //  public void onBindViewHolder(RecyclerListAdapter.ViewHolder holder, int position) {
-//    WidgetObject foodItemBean = foodItemList.get(position);
+//    GreenLand foodItemBean = foodItemList.get(position);
 //
 //    holder.imgFood.setImageResource(foodItemBean.getImgId());
 //    holder.txtFood.setText(foodItemBean.getFoodItem());

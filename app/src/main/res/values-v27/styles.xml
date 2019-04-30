@@ -10,4 +10,9 @@
     <item name="android:windowDrawsSystemBarBackgrounds">false</item>
     <!--<item name="android:windowLightNavigationBar">false</item>-->
   </style>
+
+
+  <style name="CheckBoxStyle">
+    <item name="android:colorAccent">@android:color/darker_gray</item>
+  </style>
 </resources>
