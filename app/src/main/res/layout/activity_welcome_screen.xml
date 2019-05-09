@@ -5,9 +5,20 @@
   android:id="@+id/the_holder"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@drawable/night02"
+  android:background="@drawable/whitebg"
   android:fitsSystemWindows="true"
   tools:openDrawer="left">
+
+  <ImageButton
+    android:id="@+id/imageButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="24dp"
+    app:layout_constraintEnd_toEndOf="@+id/settingButon"
+    app:layout_constraintTop_toTopOf="parent"
+    android:translationZ="1dp"
+    app:srcCompat="@drawable/add_img" />
 
   <ImageButton
     android:id="@+id/settingButon"
@@ -19,70 +30,62 @@
     android:background="?attr/selectableItemBackgroundBorderless"
     android:contentDescription="TODO"
     android:src="@drawable/ic_settings_black_24dp"
+
+    android:translationZ="1dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/recyclerView"
     android:layout_width="match_parent"
-    android:layout_height="532dp"
+    android:layout_height="322dp"
     android:layout_gravity="center_horizontal"
     android:nestedScrollingEnabled="false"
-    android:paddingLeft="1dp"
-    android:paddingRight="1dp"
+    android:paddingStart="5px"
+    android:visibility="gone"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.0"
     app:layout_constraintStart_toStartOf="parent" />
 
-  <com.gauravk.bubblenavigation.BubbleNavigationConstraintView
-    android:id="@+id/bottom_navigation"
+  <androidx.viewpager.widget.ViewPager
+    android:id="@+id/viewPager"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_marginStart="25dp"
-    android:layout_marginEnd="25dp"
-    android:layout_marginBottom="25dp"
-    android:background="@drawable/rounded_rect_white"
-    android:elevation="30dp"
-    android:visibility="gone"
-    app:bnc_mode="spread"
-    app:layout_constraintBottom_toBottomOf="parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="24dp"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent">
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
-    <com.gauravk.bubblenavigation.BubbleToggleView
-      android:id="@+id/id2"
-      android:layout_width="0dp"
+    <com.google.android.material.tabs.TabLayout
+      android:layout_width="313dp"
       android:layout_height="wrap_content"
-      android:layout_marginStart="100dp"
-      app:bt_active="true"
-      app:bt_colorActive="@color/grey"
-      app:bt_colorInactive="#180AA5"
-      app:bt_icon="@drawable/icn_1"
-      app:bt_title="show"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintStart_toStartOf="parent" />
-
-    <com.gauravk.bubblenavigation.BubbleToggleView
-      android:id="@+id/id1"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="8dp"
-      android:elevation="20dp"
-      app:bt_active="true"
-      app:bt_colorActive="@color/grey"
-      app:bt_colorInactive="#90000C"
-      app:bt_icon="@drawable/icn_close"
-      app:bt_title="Movies"
-      app:layout_constraintEnd_toStartOf="@+id/id2"
+      android:layout_marginTop="24dp"
+      android:layout_marginEnd="16dp"
+      android:paddingBottom="5dp"
+      app:layout_constraintEnd_toStartOf="@+id/settingButon"
+      app:layout_constraintHorizontal_bias="0.0"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
+      app:layout_constraintTop_toTopOf="parent"
+      app:tabMode="scrollable"
+      app:tabSelectedTextColor="@color/disabled"
+      app:tabTextColor="@color/lightBrown">
 
-    </com.gauravk.bubblenavigation.BubbleToggleView>
+      <com.google.android.material.tabs.TabItem
+        android:id="@+id/tabItem5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/red"
+        android:text="Monday" />
 
+      <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/grey"
+        android:text="Monday" />
 
-  </com.gauravk.bubblenavigation.BubbleNavigationConstraintView>
+    </com.google.android.material.tabs.TabLayout>
+  </androidx.viewpager.widget.ViewPager>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

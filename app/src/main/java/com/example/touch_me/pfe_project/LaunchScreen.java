@@ -47,8 +47,6 @@ import androidx.transition.ChangeBounds;
 import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import io.realm.RealmResults;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -70,6 +68,7 @@ public class LaunchScreen extends AppCompatActivity {
   LinearLayout theShower;
   Boolean isDown = false;
   Boolean isDown2 = false;
+  Boolean isLeft = false;
   TableRow highestShoot;
   Boolean isColorsInverted = true;
   Boolean mColorsInverted = true;
@@ -78,6 +77,8 @@ public class LaunchScreen extends AppCompatActivity {
   private Realm realm;
   private static ArrayList<GreenLand> fireBaseList;
   int wiidth;
+  boolean availability;
+  private boolean commit;
 
 
   @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -170,7 +171,6 @@ public class LaunchScreen extends AppCompatActivity {
       }
     });
 
-
     btnConLogIn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -178,14 +178,12 @@ public class LaunchScreen extends AppCompatActivity {
         SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
         Boolean boo = mPrefs.getBoolean("offlineFunc", false);
         if (boo == true) {
-//          firebaseStaticConfig();
-          Log.wtf("tag", "WAiting While loading data from databse");
+          checkDataBaseConnection();
         }
 
         startActivity(new Intent(LaunchScreen.this, WelcomeScreen.class));
       }
     });
-
 
     Display display = getWindowManager().getDefaultDisplay();
     DisplayMetrics outMetrics = new DisplayMetrics();
@@ -196,151 +194,63 @@ public class LaunchScreen extends AppCompatActivity {
     float dpWidth = outMetrics.widthPixels / density;
     Log.wtf("tag", "WIDTH::" + dpWidth);
 
-    topbox_holder.setLayoutParams(new FrameLayout.LayoutParams((int) dpWidth * 2, WRAP_CONTENT));
-    bottombox.setLayoutParams(new FrameLayout.LayoutParams((int) dpWidth * 2, 650, Gravity.BOTTOM));
-    FrameLayout.LayoutParams topPrams = new FrameLayout.LayoutParams((int) dpWidth * 2, MATCH_PARENT, Gravity.END);
-    topPrams.topMargin = 400;
-    topShelf.setLayoutParams(new FrameLayout.LayoutParams(topPrams));
-    frameLayout.setLayoutParams(new FrameLayout.LayoutParams((int) dpWidth * 4, 800, Gravity.TOP));
+    topbox_holder.setLayoutParams(new FrameLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
 
+
+    frameLayout.setLayoutParams(new FrameLayout.LayoutParams((int) outMetrics.widthPixels*2, (int) (outMetrics.heightPixels/1.7), Gravity.TOP));
+    FrameLayout.LayoutParams topPrams = new FrameLayout.LayoutParams((int) outMetrics.widthPixels, WRAP_CONTENT,/*, Gravity.END*/Gravity.BOTTOM|Gravity.END);
+//    topPrams.topMargin = (int) (dpHeight/2);
+    topShelf.setLayoutParams(new FrameLayout.LayoutParams(topPrams));
+    FrameLayout.LayoutParams bottomParams = new FrameLayout.LayoutParams((int) outMetrics.widthPixels, (int) dpHeight+85,/*, Gravity.END*/Gravity.BOTTOM);
+//    bottomParams.bottomMargin=400;
+    bottombox.setLayoutParams(bottomParams);
+//    bottombox.
 //    FrameLayout.LayoutParams btnParams = new FrameLayout.LayoutParams((int) (dpWidth*2)-150,WRAP_CONTENT,Gravity.CENTER);
 //    btnParams.topMargin = -30;
 //    btnLogIn.setLayoutParams(btnParams);
+
+//    vg.addView(imageV);
+
   }
 
-  public void firebaseStaticConfig() {
-//    final GreenLand[] wo = {null};
-    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference globRef = database.getReference();
-    final DatabaseReference myRef2 = database.getReference().child("Green_Land");
+  public void checkDataBaseConnection() {
 
-    Realm.init(this);
-
-    final RealmConfiguration realmConfig = new RealmConfiguration.Builder()
-      .name("test1.realm")
-      .schemaVersion(0)
-//      .deleteRealmIfMigrationNeeded()
-      .build();
-
-    Realm.setDefaultConfiguration(realmConfig);
-
-    realm = Realm.getInstance(realmConfig);
-//
-//    realm.executeTransaction(new Realm.Transaction() {
-//      @Override
-//      public void execute(Realm realm) {
-//                  for(int i = 0; i<10;i++){
-//                    final GreenLand wo = realm.createObject(GreenLand.class);
-//                    wo.setTemperature(i+i);
-//                    wo.setHumidity(i+5f);
-//                    realm.insertOrUpdate(wo);
-//                  }
-
-//        realm.deleteAll();//in case of deletion
-//      }
-//    });
-
-
-    RealmResults<GreenLand> result = realm.where(GreenLand.class).findAll();
-    Log.wtf("tag", "WHAT WE got here BG THREAD??" + result.size());
-
-//    realm.close();
-
-
-//    Thread thread = new Thread(new Runnable() {
-//      @Override
-//      public void run() {
-
-    globRef.addListenerForSingleValueEvent(new ValueEventListener() {
+    DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+    connectedRef.addValueEventListener(new ValueEventListener() {
       @Override
-      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//        realm = Realm.getInstance(realmConfig);
-        Log.wtf("tag", "STATIC  MOFOOOOOOOOOO:::" + dataSnapshot.getChildrenCount());
-        for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
-//          devicesName.add(snapshot.getKey());
-
-//          List<String> list = new ArrayList<String>(2);
-//          list.add(snapshot.getKey());
-//          devicesName.add(list);
-
-//              realm.executeTransaction(new Realm.Transaction() {
-//                @Override
-//                public void execute(Realm realm) {
-//                  final GreenLand wo = realm.createObject(GreenLand.class);
-//                  wo.setTemperature(000);
-//                  wo.setHumidity(0000f);
-//                  realm.insertOrUpdate(wo);
-////                  realm.deleteAll();//in case of deletion
-//                }
-//              });
-
-
-//            realm.executeTransaction(new Realm.Transaction() {
-//              @Override
-//              public void execute(Realm realm) {
-          GreenLand wo = new GreenLand();
-          try {
-
-//          if (snapshot.child("Time").getValue().toString() != null && snapshot.child("Temperature") != null) {
-
-            wo.setTime(snapshot.child("Time").getValue().toString());
-            wo.setTemperature(Float.valueOf(snapshot.child("Temperature").getValue().toString()));
-            wo.setBatteryLevel(Double.valueOf(snapshot.child("Battery_Level").getValue().toString()));
-
-//            Log.wtf("tag", "Time:::" + wo.getTime());
-            fireBaseList.add(wo);
-
-//                  wo.setTemperature(69);
-//                  realm.insertOrUpdate(wo);
-//          }
-//                    realm.deleteAll();//in case of deletion
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
-//              }
-//            });
-
-//                RealmResults<GreenLand> result = realm.where(GreenLand.class).findAllAsync();
-//                Log.wtf("tag", "WHAT WE got here??" + result.size());
-
-//                if (wo[0].getTime().equals("15 19 46 2019 4 20"))
-//                  Log.wtf("tag", "TIME value????  " + wo[0].getTime());
-
+      public void onDataChange(@NonNull DataSnapshot snapshot) {
+        boolean connected = snapshot.getValue(Boolean.class);
+        if (connected) {
+          afterConfirmation(true);
+        } else {
+          afterConfirmation(false);
         }
-//        realm.close();
-
-//        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//          Log.wtf("tag", "keyValue::" + snapshot.getKey());
-//          try{
-//          String time = snapshot.child("rxInfo/0/time").getValue().toString();
-//
-//          Log.wtf("tag", "time ::" + "" + "::" + time);
-//          }catch (NullPointerException e){
-//            Log.wtf("tag","NUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUULLLLLLLLLLLLLLLL"+snapshot.getKey());
-//          }
-//        }
       }
 
-
       @Override
-      public void onCancelled(@NonNull DatabaseError databaseError) {
-        Log.wtf("tag", "WHO  CANCELED  ITTTTTTTT????????,," + databaseError);
+      public void onCancelled(@NonNull DatabaseError error) {
+        Log.wtf("tag", "Listener was cancelled");
       }
     });
+  }
 
-//      }
+  public void afterConfirmation(Boolean boo) {
+    if (boo) {
 
-//    });
-//    thread.start();
+      Log.wtf("tag", "Waiting While loading data from database");
 
-//    realm.addChangeListener(new RealmChangeListener<Realm>() {
-//      @Override
-//      public void onChange(Realm realm) {
-//        Log.wtf("tag", "DATABSE CHANGEDDDDD");
-//      }
-//    });
+      SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
+      SharedPreferences.Editor editor = mPrefs.edit();
+      editor.putBoolean("startOffline", false);
+      editor.commit();
+    } else {
+      Log.wtf("tag", "Unable to connect to the server, try later");
+      SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
+      SharedPreferences.Editor editor = mPrefs.edit();
+      editor.putBoolean("startOffline", true);
+      editor.commit();
 
+    }
 
   }
 
@@ -391,11 +301,11 @@ public class LaunchScreen extends AppCompatActivity {
     animateIt(btnLogIn, 800, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
 //    animateIt(btnSignUp, 1000, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
 //    animateIt(tvNewUser, 1000, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
-    animateIt(topShelf, 800, tc, Gravity.END, Gravity.START);
+    animateIt(topShelf, 800, tc, Gravity.END|Gravity.BOTTOM, Gravity.START|Gravity.BOTTOM);
     animateIt(btnConLogIn, 800, tc, Gravity.BOTTOM | Gravity.CENTER, Gravity.TOP | Gravity.CENTER);
 //    theShower.setPadding(0,20,0,0);
     animateIt3(imageV, 500, tc, 120, 20);
-    animateIt2(highestShoot, 500, tc, 0, -460);//PRAISE THE SUUUUUUUUN \O/
+    animateIt2(highestShoot, 500, tc, 0, -650);//PRAISE THE SUUUUUUUUN \O/
 
 //    superFade(tc, goldenShower);
 
@@ -515,7 +425,7 @@ public class LaunchScreen extends AppCompatActivity {
 
   public void colorChange(final ViewGroup tc) {
     final TransitionDrawable transition = (TransitionDrawable) tc.getBackground();
-
+    final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     Runnable runnable = new Runnable() {
       @Override
       public void run() {
@@ -526,11 +436,10 @@ public class LaunchScreen extends AppCompatActivity {
           transition.reverseTransition(8000);
           cantStopMeNow = true;
         }
-
       }
     };
 
-    final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
     scheduler.scheduleAtFixedRate(runnable, 5, 7, TimeUnit.SECONDS);
 
   }
@@ -547,12 +456,14 @@ public class LaunchScreen extends AppCompatActivity {
       animateIt(btnLogIn, 600, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
 //      animateIt(btnSignUp, 800, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
 //      animateIt(tvNewUser, 800, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
-      animateIt(topShelf, 600, tc, Gravity.END, Gravity.START);
+      animateIt(topShelf, 600, tc, Gravity.END|Gravity.BOTTOM, Gravity.START|Gravity.BOTTOM);
       animateIt(btnConLogIn, 600, tc, Gravity.BOTTOM | Gravity.CENTER, Gravity.TOP | Gravity.CENTER);
 //      theShower.setPadding(0,100,0,0);
       animateIt3(imageV, 500, tc, 120, 20);
 
-      animateIt2(highestShoot, 500, tc, 0, -300);
+      animateIt2(highestShoot, 500, tc, 0, -800);
+      et_Pwd.getText().clear();
+      et_Login.getText().clear();
 
 
 //      goldenShower.setPadding(0,0,0,0);

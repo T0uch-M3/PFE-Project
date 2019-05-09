@@ -20,7 +20,9 @@
       android:exported="false"></service>
 
     <activity android:name=".PopUp" />
-    <activity android:name=".LaunchScreen" />
+    <activity android:name=".LaunchScreen">
+
+    </activity>
     <activity android:name=".WelcomeScreen">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

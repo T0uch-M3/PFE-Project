@@ -20,10 +20,15 @@ import android.widget.TextView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.lzyzsd.circleprogress.ArcProgress;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,9 +46,9 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
   private List<WidgetItem> mListObjects;
   private boolean clickState = false;
   private RecyclerView recyclerView;
-  boolean textClicked1 = false;
-  boolean textClicked2 = false;
+
   boolean cantStopMeNow = true;
+  private List<TextShapeSaver> shapeSaverList = new ArrayList<>();
 
 
   public CustomAdapter(@NonNull Context context) {
@@ -76,6 +81,8 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return 4;
       case "TempHolder":
         return 5;
+      case "Graph":
+        return 6;
       default:
         return -1;
     }
@@ -96,14 +103,96 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //    Log.wtf("tag", "inside onCREATEHOLDER");
     ViewGroup viewGroup = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(R.layout.widget_holder, parent, false);
     final LinearLayout ln = new LinearLayout(parent.getContext());
-    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((recyclerView.getWidth() / 3) - 15, 250, Gravity.CENTER);
+    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((recyclerView.getWidth() / 3) - 6, (recyclerView.getWidth() / 3) + 15, Gravity.CENTER);
     params.setMargins(0, 0, 0, 0);
+//    Log.wtf("tag", "list widdth::" + recyclerView.getWidth());
 //    RecyclerView.LayoutParams listParams = new RecyclerView.LayoutParams(230,250);
 //    listParams.setMargins(0,0,0,0);
 //    viewGroup.setLayoutParams(listParams);
     ln.setLayoutParams(params);
 
     switch (viewType) {
+      case 6: {
+        ln.setBackgroundColor(ln.getContext().getResources().getColor(R.color.white_ish));
+        params.width = (recyclerView.getWidth() - 23);
+        params.height = 500;
+        LineChart lineChart = new LineChart(context);
+        BarChart barChart = new BarChart(context);
+
+        List<Entry> entriesList = new ArrayList<Entry>();
+
+        for (int i = 0; i < 9; i = i + 2) {
+          entriesList.add(new Entry(i, i + 3));
+        }
+
+//        entriesList.add(new Entry(9,4));
+//        entriesList.add(new Entry(5,4));
+//        entriesList.add(new Entry(5,2));
+//        entriesList.add(new Entry(3,0));
+
+//        LineDataSet dataSet = new LineDataSet(entriesList, "Label");
+//        dataSet.setColor(Color.RED);
+//        dataSet.setValueTextColor(Color.BLUE);
+//        dataSet.setForm(Legend.LegendForm.CIRCLE);
+//        dataSet.setFillColor(Color.GREEN);
+//        dataSet.setFillDrawable(new DrawableContainer());
+//        dataSet.setDrawHighlightIndicators(false);
+//        dataSet.setFormSize(5f);
+//        dataSet.setLineWidth(2f);
+//        dataSet.setDrawCircleHole(false);
+//
+//        final String[] quarters = new String[] { "Q1", "Q2", "Q3", "Q4" };
+//        IndexAxisValueFormatter formatter2 = new IndexAxisValueFormatter();
+//        formatter2.setValues(quarters);
+//
+//        XAxis xAxis = lineChart.getXAxis();
+//        lineChart.getAxisLeft().setEnabled(false);
+//        xAxis.setValueFormatter(formatter2);
+//
+//        LineData lineData = new LineData(dataSet);
+/********************************************************/
+        List<BarEntry> entries = new ArrayList<>();
+//        entries.add(new BarEntry(0f, 30f));
+//        entries.add(new BarEntry(1f, 80f));
+//        entries.add(new BarEntry(2f, 60f));
+//        entries.add(new BarEntry(3f, 50f));
+//        // gap of 2f
+//        entries.add(new BarEntry(5f, 70f));
+//        entries.add(new BarEntry(6f, 60f));
+//        entries.add(new BarEntry(7f, 40f));
+//        entries.add(new BarEntry(8f, 75f));
+//        entries.add(new BarEntry(9f, 55f));
+        for (int i = 0; i < 40; i = i + 2) {
+          entries.add(new BarEntry(i - 2, i));
+        }
+
+        BarDataSet set = new BarDataSet(entries, "BarDataSet");
+
+        BarData data = new BarData(set);
+        data.setBarWidth(0.9f); // set custom bar width
+        barChart.setData(data);
+//        barChart.setFitBars(true); // make the x-axis fit exactly all bars
+        barChart.setDrawGridBackground(false);
+        barChart.setGridBackgroundColor(Color.GREEN);
+        barChart.animateX(3000);
+//        barChart.setTouchEnabled(false);
+        barChart.setScaleEnabled(false);
+        barChart.setDrawBorders(false);
+
+        barChart.setDragYEnabled(false);
+//        barChart.setPinchZoom(false);
+        barChart.invalidate(); // refresh
+
+
+//        lineChart.setData(barChart);
+//        lineChart.invalidate();
+        barChart.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        ln.addView(barChart);
+
+        viewGroup.addView(ln);
+        return new ViewHolderDummy(viewGroup);
+      }
       case 5: {/************************TempHolder*/
         ln.setBackgroundColor(Color.BLACK);
         viewGroup.addView(ln);
@@ -118,9 +207,10 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //        params.width = 467;
         params.width = ((recyclerView.getWidth() / 3) * 2) - 23;
 
+
         TextView tv = new TextView(parent.getContext());
-        tv.setBackgroundColor(Color.YELLOW);
-        LinearLayout.LayoutParams paramsTV = new LinearLayout.LayoutParams(300, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        tv.setBackgroundColor(Color.YELLOW);
+        LinearLayout.LayoutParams paramsTV = new LinearLayout.LayoutParams(400, ViewGroup.LayoutParams.WRAP_CONTENT);
         paramsTV.gravity = Gravity.CENTER | Gravity.LEFT;
         paramsTV.leftMargin = 10;
 //      paramsTV.rightMargin = 8;
@@ -158,13 +248,28 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         //setting up the option button and what's under it
         ViewGroup optionButtonHolder = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(R.layout.circular_button, parent, false);
         FloatingActionsMenu fMenu = (FloatingActionsMenu) optionButtonHolder.getChildAt(0);
+
+
         final FloatingActionButton testButton = new FloatingActionButton(fMenu.getContext());
-        testButton.setColorNormal(testButton.getContext().getResources().getColor(R.color.optionButton));
+        testButton.setColorNormal(testButton.getContext().getResources().getColor(R.color.orange));
+        testButton.setColorPressed(testButton.getContext().getResources().getColor(R.color.grey));
+        ShapeDrawable drawable = new ShapeDrawable(new RectShape());
+        drawable.getPaint().setColor(Color.WHITE);
+        testButton.setIconDrawable(drawable);
+
         final FloatingActionButton testButton2 = new FloatingActionButton(fMenu.getContext());
-        testButton2.setColorNormal(testButton.getContext().getResources().getColor(R.color.optionButton));
-        fMenu.addButton(testButton);
+        testButton2.setColorNormal(testButton.getContext().getResources().getColor(R.color.company_name));
+        testButton2.setColorPressed(testButton.getContext().getResources().getColor(R.color.grey));
+        ShapeDrawable drawable2 = new ShapeDrawable(new OvalShape());
+
+        drawable2.getPaint().setColor(Color.WHITE);
+        testButton2.setIconDrawable(drawable2);
+
         fMenu.addButton(testButton2);
+        fMenu.addButton(testButton);
         lnH.addView(optionButtonHolder);
+
+        lnH.setBackground(ln.getContext().getResources().getDrawable(R.drawable.rect_button_border));
 
         viewGroup.addView(lnH);
 //      viewGroup.addView(ln);
@@ -176,8 +281,11 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
          ********************VG==>lnH==>lnV=||*************
          **********************************||==>tv******/
         TextView tv = new TextView(parent.getContext());
-//        tv.setBackgroundColor(Color.YELLOW);
-        LinearLayout.LayoutParams paramsTV = new LinearLayout.LayoutParams(199, 40);
+        final boolean[] textClicked1 = {false};
+        final boolean[] textClicked2 = {false};
+        tv.setBackgroundColor(Color.YELLOW);
+        LinearLayout.LayoutParams paramsTV = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
         paramsTV.gravity = Gravity.CENTER;
 
         ViewGroup rightPanel = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main, parent, false);
@@ -195,24 +303,29 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         final TextView upperText = (TextView) group3.getChildAt(0);
         final TextView lowerText = (TextView) group32.getChildAt(0);
+
         upperText.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            Log.wtf("tag", "CLICKED");
+            Log.wtf("tag", "up CLICKED");
             TransitionManager.beginDelayedTransition(group3, new ChangeBounds());
-            LinearLayout.LayoutParams textParams = (LinearLayout.LayoutParams) upperText.getLayoutParams();
-            if (textClicked1) {
+            final LinearLayout.LayoutParams textParams = (LinearLayout.LayoutParams) upperText.getLayoutParams();
+            if (textClicked1[0]) {
+              Log.wtf("tag", "up text size::" + upperText.getTextSize());
+//            if(upperText.getTextSize()==55){
               upperText.setTextSize(40);
               lowerText.setTextSize(40);
               imgParams.topMargin = 0;
-              textClicked1 = false;
-              Log.wtf("tag", "50");
+              textClicked1[0] = false;
+              textClicked2[0] = false;
+              Log.wtf("tag", "up 40");
             } else {
               upperText.setTextSize(55);
               lowerText.setTextSize(20);
               imgParams.topMargin = -20;
-              textClicked1 = true;
-              Log.wtf("tag", "80");
+              textClicked1[0] = true;
+              textClicked2[0] = true;
+              Log.wtf("tag", "up 55");
 
             }
             upperText.setLayoutParams(textParams);
@@ -222,20 +335,23 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         lowerText.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            Log.wtf("tag", "CLICKED");
+            Log.wtf("tag", "down CLICKED");
             TransitionManager.beginDelayedTransition(group3, new ChangeBounds());
             LinearLayout.LayoutParams textParams = (LinearLayout.LayoutParams) upperText.getLayoutParams();
-            if (textClicked2) {
+            if (textClicked2[0]) {
+//            if(lowerText.getTextSize()==55){
               lowerText.setTextSize(40);
               upperText.setTextSize(40);
               imgParams.topMargin = 0;
-              textClicked2 = false;
+              textClicked2[0] = false;
+              textClicked1[0] = false;
               Log.wtf("tag", "50");
             } else {
               lowerText.setTextSize(55);
               upperText.setTextSize(20);
               imgParams.topMargin = 20;
-              textClicked2 = true;
+              textClicked2[0] = true;
+              textClicked1[0] = true;
               Log.wtf("tag", "80");
 
             }
@@ -246,11 +362,12 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         paramsTV.leftMargin = -10;
 //      paramsTV.rightMargin = 8;
         tv.setLayoutParams(paramsTV);
-        tv.setPadding(10, 0, 0, 0);
+        tv.setPadding(20, 0, 20, 0);
+        tv.setMaxLines(2);
 
         LinearLayout lnH = new LinearLayout(parent.getContext());
         LinearLayout lnV = null;
-        LinearLayout.LayoutParams paramsH = new LinearLayout.LayoutParams((recyclerView.getWidth() / 3) - 15, 250);
+        LinearLayout.LayoutParams paramsH = new LinearLayout.LayoutParams((recyclerView.getWidth() / 3) - 6, (recyclerView.getWidth() / 3) + 15);
         lnH.setLayoutParams(paramsH);
         lnH.setOrientation(LinearLayout.HORIZONTAL);
         lnH.setBackgroundColor(lnH.getContext().getResources().getColor(R.color.white_ish));
@@ -302,6 +419,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         fMenu.addButton(testButton2);
         fMenu.addButton(testButton);
         lnH.addView(optionButtonHolder);
+        lnH.setBackground(lnH.getContext().getResources().getDrawable(R.drawable.rect_button_border));
 
         viewGroup.addView(lnH);
         return new ViewHolderDummy(viewGroup);
@@ -323,7 +441,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         final LinearLayout lnH = new LinearLayout(parent.getContext());
         LinearLayout lnV = null;
-        LinearLayout.LayoutParams paramsH = new LinearLayout.LayoutParams((recyclerView.getWidth() / 3) - 15, 250);
+        LinearLayout.LayoutParams paramsH = new LinearLayout.LayoutParams((recyclerView.getWidth() / 3) - 15, (recyclerView.getWidth() / 3) + 15);
 
         LinearLayout.LayoutParams listParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 440);
         lnH.setLayoutParams(paramsH);
@@ -374,7 +492,8 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         ln.post(new Runnable() {
           @Override
           public void run() {
-            recyclerView.setPadding(((recyclerView.getWidth() - (ln.getWidth() * 3)) / 5) + 2, 0, (recyclerView.getWidth() - (ln.getWidth() * 3)) / 5, 0);
+//            recyclerView.setPadding(0, 0, 0, 0);
+//            recyclerView.setPadding(((recyclerView.getWidth() - (ln.getWidth() * 3)) / 5) + 2, 0, (recyclerView.getWidth() - (ln.getWidth() * 3)) / 5, 0);
           }
         });
 //        params.width =(recyclerView.getWidth()/3)-20 ;
@@ -397,10 +516,45 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     if (nonCastObject == null) {
       Log.wtf("tag", "null cast object?");
     }
+    if (position == 1) {
+      try {
+        ViewHolderDummy viewHolderDummy = (ViewHolderDummy) holder;
+        final ViewGroup lvl1 = (ViewGroup) viewHolderDummy.getvGroup().getChildAt(0);
+//        Log.wtf("tag", "what is the class::" + lvl1.getClass());
+        lvl1.setBackgroundColor(Color.GREEN);
+      } catch (Exception e) {
+
+      }
+    }
+    if (position == 0) {
+      try {
+        ViewHolderDummy viewHolderDummy = (ViewHolderDummy) holder;
+        final ViewGroup lvl1 = (ViewGroup) viewHolderDummy.getvGroup().getChildAt(0);
+        Log.wtf("tag", "what is the class::" + lvl1.getClass());
+        lvl1.setBackgroundColor(Color.BLUE);
+      } catch (Exception e) {
+
+      }
+    }
 
     final WidgetItem wi = (WidgetItem) nonCastObject;
 //    switch (holder.getItemViewType()) {
     switch (wi.getType()) {
+      case "Graph": {
+        ViewHolderDummy viewHolderDummy = (ViewHolderDummy) holder;
+        final ViewGroup lvl1 = (ViewGroup) viewHolderDummy.getvGroup().getChildAt(0);
+        ViewGroup lvl2 = (ViewGroup) lvl1.getChildAt(0);
+        lvl2.setOnTouchListener(new View.OnTouchListener() {
+          @Override
+          public boolean onTouch(View v, MotionEvent event) {
+            RecyclerView recView = (RecyclerView) lvl1.getParent().getParent();
+            recView.requestDisallowInterceptTouchEvent(true);
+            return false;
+          }
+        });
+        Log.wtf("tag", "what is the class::" + lvl2.getClass());
+      }
+      break;
       case "Widget_T": {
         ViewHolderDummy viewHolder = (ViewHolderDummy) holder;
         //just to bypass an error i was getting
@@ -421,7 +575,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         widget.setLayoutParams(params);
 
         ImageView iv = (ImageView) downLvl3.getChildAt(0);
-        iv.setImageDrawable(iv.getContext().getResources().getDrawable(R.drawable.farenheit));
+        iv.setImageDrawable(iv.getContext().getResources().getDrawable(R.drawable.thermometertemp));
 
         TextView title = (TextView) downLvl2.getChildAt(0);
         title.setText(wi.getTilte());
@@ -546,7 +700,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
       }
       break;
       case "Info": {
-        final List<Integer> shapeSaver = new ArrayList<>();
+        List<Integer> shapeSaver = new ArrayList<>();
 
         final ViewHolderDummy viewHolder = (ViewHolderDummy) holder;
         final ViewGroup downLvl = (ViewGroup) viewHolder.getvGroup().getChildAt(0);
@@ -560,182 +714,264 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         ViewGroup devicesHolder = (ViewGroup) scrollViewList.getChildAt(0);
 //        devicesHolder.removeAllViews();
 
-        List<List<String>> bigDaddy = wi.getInfo();//TODO: The list is start with get filled gradually (1 then 2, 3...) due to being connected directly to db, change the input source to realm, than future update from firebase
+        List<List<String>> bigDaddy = wi.getSelectedDevices();//TODO: The list is start with get filled gradually (1 then 2, 3...) due to being connected directly to db, change the input source to realm, than future update from firebase
 
+        final FloatingActionsMenu optionBtn = ((ViewHolderDummy) holder).getOptionButton();
+
+        if (((ViewHolderDummy) holder).getOptionButton() != null) {
+          if (optionBtn != null) {/****Option Button Click  EVENT **/
+            optionBtn.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                optionBtn.expand();
+                Log.wtf("tag", "OPTION BUTTON SELECTED");
+                listener.onOptionButtonReady(((ViewHolderDummy) holder).getOptionButton(), position);
+              }
+            });
+          }
+        }
         /************************/
-        if(devicesHolder.getChildCount()==4)
+        Log.wtf("tag", "wi.getSelectedDevicesNumber" + wi.getSelectedDevicesNumber());
+        if ((devicesHolder.getChildCount() + bigDaddy.size()) > wi.getSelectedDevicesNumber())
           devicesHolder.removeAllViews();
-
 
 
         Log.wtf("tag", "holder size::" + devicesHolder.getChildCount());
         Log.wtf("tag", "info display::" + bigDaddy);
-        if (wi.getInfo() != null){
-          Collections.reverse(bigDaddy);//Just to keep the unchanged value at the bottom (when you became what you hate)
-          for (int i = 0; i < bigDaddy.size(); i++) {
-            shapeSaver.add(0);//the list responsible of the values for the time/date switch events
-          }
-        if (bigDaddy.size() > 1)//for testing if the user worth of a gift or not (picking just one device)
-          for (int i = 0; i < bigDaddy.size(); i++) {
-            Log.wtf("tag", "countingggggg" + i);
-            final String deviceName = bigDaddy.get(i).get(0);
-            final String timeAndDate = bigDaddy.get(i).get(1);
-            String[] splitter = timeAndDate.split(" ");
-            //Due to how cooperative the backend team was, i had to add the "0" in front of every one digit number
-            for (int h = 0; h < splitter.length; h++) {
-              if (splitter[h].length() == 1) {
-                splitter[h] = "0" + splitter[h];
-              }
+
+        if (wi.getSelectedDevices() != null && wi.getSelectedDevicesNumber() != null) {
+          if (bigDaddy.size() == wi.getSelectedDevicesNumber()) {
+            Collections.reverse(bigDaddy);//Just to keep the unchanged value at the bottom (or this what i think it should be doing :P)
+//            Log.wtf("tag", "YOU BETTER  BE  4::" + wi.getSelectedDevicesNumber());
+
+//            if (shapeSaverList.size() == 0) {
+
+            boolean foundIt = false;
+            for (TextShapeSaver tsS : shapeSaverList) {
+              if (tsS.devicePos == holder.getAdapterPosition())
+                foundIt = true;
+//              Log.wtf("tag", "refilling the shapeSaver");
             }
-            final String time = splitter[0] + " : " + splitter[1] + " : " + splitter[2];
-            final String date = splitter[3] + "/" + splitter[4] + "/" + splitter[5];
-
-            //Creating the textView's holder
-            LinearLayout device = new LinearLayout(this.context);
-            device.setOrientation(LinearLayout.HORIZONTAL);
-            device.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-            //the textViews...
-            final TextView leftSide = new TextView(this.context);
-            final TextView rightSide = new TextView(this.context);
-            TextView etc = new TextView(this.context);
-
-            leftSide.setTextSize(19);
-            rightSide.setTextSize(19);
-
-            leftSide.setSingleLine(true);
-            rightSide.setSingleLine(true);
-
-            leftSide.setText(deviceName);
-            rightSide.setText(date);
-
-            leftSide.setBackgroundColor(Color.GREEN);
-            rightSide.setBackgroundColor(Color.YELLOW);
-
-            leftSide.setLayoutParams(new LinearLayout.LayoutParams(240, ViewGroup.LayoutParams.WRAP_CONTENT));
-            rightSide.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            rightSide.setGravity(Gravity.CENTER);
-            device.addView(leftSide);
-
-            if (leftSide.length() > 12) {
-              etc.setText("...");
-              etc.setTextSize(19);
-              device.addView(etc);
+            if (!foundIt) {
+//              Log.wtf("tag", "bigdady size" + bigDaddy.size());
+              for (int h = 0; h < bigDaddy.size(); h++) {
+//                Log.wtf("tag", "refilling the shapeSaver");
+                shapeSaver.add(0);//the list responsible of the values for the time/date switch events
+              }
+              TextShapeSaver tss = new TextShapeSaver();
+              tss.devicePos = holder.getAdapterPosition();
+              tss.shapeList = shapeSaver;
+              shapeSaverList.add(tss);
             }
-            device.addView(rightSide);
-            devicesHolder.addView(device);
 
-            leftSide.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {//TODO: make the hold to show the full name of the device
-                if(leftSide.getLayoutParams().width==450)
-                  leftSide.setLayoutParams(new LinearLayout.LayoutParams(220, ViewGroup.LayoutParams.WRAP_CONTENT));
-                else
-                  leftSide.setLayoutParams(new LinearLayout.LayoutParams(450, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            if (bigDaddy.size() > 1)//for testing if the user worth of a gift or not (picking just one device)(tfw you are EA)
+              for (int i = 0; i < bigDaddy.size(); i++) {
+//                Log.wtf("tag", "number of devices detected under BigDaddy: " + i);
+                final String deviceName = bigDaddy.get(i).get(0);
+                final String timeAndDate = bigDaddy.get(i).get(1);
+                String[] splitter = timeAndDate.split(" ");
+                //Due to how cooperative the backend team was, i had to add the "0" in front of every one digit number
+                for (int h = 0; h < splitter.length; h++) {
+                  if (splitter[h].length() == 1) {
+                    splitter[h] = "0" + splitter[h];
+                  }
+                }
+                final String time = splitter[0] + " : " + splitter[1] + " : " + splitter[2];
+
+                final String date = splitter[3] + "/" + splitter[4] + "/" + splitter[5];
+
+                //Creating the textView's holder
+                final LinearLayout device = new LinearLayout(this.context);
+                device.setOrientation(LinearLayout.HORIZONTAL);
+                device.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+                //the textViews...
+                final TextView leftSide = new TextView(this.context);
+                final TextView rightSide = new TextView(this.context);
+                final TextView etc = new TextView(this.context);
+
+                leftSide.setTextSize(19);
+                rightSide.setTextSize(19);
+
+                leftSide.setSingleLine(true);
+                rightSide.setSingleLine(true);
+
+                leftSide.setText(deviceName);
+                rightSide.setText(date);
+
+//                leftSide.setBackgroundColor(Color.GREEN);
+//                rightSide.setBackgroundColor(Color.YELLOW);
+
+                leftSide.setLayoutParams(new LinearLayout.LayoutParams(recyclerView.getWidth() / 3, ViewGroup.LayoutParams.WRAP_CONTENT));
+                leftSide.setClickable(true);
+                rightSide.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                rightSide.setGravity(Gravity.RIGHT);
+                rightSide.setId(i);
+                device.addView(leftSide);
+
+                if (leftSide.length() > 12) {
+                  etc.setText("...");
+                  etc.setTextSize(19);
+                  device.addView(etc);
+                }
+                device.addView(rightSide);
+                devicesHolder.addView(device);
+
+//                Log.wtf("tag", "shapeSaverList size::" + shapeSaverList.size());
+                for (TextShapeSaver tss2 : shapeSaverList) {
+                  if (tss2.devicePos == holder.getAdapterPosition()) {
+                    List l = tss2.shapeList;
+                    if (l.get(rightSide.getId()).equals(0)) {
+                      rightSide.setText(date);
+                    } else {
+                      rightSide.setText(time);
+                    }
+                  }
+                }
+                if (leftSide.length() > 12)
+                  leftSide.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                      switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_DOWN:
+                          Log.wtf("tag", "CLICKED  OR  MAYBE TOUCHED");
+//                  if(event.getAction()== MotionEvent.ACTION_DOWN){
+                          leftSide.setLayoutParams(new LinearLayout.LayoutParams(recyclerView.getWidth() / 2, ViewGroup.LayoutParams.WRAP_CONTENT));
+                          if (device.getChildCount() == 3)
+                            etc.setVisibility(View.GONE);
+                          rightSide.setVisibility(View.GONE);
+
+                          RecyclerView recView = (RecyclerView) downLvl.getParent().getParent();
+                          recView.requestDisallowInterceptTouchEvent(true);
+                          return true;
+                        case MotionEvent.ACTION_MOVE:
+                          leftSide.setLayoutParams(new LinearLayout.LayoutParams(recyclerView.getWidth() / 3, ViewGroup.LayoutParams.WRAP_CONTENT));
+                          if (device.getChildCount() == 3)
+                            etc.setVisibility(View.VISIBLE);
+                          rightSide.setVisibility(View.VISIBLE);
+                          return true;
+                        case MotionEvent.ACTION_CANCEL:
+                          leftSide.setLayoutParams(new LinearLayout.LayoutParams(recyclerView.getWidth() / 3, ViewGroup.LayoutParams.WRAP_CONTENT));
+                          if (device.getChildCount() == 3)
+                            etc.setVisibility(View.VISIBLE);
+                          rightSide.setVisibility(View.VISIBLE);
+                          return true;
+                        case MotionEvent.ACTION_OUTSIDE:
+                          leftSide.setLayoutParams(new LinearLayout.LayoutParams(recyclerView.getWidth() / 3, ViewGroup.LayoutParams.WRAP_CONTENT));
+                          if (device.getChildCount() == 3)
+                            etc.setVisibility(View.VISIBLE);
+                          rightSide.setVisibility(View.VISIBLE);
+                          return true;
+                        case MotionEvent.ACTION_UP:
+                          leftSide.setLayoutParams(new LinearLayout.LayoutParams(recyclerView.getWidth() / 3, ViewGroup.LayoutParams.WRAP_CONTENT));
+                          if (device.getChildCount() == 3)
+                            etc.setVisibility(View.VISIBLE);
+                          rightSide.setVisibility(View.VISIBLE);
+                          return true;
+                      }
+
+//                  }
+                      return false;
+                    }
+                  });
+
+                final int finalI = i;
+
+                //switching between date and time
+                rightSide.setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View v) {
+                    for (int h=0;h<shapeSaverList.size();h++) {
+                      if (shapeSaverList.get(h).devicePos == holder.getAdapterPosition()) {
+                        List l = shapeSaverList.get(h).shapeList;
+                        if (l.get(rightSide.getId()).equals(0)) {
+                          rightSide.setText(time);
+                          l.set(rightSide.getId(), 1);
+                        } else {
+                          rightSide.setText(date);
+                          l.set(rightSide.getId(), 0);
+                        }
+                      }
+                    }
+                  }
+                });
+                etc.setOnTouchListener(new View.OnTouchListener() {
+                  @Override
+                  public boolean onTouch(View v, MotionEvent event) {
+                    RecyclerView recView = (RecyclerView) downLvl.getParent().getParent();
+                    recView.requestDisallowInterceptTouchEvent(true);
+                    return false;
+                  }
+
+                });
+                rightSide.setOnTouchListener(new View.OnTouchListener() {
+                  @Override
+                  public boolean onTouch(View v, MotionEvent event) {
+                    RecyclerView recView = (RecyclerView) downLvl.getParent().getParent();
+                    recView.requestDisallowInterceptTouchEvent(true);
+                    return false;
+                  }
+
+                });
               }
-            });
-            final int finalI = i;
+            if (bigDaddy.size() == 1) {
 
-            //switching between date and time
-            rightSide.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-//                if (shapeSaver.get(finalI) == 0) {
-//                  rightSide.setText(time);
-//                  shapeSaver.set(finalI, 1);
-//                } else {
-//                  rightSide.setText(date);
-//                  shapeSaver.set(finalI, 0);
-//                }
-                if(rightSide.getText().toString().contains(":"))
-                  rightSide.setText(date);
-                else
-                  rightSide.setText(time);
+              final String deviceName = bigDaddy.get(0).get(0);
+              final String timeAndDate = bigDaddy.get(0).get(1);
+              String[] splitter = timeAndDate.split(" ");
+              //Due to how cooperative the backend team was, i had to add the "0" in front of every one digit number
+              for (int i = 0; i < splitter.length; i++) {
+                if (splitter[i].length() == 1) {
+                  splitter[i] = "0" + splitter[i];
+                }
               }
-            });
-            etc.setOnTouchListener(new View.OnTouchListener() {
-              @Override
-              public boolean onTouch(View v, MotionEvent event) {
-                RecyclerView recView = (RecyclerView) downLvl.getParent().getParent();
-                recView.requestDisallowInterceptTouchEvent(true);
-                return false;
-              }
+              final String time = "" + splitter[0] + " : " + splitter[1] + " : " + splitter[2];
+              final String date = splitter[3] + "/" + splitter[4] + "/" + splitter[5];
 
-            });
-            leftSide.setOnTouchListener(new View.OnTouchListener() {
-              @Override
-              public boolean onTouch(View v, MotionEvent event) {
-                RecyclerView recView = (RecyclerView) downLvl.getParent().getParent();
-                recView.requestDisallowInterceptTouchEvent(true);
-                return false;
-              }
+              final TextView topText = new TextView(this.context);
+              final TextView timeText = new TextView(this.context);
+              final TextView dateText = new TextView(this.context);
+              final TextView nameText = new TextView(this.context);
 
-            });
-            rightSide.setOnTouchListener(new View.OnTouchListener() {
-              @Override
-              public boolean onTouch(View v, MotionEvent event) {
-                RecyclerView recView = (RecyclerView) downLvl.getParent().getParent();
-                recView.requestDisallowInterceptTouchEvent(true);
-                return false;
-              }
+              topText.setTextSize(16);
+              timeText.setTextSize(30);
+              dateText.setTextSize(15);
+              nameText.setTextSize(15);
 
-            });
-          }
-        if (bigDaddy.size() == 1) {
+              topText.setText("Last update:");
+              timeText.setText(time);
+              dateText.setText(date);
+              nameText.setText(deviceName);
 
-          final String deviceName = bigDaddy.get(0).get(0);
-          final String timeAndDate = bigDaddy.get(0).get(1);
-          String[] splitter = timeAndDate.split(" ");
-          //Due to how cooperative the backend team was, i had to add the "0" in front of every one digit number
-          for (int i = 0; i < splitter.length; i++) {
-            if (splitter[i].length() == 1) {
-              splitter[i] = "0" + splitter[i];
+              timeText.setGravity(Gravity.CENTER);
+              dateText.setGravity(Gravity.CENTER);
+              nameText.setGravity(Gravity.CENTER);
+
+              nameText.setPadding(0, 2, 0, 1);
+
+              devicesHolder.addView(topText);
+              devicesHolder.addView(timeText);
+              devicesHolder.addView(dateText);
+              devicesHolder.addView(nameText);
+
             }
-          }
-          final String time = "" + splitter[0] + " : " + splitter[1] + " : " + splitter[2];
-          final String date = splitter[3] + "/" + splitter[4] + "/" + splitter[5];
-
-          final TextView topText = new TextView(this.context);
-          final TextView timeText = new TextView(this.context);
-          final TextView dateText = new TextView(this.context);
-          final TextView nameText = new TextView(this.context);
-
-          topText.setTextSize(16);
-          timeText.setTextSize(30);
-          dateText.setTextSize(15);
-          nameText.setTextSize(15);
-
-          topText.setText("Last update:");
-          timeText.setText(time);
-          dateText.setText(date);
-          nameText.setText(deviceName);
-
-          timeText.setGravity(Gravity.CENTER);
-          dateText.setGravity(Gravity.CENTER);
-          nameText.setGravity(Gravity.CENTER);
-
-          nameText.setPadding(0, 3, 0, 1);
-
-          devicesHolder.addView(topText);
-          devicesHolder.addView(timeText);
-          devicesHolder.addView(dateText);
-          devicesHolder.addView(nameText);
-
-        }
-        //disable the scroll of the recyclerViw in favor of the scrollView inside the cards when the number of items is more than what the card can hold
-        if (scrollViewList.getChildCount() > 4)
-          scrollViewList.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-              RecyclerView recView = (RecyclerView) downLvl.getParent().getParent();
-              recView.requestDisallowInterceptTouchEvent(true);
-              return false;
-            }
-          });
+            //disable the scroll of the recyclerViw in favor of the scrollView inside the cards when the number of items is more than what the card can hold
+            if (scrollViewList.getChildCount() > 4)
+              scrollViewList.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                  RecyclerView recView = (RecyclerView) downLvl.getParent().getParent();
+                  recView.requestDisallowInterceptTouchEvent(true);
+                  return false;
+                }
+              });
 
 //        LinearLayout lv1 = scrollViewList.getChildAt(0);
-        title.setText("HONOLULU");
-      }
+
+            title.setText(wi.getTilte());
+          }
+        }
       }
       break;
       case "tempHolder": {
@@ -862,10 +1098,16 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //    if (position >= 0 && position <= getItemCount()) {
 //      return;
 //    }
-//    Log.wtf("tag", "WE ARE  UPDATING  BOYS" + mObject.getInfo());
+//    Log.wtf("tag", "WE ARE  UPDATING  BOYS" + mObject.getSelectedDevices());
     this.mListObjects.set(position, mObject);
 
     this.notifyItemChanged(position);
+  }
+
+  public class TextShapeSaver {
+    List<Integer> shapeList = new ArrayList<>();
+    int devicePos = 0;
+
   }
 
 }

@@ -10,7 +10,7 @@
 
   <LinearLayout
     android:id="@+id/theShower"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="top|center"
     android:gravity="top|center"
@@ -21,7 +21,8 @@
       android:layout_width="190dp"
       android:layout_height="109dp"
       android:layout_marginTop="50dp"
-      android:alpha="0.5"
+      android:layout_marginBottom="-5dp"
+      android:alpha=".6"
       android:contentDescription="@string/todo"
       android:src="@drawable/cloud02"
       android:visibility="visible" />
@@ -467,12 +468,11 @@
       android:id="@+id/topShelf"
       android:layout_width="360dp"
       android:layout_height="match_parent"
-      android:layout_gravity="end"
       android:layout_marginTop="300dp">
 
       <LinearLayout
         android:id="@+id/topbox_holder"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="10dp"
@@ -532,7 +532,7 @@
 
   <FrameLayout
     android:id="@+id/bottombox"
-    android:layout_width="348dp"
+    android:layout_width="match_parent"
     android:layout_height="362dp"
     android:layout_gravity="bottom|center"
     android:layout_marginStart="10dp"

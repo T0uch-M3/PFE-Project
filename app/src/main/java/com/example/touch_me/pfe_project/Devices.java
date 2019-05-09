@@ -2,6 +2,10 @@ package com.example.touch_me.pfe_project;
 
 import com.google.firebase.database.PropertyName;
 
+import java.io.IOException;
+import java.io.ObjectStreamException;
+import java.io.Serializable;
+
 import io.realm.RealmObject;
 
 public class Devices extends RealmObject {
@@ -46,7 +50,6 @@ public class Devices extends RealmObject {
 
   public Devices() {
   }
-
 
   public Float getRelativeHumidity() {
     return relativeHumidity;

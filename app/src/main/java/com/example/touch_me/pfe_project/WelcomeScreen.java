@@ -19,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -44,6 +45,8 @@ import com.transitionseverywhere.Rotate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -59,9 +62,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.TransitionManager;
+import androidx.viewpager.widget.ViewPager;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -85,16 +87,14 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   private Toolbar toolbar;
   private TextView toolbarTitle;
   private View portal;
-
   private ItemTouchHelper mItemTouchHelper;
   RecyclerView rvFoodItems;
-
   ArrayList<GreenLand> foodList;
   RecyclerView recyclerView;
   TextView testTV;
   private FlexboxLayoutManager flexboxLayoutManager;
-
   RecyclerView.Adapter catAdapter;
+  ViewPager viewPager;
   /**
    * <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
    */
@@ -110,9 +110,8 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   List<WidgetItem> CAT_IMAGE_IDS = new ArrayList<>();
   int testInt = 0;
   boolean firstTime = true;
-  CatAdapter ca;
   CustomAdapter ca2;
-  private List<List<String>> devicesName = new ArrayList<>();
+  private List<List<String>> devicesNnT = new ArrayList<>();
   private int holyRow = 0;
   int nbrItems = 0; //number of items in the list (not counting button and dummies)
   boolean isRotated = false;
@@ -126,6 +125,14 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   Dialog settingsDialog;
   Boolean cantStopMeNow = true;
   ScheduledThreadPoolExecutor scheduler;
+  Boolean startOffline = false;
+  List<String> checkedDevices = new ArrayList<>();
+  boolean infoExist = false;
+  int devicesNumber = 0;
+  List<String> listForPager;
+  CustomPagerAdapter pagerAdapter = null;
+  boolean runOnce = false;
+  ImageButton imageButton;
 
 
   @Override
@@ -151,109 +158,104 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 //    liveData = (TextView) findViewById(R.id.liveData);
     btn_Settings = (ImageButton) findViewById(R.id.settingButon);
     the_holder = (ViewGroup) findViewById(R.id.the_holder);
+    viewPager = (ViewPager) findViewById(R.id.viewPager);
+    imageButton = findViewById(R.id.imageButton);
 
 
-/**************************WORKS******************************/
-//    rvFoodItems = (RecyclerView) findViewById(R.id.rvFoodItems);
-//
-//    rvFoodItems.setLayoutManager(new LinearLayoutManager(this));
-//
-//    foodAdapter = new RecyclerListAdapter(foodList, this);
-//    rvFoodItems.setAdapter(foodAdapter);
-//
-//    ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(foodAdapter);
-//    mItemTouchHelper = new ItemTouchHelper(callback);
-//    mItemTouchHelper.attachToRecyclerView(rvFoodItems);
-/***********************WORKS*************************/
+/********************************************************/
+
     ca2 = new CustomAdapter(WelcomeScreen.this, recyclerView);
 //    ca2 = new CustomAdapter(this, recyclerView.getWidth());
 //
 //
+    listForPager = new ArrayList<>();
+//    pagerAdapter.addView (v0, 0);
+//    pagerAdapter.notifyDataSetChanged();
+//    listForPager.add("1");
+//    listForPager.add("2");
+//    listForPager.add("3");
+
+    pagerAdapter = new CustomPagerAdapter(this, listForPager);
+    viewPager.setAdapter(pagerAdapter);
+    viewPager.setOffscreenPageLimit(5);
+    viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+      @Override
+      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//        Log.wtf("tag", "Position::" + position);
+//        Log.wtf("tag", "PositionOffset::" + positionOffset);
+//        Log.wtf("tag", "positionOffsetPixels::" + positionOffsetPixels);
+//        Log.wtf("tag", "RUN AT  ONCE::" + runOnce);
+        if (positionOffset != 0 && !runOnce) {
+//          Log.wtf("tag", "SAVE  THINGS  UP");
+          Log.wtf("tag", "Position source::" + pagerAdapter.currentPosition);
+          pagerAdapter.manageObjectList("SAVE", pagerAdapter.currentPosition, null);
+          runOnce = true;
+        }
+        if (positionOffset == 0) {
+          runOnce = false;
+        }
+
+      }
+
+      @Override
+      public void onPageSelected(int position) {
+//        Log.wtf("tag", "PAGE SCROLLED::" + position);
+        pagerAdapter.manageObjectList("SWIPE", position, null);
+        pagerAdapter.notifyDataSetChanged();
+
+      }
+
+      @Override
+      public void onPageScrollStateChanged(int state) {
+
+      }
+    });
+
+
     flexlayout(ca2);
     demoHolder();
-//
-//
-//    addingWidget(ca2, null);
-//
-//    ca2.setCustomObjectListener(new MyCustomObjectListener() {
-//      @Override
-//      public void onOptionButtonReady(View v, int position) {
-//        Log.wtf("tag", "BUTTON PRESSED AT  POSITIoN::" + position);
-//      }
-//
-//      @Override
-//      public void onObjectReady() {
-//        Log.wtf("tag", "INITIATE LISTENER ONCE???????????");
-//        genesis(ca2);
-//      }
-//    });
 
-
-//    networkthingy();
-
-//    Realm.init(this);
-//
-//
-//    RealmConfiguration realmConfig = new RealmConfiguration.Builder()
-//      .name("test1.realm")
-//      .schemaVersion(0)
-////      .deleteRealmIfMigrationNeeded()
-//      .build();
-//
-//    Realm.setDefaultConfiguration(realmConfig);
-//
-////    Realm realm = null;
-//    realm = Realm.getInstance(realmConfig);
-
-
-//    realm.executeTransaction(new Realm.Transaction() {
-//      @Override
-//      public void execute(Realm realm) {
-//        final GreenLand wo = realm.createObject(GreenLand.class);
-//        wo.setTemperature(000);
-//        wo.setHumidity(0000f);
-//        realm.insertOrUpdate(wo);
-//        realm.deleteAll();//in case of deletion
-//      }
-//    });
-
-//
-//    RealmResults<GreenLand> result = realm.where(GreenLand.class)
-//      .findAll();
-//
-//    Log.wtf("tag", "WHAT WE got here??" + result);
-
-//    RealmResults<GreenLand> result = realm.where(GreenLand.class).findAll();
-//
-//
-//    Log.wtf("tag", "WHAT WE got here??" + result);
-
-
-//    realm.addChangeListener(new RealmChangeListener<Realm>() {
-//      @Override
-//      public void onChange(Realm realm) {
-////        Log.wtf("tag", "DATABSE CHANGEDDDDD");
-//        RealmResults<GreenLand> result = realm.where(GreenLand.class).findAll();
-//
-//
-//        Log.wtf("tag", "WHAT WE got here??" + result);
-//      }
-//    });
 
     //initializing the service receiver
     mReceiver = new ServiceDataReceiver(new Handler());
     mReceiver.setReceiver(this);
 
 
+    firebaseStaticConfig();
     firebaseConf();
-//    firebaseStaticConfig();
-
+    final int[] recyclerCounter = {0};
     btn_Settings.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+        RecyclerView recyclerView = new RecyclerView(viewPager.getContext());
+
+        if (recyclerCounter[0] == 0){
+          recyclerView.setBackgroundColor(Color.BLACK);
+          recyclerView.setTag("BLACK");
+        }
+
+        if (recyclerCounter[0] == 1){
+          recyclerView.setBackgroundColor(Color.GRAY);
+          recyclerView.setTag("GRAY");
+        }
+
+        if (recyclerCounter[0] == 2){
+          recyclerView.setBackgroundColor(Color.RED);
+          recyclerView.setTag("RED");
+        }
+
+        pagerAdapter.addView(recyclerView);
+
+//        pagerAdapter.manageObjectList("NEW", NULL);
+//        pagerAdapter.restoreState();
+        recyclerCounter[0]++;
+        pagerAdapter.notifyDataSetChanged();
+
         Thread thread = new Thread(new Runnable() {
           @Override
           public void run() {
+            refreshConnection();
+
             TransitionManager.beginDelayedTransition(the_holder, new Rotate());
             btn_Settings.setRotation(isRotated ? 0 : 50);
             if (isRotated)
@@ -269,6 +271,37 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 
       }
     });
+    imageButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        for (CustomPagerAdapter.WidgetSettings ws : pagerAdapter.settingsList) {
+          Log.wtf("tag", "Position " + ws.position + " holyROW?? " + ws.holyRow);
+//          if(ws.position==pagerAdapter.currentPosition)
+//            pagerAdapter.rec
+//          Log.wtf("tag", "list size 1?? " + pagerAdapter.settingsList.get(1).CAT_IMAGE_IDS.size());
+        }
+        for(int h = 0; h<pagerAdapter.recyclerViewList.size();h++){
+          RecyclerView rv = (RecyclerView) pagerAdapter.recyclerViewList.get(h);
+          if(h==pagerAdapter.currentPosition)
+            rv.setBackgroundColor(Color.YELLOW);
+          Log.wtf("tag", "current position:: "+pagerAdapter.currentPosition+" holyRow::"+pagerAdapter.holyRow);
+        }
+
+        pagerAdapter.notifyDataSetChanged();
+      }
+    });
+
+    //Will the app start with offline data or not
+    SharedPreferences peref = getSharedPreferences("forSettings", 0);
+    Boolean boo = peref.getBoolean("startOffline", true);
+    Log.wtf("tag", "boo::" + boo);
+    if (boo) {
+      startOffline = true;
+      Log.wtf("tag", "APP  STARTED OFFLINE");
+    } else {
+      startOffline = false;
+      Log.wtf("tag", "APP  STARTED ONLINE");
+    }
 
 
     //======================OLD===================================
@@ -288,6 +321,36 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 //    });
 //    itemTouchHelper.attachToRecyclerView(rvFoodItems);
 //=========================OLD===================================
+
+
+  }
+
+  public void refreshConnection() {
+    DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+    connectedRef.addValueEventListener(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot snapshot) {
+        boolean connected = snapshot.getValue(Boolean.class);
+        if (connected) {
+          Log.wtf("tag", "Successfully connected \\o/");
+          SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
+          SharedPreferences.Editor editor = mPrefs.edit();
+          editor.putBoolean("startOffline", false);
+          startOffline = false;
+        } else {
+          Log.wtf("tag", "Still no connection :(");
+          SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
+          SharedPreferences.Editor editor = mPrefs.edit();
+          editor.putBoolean("startOffline", false);
+          startOffline = true;
+        }
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError error) {
+        Log.wtf("tag", "Listener was cancelled");
+      }
+    });
   }
 
   @Override
@@ -346,11 +409,22 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 
 
     });
+
   }
 
   @Override
   public void onReceiveResult(int resultCode, Bundle resultData) {
-    Log.wtf("tag", "here we go:" + resultData.getString("offlineMode"));
+//    devicesNnT = resultData.getParcelableArrayList("search.resultset");
+//    Log.wtf("tag", "here we go:" + resultData.getStringArrayList("deviceNameList"));
+//    Log.wtf("tag", "here we go:" + resultData.getStringArrayList("deviceDateList"));
+    List<String> list = resultData.getStringArrayList("deviceNameList");
+    for (int i = 0; i < list.size(); i++) {
+      List mainList = new ArrayList();
+      mainList.add(list.get(i));
+      mainList.add(resultData.getStringArrayList("deviceDateList").get(i));
+      devicesNnT.add(mainList);
+    }
+//    Log.wtf("tag", "what we REALLLY got here::" + devicesNnT);
   }
 
   public void toggleSettings() {
@@ -924,132 +998,60 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   }
 
   public void firebaseStaticConfig() {
-//    final GreenLand[] wo = {null};
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    final DatabaseReference myRef2 = database.getReference().child("Green_Land");
+    Query query = database.getReference();
 
-    Realm.init(WelcomeScreen.this);
-
-    RealmConfiguration realmConfig = new RealmConfiguration.Builder()
-      .name("test1.realm")
-      .schemaVersion(0)
-//      .deleteRealmIfMigrationNeeded()
-      .build();
-
-    Realm.setDefaultConfiguration(realmConfig);
-
-    realm = Realm.getInstance(realmConfig);
-//
-    realm.executeTransaction(new Realm.Transaction() {
+    query.addListenerForSingleValueEvent(new ValueEventListener() {
       @Override
-      public void execute(Realm realm) {
-//                  for(int i = 0; i<10;i++){
-//                    final GreenLand wo = realm.createObject(GreenLand.class);
-//                    wo.setTemperature(i+i);
-//                    wo.setHumidity(i+5f);
-//                    realm.insertOrUpdate(wo);
-//                  }
+      public void onDataChange(@NonNull final DataSnapshot dataSnapshotTop) {
+        Log.wtf("tag", "it should be 4::" + dataSnapshotTop.getChildrenCount());
+        devicesNumber = (int) dataSnapshotTop.getChildrenCount();
 
-//        realm.deleteAll();//in case of deletion
-      }
-    });
+        for (final DataSnapshot childNode : dataSnapshotTop.getChildren()) {
+//          Log.wtf("tag", "it's children count::" + dataSnapshotTop.getChildrenCount());
+          DatabaseReference childRef = FirebaseDatabase.getInstance().getReference().child(childNode.getKey());
+          final Query query = childRef.limitToLast(1);
 
-//
-    RealmResults<GreenLand> result = realm.where(GreenLand.class).findAll();
-    Log.wtf("tag", "WHAT WE got here UI THREAD??" + result.size());
-
-
-    Thread thread = new Thread(new Runnable() {
-      @Override
-      public void run() {
-
-        myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
-          @Override
-          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            Log.wtf("tag", "STATIC  MOFOOOOOOOOOO:::" + dataSnapshot.getChildrenCount());
-            for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//          devicesName.add(snapshot.getKey());
-
-//          List<String> list = new ArrayList<String>(2);
-//          list.add(snapshot.getKey());
-//          devicesName.add(list);
-
-//              realm.executeTransaction(new Realm.Transaction() {
-//                @Override
-//                public void execute(Realm realm) {
-//                  final GreenLand wo = realm.createObject(GreenLand.class);
-//                  wo.setTemperature(000);
-//                  wo.setHumidity(0000f);
-//                  realm.insertOrUpdate(wo);
-////                  realm.deleteAll();//in case of deletion
-//                }
-//              });
-
-
+          query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//              Log.wtf("tag", "main Node::" + childNode.getKey());
               try {
-                realm.executeTransaction(new Realm.Transaction() {
-                  @Override
-                  public void execute(Realm realm) {
-                    GreenLand wo = new GreenLand();
-
-
-                    if (snapshot.child("Time").toString() != null && snapshot.child("Temperature") != null) {
-
-//                      wo.setTime(snapshot.child("Time").getValue().toString());
-//                      wo.setHumidity(Float.valueOf(snapshot.child("Humidity").getValue().toString()));
-//                      wo.setTemperature(Float.valueOf(snapshot.child("Temperature").getValue().toString()));
-//                      wo.setBattery(Double.valueOf(snapshot.child("Battery_Level").getValue().toString()));
-
-
-//                wo.setTemperature(69);
-//                      realm.insertOrUpdate(wo);
-                    }
-//                    realm.deleteAll();//in case of deletion
-                  }
-                });
-
-//                RealmResults<GreenLand> result = realm.where(GreenLand.class).findAllAsync();
-//                Log.wtf("tag", "WHAT WE got here??" + result.size());
-
-//                if (wo[0].getTime().equals("15 19 46 2019 4 20"))
-//                  Log.wtf("tag", "TIME value????  " + wo[0].getTime());
+                for (DataSnapshot dataSnapshotChild : dataSnapshot.getChildren()) {
+//                  for (DataSnapshot dataSnapshotChild2 : dataSnapshotChild.getChildren())
+//                    Log.wtf("tag", "it's children time::" + dataSnapshotChild2.getKey());// yes it's working
+                  List<String> list = new ArrayList<>();
+                  List<List<String>> biggerList = new ArrayList<>();
+                  list.add(childNode.getKey());
+                  list.add(dataSnapshotChild.child("Time").getValue().toString());
+                  biggerList.add(list);
+                  if (dataSnapshotTop.getChildrenCount() == biggerList.size())
+                    devicesNnT = biggerList;
+                  Log.wtf("tag", "deviceNnT from STATIC::" + devicesNnT);
+                }
               } catch (Exception e) {
-                e.printStackTrace();
+
               }
+
+//              Log.wtf("tag", "it's children count::" + dataSnapshotUnder);
             }
 
-//        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//          Log.wtf("tag", "keyValue::" + snapshot.getKey());
-//          try{
-//          String time = snapshot.child("rxInfo/0/time").getValue().toString();
-//
-//          Log.wtf("tag", "time ::" + "" + "::" + time);
-//          }catch (NullPointerException e){
-//            Log.wtf("tag","NUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUULLLLLLLLLLLLLLLL"+snapshot.getKey());
-//          }
-//        }
-          }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-          @Override
-          public void onCancelled(@NonNull DatabaseError databaseError) {
-            Log.wtf("tag", "WHO  CANCELED  ITTTTTTTT????????,," + databaseError);
-          }
-        });
+            }
 
+          });
+        }
       }
 
+      @Override
+      public void onCancelled(@NonNull DatabaseError databaseError) {
+
+      }
     });
-    thread.start();
-
-//    realm.addChangeListener(new RealmChangeListener<Realm>() {
-//      @Override
-//      public void onChange(Realm realm) {
-//        Log.wtf("tag", "DATABSE CHANGEDDDDD");
-//      }
-//    });
-
-
   }
+
 
   public void firebaseConf() {
 
@@ -1147,21 +1149,27 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
      */
     timeRef.addListenerForSingleValueEvent(new ValueEventListener() {
       @Override
-      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-        Log.wtf("tag", "it should be 4::" + dataSnapshot.getChildrenCount());
+      public void onDataChange(@NonNull final DataSnapshot dataSnapshotTop) {
+        Log.wtf("tag", "it should be 4::" + dataSnapshotTop.getChildrenCount());
+        devicesNumber = (int) dataSnapshotTop.getChildrenCount();
 
+        for (final DataSnapshot childNode : dataSnapshotTop.getChildren()) {
 
-        for (final DataSnapshot childNode : dataSnapshot.getChildren()) {
           DatabaseReference childRef = FirebaseDatabase.getInstance().getReference().child(childNode.getKey());
-          Query query = childRef.limitToLast(1);
+          final Query query = childRef.limitToLast(1);
+
           query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//              if(infoExist){
+              Log.wtf("tag", "REFERENCE  NAME****" + query.getRef().toString());
+//              }
+              Log.wtf("tag", "what deviceNnT has inside" + devicesNnT);
               try {
                 //for the sake of maintaining only one copy of each of the devices inside the list, the old value must be removed
-                for (int i = 0; i < devicesName.size(); i++) {
-                  if (devicesName.get(i).get(0) == childNode.getKey()) {
-                    devicesName.remove(i);
+                for (int i = 0; i < devicesNnT.size(); i++) {
+                  if (devicesNnT.get(i).get(0) == childNode.getKey()) {
+                    devicesNnT.remove(i);
                   }
                 }
 
@@ -1170,18 +1178,31 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
                 listQuery.add(0, childNode.getKey());
                 listQuery.add(1, dataSnapshot.child("Time").getValue().toString());
 
-                devicesName.add(listQuery);
-                Log.wtf("tag", "DEVICE NAME SIZE::" + devicesName.size());
+
+                devicesNnT.add(listQuery);
+//                Log.wtf("tag", "DEVICE NAME SIZE::" + devicesNnT.size());
 
                 //creating new WidgetItem and insert the big list inside of it
                 for (int i = 0; i < ca2.getObjectList().size(); i++) {
                   if (ca2.getObjectList().get(i).getType() == "Info") {
                     WidgetItem wi = ca2.getObjectList().get(i);
-                    wi.setInfo(devicesName);
+                    Log.wtf("tag", "this item:: " + i + " selected devices:: " + wi.getSelectedDevices());
+                    Log.wtf("tag", "this item:: " + i + " selected devices:: " + wi.getSelectedDevicesNumber());
+
+                    List<String> newNnTList = new ArrayList<>();
+
+                    for (List list : wi.getSelectedDevices()) {
+                      newNnTList.add(list.get(0).toString());
+                    }
+                    Log.wtf("tag", "new newNnTList" + removeUnnecessaryData(newNnTList));
+//                    removeUnnecessaryData(nameList);
+                    wi.setSelectedDevices(removeUnnecessaryData(newNnTList));
+                    wi.setSelectedDevicesNumber((long) newNnTList.size());
+//                    wi.setSelectedDevicesNumber((Long.valueOf(String.valueOf(checkedDevices.size()))));
                     ca2.updateOneObject(i, wi);
                     try {
 
-//                      Log.wtf("tag", "WHAT  We Got iNSIde::" + wi.getInfo());
+//                      Log.wtf("tag", "WHAT  We Got iNSIde::" + wi.getSelectedDevices());
                     } catch (IndexOutOfBoundsException e) {
                       Log.wtf("tag", "SOMETHING NOT RIGHT!!!");
                     }
@@ -1222,70 +1243,74 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
       }
     });
 
-    query1.addChildEventListener(new ChildEventListener() {
-      @Override
-      public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-        Log.wtf("tag", "ADDED");
-
-        try {
-          Log.wtf("tag", "key::" + dataSnapshot.getKey());
-          Log.wtf("tag", "CA2::" + ca2.getItemCount());
-//          liveData.setText(dataSnapshot.child("Time").getValue().toString());
-
-          for (int i = 0; i < ca2.getObjectList().size(); i++) {
-            Log.wtf("tat", "INSDIE  THE FOR LOOP");
-            if ((ca2.getObjectList().get(i).getDisplayValue() == "Temperature" && ca2.getObjectList().get(i).getType() == "Widget_G")) {
-              Log.wtf("tat", "NOW  WE  CHAnGE  THE WIdGET  DATA");
-              ArcProgress cp = (ArcProgress) ca2.getObjectList().get(i).getWidget();
-              cp.setBottomText("LMBAO");
-              cp.setProgress(6666);
-              WidgetItem wi = ca2.getObjectList().get(i);
-              wi.setWidget(cp);
-              ca2.updateOneObject(i, wi);
-//              ca.notifyItemInserted(0);
-//              Log.wtf("tag", "WE GOT THEMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM:::" + i);
-            }
-          }
-
-//          try {
-//            listQuery1.remove(1);
-//          } catch (Exception e) {
-//            Log.wtf("tag", "there's nothing to delete in this position");
+//    query1.addChildEventListener(new ChildEventListener() {
+//      @Override
+//      public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//        //change the config values of offline setting
+//        SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
+//        SharedPreferences.Editor editor = mPrefs.edit();
+//        editor.putBoolean("startOffline", false);
+//        startOffline = false;
+//
+//        try {
+//          Log.wtf("tag", "key::" + dataSnapshot.getKey());
+//          Log.wtf("tag", "CA2::" + ca2.getItemCount());
+////          liveData.setText(dataSnapshot.child("Time").getValue().toString());
+//
+//          for (int i = 0; i < ca2.getObjectList().size(); i++) {
+//            Log.wtf("tat", "INSDIE  THE FOR LOOP");
+//            if ((ca2.getObjectList().get(i).getDisplayValue() == "Temperature" && ca2.getObjectList().get(i).getType() == "Widget_G")) {
+//              Log.wtf("tat", "NOW  WE  CHAnGE  THE WIdGET  DATA");
+//              ArcProgress cp = (ArcProgress) ca2.getObjectList().get(i).getWidget();
+//              cp.setBottomText("LMBAO");
+//              cp.setProgress(6666);
+//              WidgetItem wi = ca2.getObjectList().get(i);
+//              wi.setWidget(cp);
+//              ca2.updateOneObject(i, wi);
+////              ca.notifyItemInserted(0);
+////              Log.wtf("tag", "WE GOT THEMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM:::" + i);
+//            }
 //          }
 //
-//          listQuery1.add(1, dataSnapshot.child("Time").getValue().toString());
-//          devicesName.add(listQuery1);
-
-//          Log.wtf("tag", "WHAT WE GOT INSDIE???::" + listQuery1);
-
-//          }
-        } catch (NullPointerException e) {
-          Log.wtf("tag", "NYULLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
-        }
-
-
-      }
-
-      @Override
-      public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-        Log.wtf("tag", "CHANGED");
-      }
-
-      @Override
-      public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-        Log.wtf("tag", "REMOVED");
-      }
-
-      @Override
-      public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-        Log.wtf("tag", "MOVED");
-      }
-
-      @Override
-      public void onCancelled(@NonNull DatabaseError databaseError) {
-        Log.wtf("tag", "CANCELLLED" + databaseError.getMessage());
-      }
-    });
+////          try {
+////            listQuery1.remove(1);
+////          } catch (Exception e) {
+////            Log.wtf("tag", "there's nothing to delete in this position");
+////          }
+////
+////          listQuery1.add(1, dataSnapshot.child("Time").getValue().toString());
+////          devicesNnT.add(listQuery1);
+//
+////          Log.wtf("tag", "WHAT WE GOT INSDIE???::" + listQuery1);
+//
+////          }
+//        } catch (NullPointerException e) {
+//          Log.wtf("tag", "NYULLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+//        }
+//
+//
+//      }
+//
+//      @Override
+//      public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//        Log.wtf("tag", "CHANGED");
+//      }
+//
+//      @Override
+//      public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//        Log.wtf("tag", "REMOVED");
+//      }
+//
+//      @Override
+//      public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//        Log.wtf("tag", "MOVED");
+//      }
+//
+//      @Override
+//      public void onCancelled(@NonNull DatabaseError databaseError) {
+//        Log.wtf("tag", "CANCELLLED" + databaseError.getMessage());
+//      }
+//    });
 
   }
 
@@ -1357,6 +1382,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   }
 
   public void firstDialogLayout(final Dialog dialog, final CustomAdapter ca) {
+    final boolean[] exitLoop = {false};
     dialog.setContentView(R.layout.popup_body);
 
     Thermometer th = dialog.findViewById(R.id.thermo);
@@ -1374,6 +1400,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 //          dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
           dialog.setContentView(R.layout.popup_body2);
           secondDialogLayout(dialog, ca);
+          firebaseStaticConfig();
         }
 
         if (v.equals(card2)) {
@@ -1384,15 +1411,79 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
         if (v.equals(card3)) {
           _selected = 3;
 //          dialog.setContentView(R.layout.popup_body2);
-//          secondDialogLayout(dialog, ca);
+          graphDialogLayout(dialog, ca);
         }
 
         if (v.equals(card4)) {
           _selected = 4;
-          dialog.setContentView(R.layout.popup_body_info);
-          infoDialogLayout(dialog, ca);
-        }
+          if (!startOffline) {//if the "startOffline" field in the settings is marked as !true (false) which is mean start in online mode
+            Log.wtf("tag", "Fetching data from online database");
+            if (devicesNnT != null && devicesNnT.size() > 0) {
+              dialog.setContentView(R.layout.popup_body_info);
+              infoDialogLayout(dialog, ca);
+            } else {
+              final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+              Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                  Log.wtf("tag", "entered while loop once");
+//              if (!exitLoop[0]) {
+                  Log.wtf("tag", "DEIVCE NUMBER**" + devicesNumber);
+                  Log.wtf("tag", "DEVICE NAME  SIZE**" + devicesNnT.size());
+                  if (devicesNumber == devicesNnT.size() && devicesNumber > 0) {
+                    Log.wtf("tag", "condition check is true");
 
+                    Runnable r = new Runnable() {
+                      @Override
+                      public void run() {
+                        dialog.setContentView(R.layout.popup_body_info);
+                        infoDialogLayout(dialog, ca);
+                      }
+                    };
+                    new Handler(Looper.getMainLooper()).post(r);
+                    scheduler.shutdown();
+                  }
+                }
+              };
+              scheduler.scheduleAtFixedRate(runnable, 2, 2, TimeUnit.SECONDS);
+            }
+
+
+          } else {
+            //If an offline data reading already been done than there will be 0 waiting time
+            Log.wtf("tag", "Fetching data from offline database");
+            if (devicesNnT != null && devicesNnT.size() > 0) {
+              dialog.setContentView(R.layout.popup_body_info);
+              infoDialogLayout(dialog, ca);
+            } else {
+              Intent networkIntent = new Intent(WelcomeScreen.this, FirebasePullService.class);
+              Bundle b = new Bundle();
+              b.putParcelable("offlineMode", mReceiver);
+              b.putString("identifier", "deviceList");
+              networkIntent.putExtras(b);
+              WelcomeScreen.this.startService(networkIntent);
+
+              final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+              Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                  if (devicesNnT != null && devicesNnT.size() > 0) {
+                    Runnable r = new Runnable() {
+                      @Override
+                      public void run() {
+                        dialog.setContentView(R.layout.popup_body_info);
+                        infoDialogLayout(dialog, ca);
+                      }
+                    };
+                    new Handler(Looper.getMainLooper()).post(r);
+                    scheduler.shutdown();
+                  }
+                }
+              };
+              scheduler.scheduleAtFixedRate(runnable, 3, 1, TimeUnit.SECONDS);
+            }
+          }
+        }
 
       }
     };
@@ -1404,10 +1495,23 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     th.noAnimation();
   }
 
+  public void graphDialogLayout(final Dialog dialog, final CustomAdapter ca) {
+    WidgetItem wi = new WidgetItem();
+    wi.setType("Graph");
+    wi.isWidget(true);
+    wi.setSize(6);
+
+    addingWidget(ca, wi);
+  }
+
   @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   public void infoDialogLayout(final Dialog dialog, final CustomAdapter ca) {
+    checkedDevices.clear();
+    final boolean[] foundIt = {false};
     ImageButton btnBack = (ImageButton) dialog.findViewById(R.id.btnBack);
-    Button btn_add = dialog.findViewById(R.id.btn_add);
+    final Button btn_add = dialog.findViewById(R.id.btn_add);
+    final EditText title = dialog.findViewById(R.id.title);
+    btn_add.setEnabled(false);//Enable it only when there's some checkboxes selected in the vicinity ;)
     LinearLayout boxHolder = dialog.findViewById(R.id.box_holder);
     btnBack.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -1416,16 +1520,10 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
         firstDialogLayout(dialog, ca);
       }
     });
-//    firebaseStaticConfig();
-//
-//    if (devicesName != null && devicesName.size() > 0) {
-//      for (List list : devicesName) {
-//        Log.wtf("tag", "name" + list);
-//      }
-//      Log.wtf("tag","INSIDE THE LOOP");
-    for (List deviceList : devicesName) {
-//        Log.wtf("tag", "THE REAL  DEAL??"+deviceList.get(0));
-      CheckBox name = new CheckBox(this);
+
+
+    for (List deviceList : devicesNnT) {
+      final CheckBox name = new CheckBox(this);
 
       name.setTextColor(getResources().getColor(R.color.lightBrown));
       int states[][] = {{android.R.attr.state_checked}, {}};
@@ -1442,23 +1540,102 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
       v.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 5));
       boxHolder.addView(ln);
 
+      name.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+          if (isChecked) {
+            checkedDevices.add((String) name.getText());
+            Log.wtf("tag", "checked devices name::" + name.getText());
+          }
+          if (!isChecked)
+            for (int i = 0; i < checkedDevices.size(); i++) {
+              if (checkedDevices.get(i).equals(name.getText()))
+                checkedDevices.remove(i);
+            }
+          if (checkedDevices.size() > 0/* && title.getText().length() > 0*/)
+            btn_add.setEnabled(true);
+          else
+            btn_add.setEnabled(false);
+        }
+      });
     }
+//    title.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//      @Override
+//      public void onFocusChange(View v, boolean hasFocus) {
+//        if (checkedDevices.size() > 0 && title.getText().length() > 0)
+//          btn_add.setEnabled(true);
+//        else
+//          btn_add.setEnabled(false);
+//      }
+//    });
 
     btn_add.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-
+        Boolean found = false;
         WidgetItem wi = new WidgetItem();
         wi.setType("Info");
         wi.isWidget(true);
         wi.setSize(2);
+        wi.setTilte(title.getText().toString());
 
+        List<List<String>> temp = new ArrayList<>();
+
+//        if (startOffline) {
+//        Log.wtf("tag", "INSIDE OFFLINE");
+        for (List list : devicesNnT) {
+          found = false;
+          for (int j = 0; j < checkedDevices.size(); j++) {
+            if (list.get(0).equals(checkedDevices.get(j))) {
+              found = true;
+//              Log.wtf("tag", "::FOUND ==TRUE::");
+            }
+            if (!list.get(0).equals(checkedDevices.get(j)) && found == false) {
+//              Log.wtf("tag", "::FOUND ==FALSE::");
+              found = false;
+            }
+          }
+//          Log.wtf("tag", "there's something utterly wrong here::");
+          if (!found)
+            Log.wtf("tag", "this should be removed::" + list.get(0));
+          else
+            temp.add(list);
+        }
+        wi.setSelectedDevices(temp);
+        wi.setSelectedDevicesNumber((long) temp.size());
+//        }
         addingWidget(ca, wi);
-
-//        for (String)
+//        Log.wtf("tag", "checked devices list::" + checkedDevices);
       }
     });
 
+  }
+
+  //This method should take care of trimming the first list to look like the second list and return it back
+  public List removeUnnecessaryData(List<String> theSmallList) {
+    Boolean found = false;
+    List<List<String>> temp = new ArrayList<>();
+
+    for (List list : devicesNnT) {
+      found = false;
+      for (int j = 0; j < theSmallList.size(); j++) {
+        if (list.get(0).equals(theSmallList.get(j))) {
+          found = true;
+//              Log.wtf("tag", "::FOUND ==TRUE::");
+        }
+        if (!list.get(0).equals(theSmallList.get(j)) && found == false) {
+//              Log.wtf("tag", "::FOUND ==FALSE::");
+          found = false;
+        }
+      }
+//          Log.wtf("tag", "there's something utterly wrong here::");
+      if (!found)
+        Log.wtf("tag", "this should be removed::" + list.get(0));//but no, this will stay and add the missing value to a new list "else" bellow
+      else
+        temp.add(list);
+    }
+    return temp;
   }
 
   public void secondDialogLayout(final Dialog dialog, final CustomAdapter ca) {

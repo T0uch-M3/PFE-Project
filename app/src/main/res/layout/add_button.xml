@@ -11,6 +11,6 @@
     android:layout_height="40dp"
     android:background="@drawable/add_button_style"
     android:text="+"
-    android:textColor="@color/grey"
+    android:textColor="@color/white_ish"
     android:textSize="24sp" />
 </FrameLayout>

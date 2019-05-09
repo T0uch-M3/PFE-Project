@@ -13,14 +13,23 @@ public class WidgetItem {
   private String displayValue = "null";
   private boolean isWidget = false;
   private int size = 1;
-  private List<List<String>> info = null;
+  private List<List<String>> selectedDevices = null;
+  private Long selectedDevicesNumber;
 
-  public List<List<String>> getInfo() {
-    return info;
+  public List<List<String>> getSelectedDevices() {
+    return selectedDevices;
   }
 
-  public void setInfo(List<List<String>> info) {
-    this.info = info;
+  public Long getSelectedDevicesNumber() {
+    return selectedDevicesNumber;
+  }
+
+  public void setSelectedDevicesNumber(Long selectedDevicesNumber) {
+    this.selectedDevicesNumber = selectedDevicesNumber;
+  }
+
+  public void setSelectedDevices(List<List<String>> selectedDevices) {
+    this.selectedDevices = selectedDevices;
   }
 
   public int getSize() {
