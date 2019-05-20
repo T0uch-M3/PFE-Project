@@ -50,41 +50,64 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="396795a7-569d-43e9-af03-01c93090f3d0" name="Default" comment="Setting up the Toolbar with the sideDrawer (finally)">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/CustomPagerAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-nodpi/night022.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-nodpi/shbackground.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-nodpi/whitebg.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bottom_border.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/left_border.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/right_border.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/sofiacloud.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/sofiaclouddark.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/sofiacloudlight.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/thermometertemp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/alert_cloud.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/arrow_style.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/delete_button_style.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/delete_button_style_selected.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_add_box_black_24dp.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_gauge.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_misc.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/offline_alert.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/online_cloud.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit_unfocused_dark.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/right_arrow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/right_arrow_in_box.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/widget_icon.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/new_page_editor.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/popup_body3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/popup_body_info2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/settings_body_for_page.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_material_material_1_0_0_rc01_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_material_material_1_0_0_rc01_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_code_findbugs_jsr305_2_0_1_jar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/CustomAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/CustomAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/CustomPagerAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/CustomPagerAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/Devices.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/Devices.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/FirebasePullService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/FirebasePullService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/LaunchScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/LaunchScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/MyCustomObjectListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/MyCustomObjectListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/RecyclerListAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/RecyclerListFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/ServiceDataReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/ServiceDataReceiver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/WelcomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/WelcomeScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/WidgetItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/WidgetItem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/add_button_style.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/add_button_style.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/rect_button_border.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/rect_button_border.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout-v27/activity_launch_screen.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout-v27/activity_launch_screen.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/background1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/background2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/background3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/background4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/bg01.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/button.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/dailog_shape.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/dailog_shape.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_chart.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_chart.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_settings_black_24dp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_settings_black_24dp.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/info.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/info.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/rect_button_pressed.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/rect_button_pressed.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit_selector_light.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit_selector_light.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit_unfocused_light.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit_unfocused_light.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/top_corner_only.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/top_corner_only.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_launch_screen.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_launch_screen.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_welcome_screen.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_welcome_screen.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/add_button.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/add_button.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_test_nav.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_test_nav.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/info_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/info_item.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/popup_body.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/popup_body.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/popup_body2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/popup_body2.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/popup_body_info.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/popup_body_info.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/widget_holder.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/widget_holder.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/settings_body.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/settings_body.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -124,7 +147,7 @@
     <session id="641796100">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="106" />
+          <entry key="project.closed" value="125" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.101" value="1" />
           <entry key="project.open.time.103" value="3" />
@@ -134,6 +157,7 @@
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.120" value="1" />
           <entry key="project.open.time.121" value="1" />
+          <entry key="project.open.time.122" value="1" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.132" value="1" />
           <entry key="project.open.time.135" value="1" />
@@ -153,95 +177,98 @@
           <entry key="project.open.time.33" value="2" />
           <entry key="project.open.time.34" value="2" />
           <entry key="project.open.time.35" value="5" />
-          <entry key="project.open.time.36" value="1" />
-          <entry key="project.open.time.37" value="2" />
+          <entry key="project.open.time.36" value="3" />
+          <entry key="project.open.time.37" value="3" />
           <entry key="project.open.time.38" value="2" />
-          <entry key="project.open.time.39" value="3" />
+          <entry key="project.open.time.39" value="4" />
           <entry key="project.open.time.40" value="4" />
-          <entry key="project.open.time.41" value="1" />
+          <entry key="project.open.time.41" value="2" />
           <entry key="project.open.time.42" value="1" />
-          <entry key="project.open.time.43" value="2" />
+          <entry key="project.open.time.43" value="5" />
           <entry key="project.open.time.44" value="3" />
-          <entry key="project.open.time.46" value="5" />
+          <entry key="project.open.time.46" value="6" />
           <entry key="project.open.time.47" value="4" />
           <entry key="project.open.time.48" value="2" />
-          <entry key="project.open.time.49" value="1" />
+          <entry key="project.open.time.49" value="3" />
           <entry key="project.open.time.50" value="1" />
           <entry key="project.open.time.51" value="2" />
           <entry key="project.open.time.52" value="1" />
           <entry key="project.open.time.53" value="2" />
           <entry key="project.open.time.54" value="2" />
-          <entry key="project.open.time.55" value="6" />
+          <entry key="project.open.time.55" value="7" />
           <entry key="project.open.time.56" value="3" />
           <entry key="project.open.time.57" value="1" />
           <entry key="project.open.time.58" value="1" />
           <entry key="project.open.time.59" value="2" />
           <entry key="project.open.time.60" value="2" />
           <entry key="project.open.time.61" value="2" />
-          <entry key="project.open.time.64" value="1" />
+          <entry key="project.open.time.64" value="2" />
           <entry key="project.open.time.65" value="1" />
           <entry key="project.open.time.66" value="2" />
           <entry key="project.open.time.67" value="1" />
           <entry key="project.open.time.7" value="3" />
-          <entry key="project.open.time.70" value="1" />
+          <entry key="project.open.time.70" value="2" />
           <entry key="project.open.time.71" value="2" />
           <entry key="project.open.time.72" value="2" />
           <entry key="project.open.time.73" value="2" />
-          <entry key="project.open.time.74" value="2" />
+          <entry key="project.open.time.74" value="3" />
           <entry key="project.open.time.75" value="1" />
-          <entry key="project.open.time.76" value="1" />
+          <entry key="project.open.time.76" value="2" />
           <entry key="project.open.time.77" value="1" />
           <entry key="project.open.time.78" value="1" />
           <entry key="project.open.time.8" value="3" />
+          <entry key="project.open.time.8086" value="1" />
           <entry key="project.open.time.83" value="1" />
           <entry key="project.open.time.89" value="1" />
           <entry key="project.open.time.9" value="1" />
           <entry key="project.open.time.90" value="1" />
-          <entry key="project.opened" value="123" />
+          <entry key="project.open.time.95" value="1" />
+          <entry key="project.opened" value="142" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="class" value="4" />
-          <entry key="gitignore" value="2" />
-          <entry key="gradle" value="28" />
-          <entry key="java" value="236" />
-          <entry key="jpg" value="13" />
-          <entry key="json" value="3" />
+          <entry key="gitignore" value="3" />
+          <entry key="gradle" value="31" />
+          <entry key="java" value="277" />
+          <entry key="jpg" value="18" />
+          <entry key="json" value="4" />
           <entry key="kt" value="1" />
-          <entry key="png" value="27" />
+          <entry key="png" value="33" />
           <entry key="txt" value="1" />
-          <entry key="xml" value="338" />
+          <entry key="url" value="1" />
+          <entry key="xml" value="430" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="4" />
-          <entry key="Groovy" value="28" />
-          <entry key="Image" value="40" />
-          <entry key="JAVA" value="236" />
-          <entry key="JSON" value="3" />
+          <entry key="Groovy" value="31" />
+          <entry key="Image" value="51" />
+          <entry key="JAVA" value="277" />
+          <entry key="JSON" value="4" />
           <entry key="Kotlin" value="1" />
-          <entry key="PLAIN_TEXT" value="3" />
-          <entry key="XML" value="338" />
+          <entry key="PLAIN_TEXT" value="5" />
+          <entry key="XML" value="430" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="9" />
           <entry key="gitignore" value="14" />
-          <entry key="gradle" value="232" />
-          <entry key="java" value="85686" />
-          <entry key="txt" value="3517" />
-          <entry key="xml" value="1629" />
+          <entry key="gradle" value="350" />
+          <entry key="java" value="108077" />
+          <entry key="txt" value="5365" />
+          <entry key="xml" value="1974" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Groovy" value="232" />
-          <entry key="JAVA" value="85686" />
-          <entry key="PLAIN_TEXT" value="3540" />
-          <entry key="XML" value="1629" />
+          <entry key="Groovy" value="350" />
+          <entry key="JAVA" value="108077" />
+          <entry key="PLAIN_TEXT" value="5388" />
+          <entry key="XML" value="1974" />
         </counts>
       </usages-collector>
     </session>
@@ -252,15 +279,41 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/CustomAdapter.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/WelcomeScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="596" column="51" selection-start-line="596" selection-start-column="51" selection-end-line="596" selection-end-column="51" />
+            <state relative-caret-position="468">
+              <caret line="438" column="45" selection-start-line="438" selection-start-column="45" selection-end-line="438" selection-end-column="45" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1557345305641" expanded="true" signature="10709:17531" ph="..." />
-                <marker date="1557345305641" expanded="true" signature="17538:20324" ph="..." />
-                <marker date="1557345305641" expanded="false" signature="35914:38723" ph="..." />
+                <element signature="e#63650#67586#0" expanded="true" />
+                <element signature="e#64977#65902#0" expanded="true" />
+                <element signature="e#65477#65740#0" expanded="true" />
+                <element signature="e#65739#65740#0" expanded="true" />
+                <element signature="e#65901#65902#0" expanded="true" />
+                <element signature="e#66849#67455#0" expanded="true" />
+                <element signature="e#67030#67293#0" expanded="true" />
+                <element signature="e#67292#67293#0" expanded="true" />
+                <element signature="e#67454#67455#0" expanded="true" />
+                <element signature="e#67585#67586#0" expanded="true" />
+                <element signature="e#68593#68778#0" expanded="true" />
+                <element signature="e#68777#68778#0" expanded="true" />
+                <element signature="e#69651#70363#0" expanded="true" />
+                <element signature="e#70362#70363#0" expanded="true" />
+                <element signature="e#70741#72051#0" expanded="true" />
+                <element signature="e#72050#72051#0" expanded="true" />
+                <element signature="e#73957#74142#0" expanded="true" />
+                <element signature="e#74141#74142#0" expanded="true" />
+                <element signature="e#74655#75372#0" expanded="true" />
+                <element signature="e#74888#75252#0" expanded="true" />
+                <element signature="e#75251#75252#0" expanded="true" />
+                <element signature="e#75371#75372#0" expanded="true" />
+                <element signature="e#75406#77010#0" expanded="true" />
+                <element signature="e#77009#77010#0" expanded="true" />
+                <element signature="e#81585#82205#0" expanded="true" />
+                <element signature="e#82204#82205#0" expanded="true" />
+                <element signature="e#82385#83084#0" expanded="true" />
+                <element signature="e#83083#83084#0" expanded="true" />
+                <marker date="1558362060458" expanded="false" signature="32041:41075" ph="..." />
               </folding>
             </state>
           </provider>
@@ -269,45 +322,89 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/CustomPagerAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="573">
-              <caret line="335" column="41" selection-start-line="335" selection-start-column="41" selection-end-line="335" selection-end-column="41" />
+            <state relative-caret-position="216">
+              <caret line="106" column="24" selection-start-line="106" selection-start-column="24" selection-end-line="106" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#9688#9853#0" expanded="true" />
-                <element signature="e#9852#9853#0" expanded="true" />
-                <element signature="e#34333#34334#0" expanded="true" />
-                <element signature="e#34373#34374#0" expanded="true" />
-                <element signature="e#35026#35027#0" expanded="true" />
-                <element signature="e#35047#35048#0" expanded="true" />
-                <element signature="e#35164#35165#0" expanded="true" />
-                <element signature="e#35216#35217#0" expanded="true" />
+                <element signature="e#7412#7440#0" />
+                <marker date="1558363135321" expanded="false" signature="43469:46332" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/WelcomeScreen.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/popup_body2.xml">
+          <provider selected="true" editor-type-id="android-designer2" />
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="2320">
+              <caret line="145" column="39" selection-start-line="145" selection-start-column="39" selection-end-line="145" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/popup_body3.xml">
+          <provider selected="true" editor-type-id="android-designer2" />
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="1680">
+              <caret line="105" column="11" selection-start-line="105" selection-start-column="11" selection-end-line="105" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/popup_body_info.xml">
+          <provider selected="true" editor-type-id="android-designer2" />
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="1744">
+              <caret line="109" column="45" selection-end-line="129" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/FirebasePullService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="188" column="47" selection-start-line="188" selection-start-column="47" selection-end-line="188" selection-end-column="47" />
+            <state relative-caret-position="3024">
+              <caret line="214" column="33" selection-start-line="213" selection-start-column="31" selection-end-line="214" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/CustomAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="10928">
+              <caret line="728" column="69" selection-start-line="728" selection-start-column="69" selection-end-line="728" selection-end-column="69" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1557406323848" expanded="false" signature="22228:31262" ph="..." />
-                <marker date="1557406323848" expanded="false" signature="42082:43038" ph="..." />
+                <element signature="e#2670#2671#0" expanded="true" />
+                <element signature="e#2704#2705#0" expanded="true" />
+                <marker date="1558279658734" expanded="true" signature="10745:17571" ph="..." />
+                <marker date="1558279658734" expanded="true" signature="17578:20364" ph="..." />
+                <marker date="1558279658734" expanded="false" signature="42695:45504" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_welcome_screen.xml">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/Devices.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
+            <state relative-caret-position="64">
+              <caret line="10" column="40" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
             </state>
           </provider>
-          <provider editor-type-id="android-designer2" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/LaunchScreen.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="224">
+              <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -326,36 +423,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>title</find>
-      <find>NAME*</find>
-      <find>countingggggg</find>
-      <find>better</find>
-      <find>DEVICE NAM</find>
-      <find>getSharedPreferences</find>
-      <find>ADDED</find>
-      <find>ln</find>
-      <find>recyclerView</find>
-      <find>line</find>
-      <find>pwd</find>
-      <find>et_</find>
-      <find>height</find>
-      <find>high</find>
-      <find>customAdapter</find>
-      <find>dialog</find>
-      <find />
-      <find>list widdth</find>
-      <find>CAT LIST</find>
-      <find>APPLY</find>
-      <find>firstTime</find>
-      <find>static</find>
-      <find>what is the cl</find>
-      <find>nbrItems</find>
-      <find>CAT_IMAGE_IDS</find>
-      <find>holyRow</find>
-      <find>addView</find>
-      <find>ca2</find>
-      <find>setAdapt</find>
-      <find>SHOULD  BE  TextVIEW</find>
+      <find>Devices</find>
+      <find>Firebase</find>
+      <find>devicesNnT</find>
+      <find>we in boys</find>
+      <find>notifyForRemove</find>
+      <find>WE IN</find>
+      <find>listener</find>
+      <find>TempHolder</find>
+      <find>notifyF</find>
+      <find>==&gt;&gt;==</find>
+      <find>position</find>
+      <find>detected</find>
+      <find>page coujt</find>
+      <find>INSTANTIATEITEM</find>
+      <find>device name</find>
+      <find>result</find>
+      <find>localDevicesList</find>
+      <find>run the loop</find>
+      <find>yy</find>
+      <find>entered the if check in runnable</find>
+      <find>check clicked</find>
+      <find>runnable</find>
+      <find>Handler</find>
+      <find>spinn</find>
+      <find>handler</find>
+      <find>picker2</find>
+      <find>preparing</find>
+      <find>newDevice</find>
+      <find>deviceNnT from STATIC</find>
+      <find>CLICKED  OR  MAYBE TOUCHED</find>
     </findStrings>
   </component>
   <component name="GenerateSignedApkSettings">
@@ -2623,50 +2720,50 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/ContentFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/gradient.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/background_color_animation.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/rect_button.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_background.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_back.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/dailog_shape.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/top_corner_only.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable-v21/checkbox_selector.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values-v27/styles.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/circular_button.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/MyCustomObjectListener.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/WidgetObject.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/popup_body2.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/ServiceDataReceiver.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/settings_body.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/GreenLand.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/SystemRoom.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/WeatherStation.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/content_test_nav.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/add_button_style.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/add_button.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/popup_body.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/WidgetItem.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/Devices.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/FirebasePullService.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/popup_body_info.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/widget_holder.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/item_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/bottom_border.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/left_border.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/right_border.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_launch_screen.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/rect_button_border.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout-v27/activity_launch_screen.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/LaunchScreen.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/info_item.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/add_button_style.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_settings_black_24dp.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/top_corner_only.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_add_box_black_24dp.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/settings_body.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values-v27/styles.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values-v23/styles.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/newPageDialog.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit_light.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/delete_button_style.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/delete_button_style_selected.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/settings_body_for_page.xml" />
+        <option value="$USER_HOME$/AppData/Local/Android/Sdk/sources/android-28/android/app/Dialog.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/arrow_style.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/rect_button_pressed.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/dailog_shape.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/new_page_editor.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_launch_screen.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/popup_body_info2.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit_unfocused_light.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_welcome_screen.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_welcome_screen.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/LaunchScreen.java" />
+        <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/ServiceDataReceiver.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/Devices.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/MyCustomObjectListener.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/CustomAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/FirebasePullService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/popup_body.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/popup_body_info.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/popup_body3.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/popup_body2.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/WelcomeScreen.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/WelcomeScreen.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/WelcomeScreen.java" />
@@ -2704,109 +2801,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView">
-        <subPane>
-          <expand>
-            <path>
-              <item name="PFEProject" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="PFEProject" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pfe_project" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="layout" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="layout-v27" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="values" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="gradle" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Project Non-Source Files'; set:Project Non-Source Files; class com.jetbrains.cidr.lang.search.scopes.ProjectSourcesScopeProvider$NonSourceFilesScope">
           <expand>
@@ -2971,6 +2965,136 @@
           <select />
         </subPane>
       </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="pfe_project" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+              <item name="layout" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+              <item name="layout-v27" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+              <item name="values" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+              <item name="values-v21" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+              <item name="values-v23" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+              <item name="values-v27" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PFEProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PFEProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="gradle" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView">
+        <subPane>
+          <expand>
+            <path>
+              <item name="PFEProject" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+            </path>
+            <path>
+              <item name="PFEProject" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2987,21 +3111,24 @@
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\adolf\MyApp\platforms\PFEProject\app\src\main\res\drawable" />
-      <recent name="C:\Users\adolf\MyApp\platforms\PFEProject\app\src\main\res\drawable-nodpi" />
-      <recent name="C:\Users\adolf\MyApp\platforms\PFEProject\app\src\main\res\layout" />
-      <recent name="C:\Users\adolf\MyApp\platforms\PFEProject\app" />
-      <recent name="C:\Users\adolf\MyApp\platforms\PFEProject\app\src\main\java\com\example\touch_me\pfe_project\widgets" />
-    </key>
-    <key name="android.template.packageName">
-      <recent name="com.example.touch_me.pfe_project" />
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="android.app" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\adolf\MyApp\platforms\PFEProject\app\src\main\res\values" />
     </key>
+    <key name="android.template.packageName">
+      <recent name="com.example.touch_me.pfe_project" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.example.touch_me.pfe_project" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\adolf\MyApp\platforms\PFEProject\app\src\main\res\drawable" />
+      <recent name="C:\Users\adolf\MyApp\platforms\PFEProject\app\src\main\res\layout" />
+      <recent name="C:\Users\adolf\MyApp\platforms\PFEProject\app\src\main\res\drawable-nodpi" />
+      <recent name="C:\Users\adolf\MyApp\platforms\PFEProject\app" />
+      <recent name="C:\Users\adolf\MyApp\platforms\PFEProject\app\src\main\java\com\example\touch_me\pfe_project\widgets" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.example.touch_me.pfe_project" />
@@ -3218,13 +3345,13 @@
       <window_info id="Build Variants" order="1" sideWeight="0.45770064" side_tool="true" weight="0.15949367" />
       <window_info x="853" y="412" width="213" height="216" id="Favorites" order="2" sideWeight="0.45770064" side_tool="true" weight="0.16151386" />
       <window_info id="Capture Tool" order="3" />
-      <window_info content_ui="combo" id="Project" order="4" sideWeight="0.5368764" weight="0.13219616" />
+      <window_info content_ui="combo" id="Project" order="4" sideWeight="0.53290325" visible="true" weight="0.098614074" />
       <window_info id="Image Layers" order="5" />
-      <window_info id="Captures" order="6" sideWeight="0.46312365" side_tool="true" weight="0.09808102" />
-      <window_info anchor="bottom" id="Build" order="0" sideWeight="0.49573562" weight="0.18112798" />
+      <window_info id="Captures" order="6" sideWeight="0.46709678" side_tool="true" weight="0.098614074" />
+      <window_info anchor="bottom" id="Build" order="0" sideWeight="0.49520257" weight="0.17895879" />
       <window_info anchor="bottom" id="Android Profiler" order="1" weight="0.3286334" />
       <window_info anchor="bottom" id="Structure" order="2" sideWeight="0.50373137" side_tool="true" weight="0.21908894" />
-      <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.50479746" side_tool="true" weight="0.19631237" />
+      <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.50479746" side_tool="true" weight="0.17895879" />
       <window_info anchor="bottom" id="Version Control" order="4" sideWeight="0.49946696" weight="0.23861171" />
       <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.4989339" weight="0.3264642" />
       <window_info anchor="bottom" id="Message" order="6" />
@@ -3232,14 +3359,14 @@
       <window_info anchor="bottom" id="Debug" order="8" weight="0.3308026" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
-      <window_info anchor="bottom" id="Run" order="11" sideWeight="0.49520257" visible="true" weight="0.21366595" />
+      <window_info anchor="bottom" id="Run" order="11" sideWeight="0.49520257" visible="true" weight="0.19305857" />
       <window_info anchor="bottom" id="TODO" order="12" weight="0.3275488" />
       <window_info anchor="bottom" id="Messages" order="13" weight="0.32897604" />
       <window_info anchor="bottom" id="Flutter Performance" order="14" show_stripe_button="false" side_tool="true" weight="0.329718" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
       <window_info anchor="right" id="Preview" order="1" sideWeight="0.49891067" weight="0.25746268" />
       <window_info anchor="right" id="Device File Explorer" order="2" sideWeight="0.39166668" side_tool="true" weight="0.2675906" />
-      <window_info active="true" anchor="right" id="Logcat" order="3" sideWeight="0.60833335" visible="true" weight="0.29371002" />
+      <window_info active="true" anchor="right" id="Logcat" order="3" sideWeight="0.60833335" visible="true" weight="0.3001066" />
       <window_info anchor="right" id="Assistant" order="4" weight="0.32995737" />
       <window_info anchor="right" id="Gradle" order="5" weight="0.32462686" />
       <window_info anchor="right" id="Theme Preview" order="6" />
@@ -3247,46 +3374,9 @@
       <window_info anchor="right" id="Ant Build" order="8" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="9" weight="0.25" />
       <window_info anchor="right" id="Palette&#9;" order="10" />
-      <window_info anchor="right" id="Flutter Inspector" order="11" weight="0.32995737" />
-      <window_info anchor="right" id="Flutter Outline" order="12" weight="0.32995737" />
+      <window_info anchor="right" id="Flutter Outline" order="11" weight="0.32995737" />
+      <window_info anchor="right" id="Flutter Inspector" order="12" weight="0.32995737" />
     </layout>
-    <layout-to-restore>
-      <window_info id="Designer" order="0" />
-      <window_info id="Build Variants" order="1" sideWeight="0.45770064" side_tool="true" weight="0.15949367" />
-      <window_info x="853" y="412" width="213" height="216" id="Favorites" order="2" sideWeight="0.45770064" side_tool="true" weight="0.16151386" />
-      <window_info id="Capture Tool" order="3" />
-      <window_info content_ui="combo" id="Project" order="4" sideWeight="0.5368764" weight="0.13219616" />
-      <window_info id="Image Layers" order="5" />
-      <window_info id="Captures" order="6" sideWeight="0.46312365" side_tool="true" weight="0.09808102" />
-      <window_info anchor="bottom" id="Build" order="0" sideWeight="0.49573562" weight="0.18112798" />
-      <window_info anchor="bottom" id="Android Profiler" order="1" weight="0.3286334" />
-      <window_info anchor="bottom" id="Structure" order="2" sideWeight="0.50373137" side_tool="true" weight="0.21908894" />
-      <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.50479746" side_tool="true" weight="0.19631237" />
-      <window_info anchor="bottom" id="Version Control" order="4" sideWeight="0.49946696" weight="0.23861171" />
-      <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.4989339" weight="0.3264642" />
-      <window_info anchor="bottom" id="Message" order="6" />
-      <window_info anchor="bottom" id="Find" order="7" weight="0.24403471" />
-      <window_info anchor="bottom" id="Debug" order="8" weight="0.3308026" />
-      <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
-      <window_info active="true" anchor="bottom" id="Run" order="11" sideWeight="0.49520257" visible="true" weight="0.19631237" />
-      <window_info anchor="bottom" id="TODO" order="12" weight="0.3275488" />
-      <window_info anchor="bottom" id="Messages" order="13" weight="0.32897604" />
-      <window_info anchor="bottom" id="Flutter Performance" order="14" show_stripe_button="false" side_tool="true" weight="0.329718" />
-      <window_info anchor="right" id="Capture Analysis" order="0" />
-      <window_info anchor="right" id="Preview" order="1" sideWeight="0.49891067" weight="0.25746268" />
-      <window_info anchor="right" id="Device File Explorer" order="2" sideWeight="0.39166668" side_tool="true" weight="0.2675906" />
-      <window_info anchor="right" id="Logcat" order="3" sideWeight="0.60833335" visible="true" weight="0.27771854" />
-      <window_info anchor="right" id="Assistant" order="4" weight="0.32995737" />
-      <window_info anchor="right" id="Gradle" order="5" weight="0.32462686" />
-      <window_info anchor="right" id="Theme Preview" order="6" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="7" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="8" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="9" weight="0.25" />
-      <window_info anchor="right" id="Palette&#9;" order="10" />
-      <window_info anchor="right" id="Flutter Inspector" order="11" weight="0.32995737" />
-      <window_info anchor="right" id="Flutter Outline" order="12" weight="0.32995737" />
-    </layout-to-restore>
   </component>
   <component name="Vcs.Log.History.Properties">
     <option name="COLUMN_ORDER">
@@ -3362,371 +3452,362 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/background_color_animation.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-28/android/content/ContextWrapper.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="172" column="29" selection-start-line="172" selection-start-column="29" selection-end-line="172" selection-end-column="29" />
+        <state relative-caret-position="368">
+          <caret line="23" column="34" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="34" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-28/android/view/View.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit_selector_light.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="520">
-          <caret line="12508" column="43" selection-start-line="12508" selection-start-column="43" selection-end-line="12508" selection-end-column="43" />
+        <state relative-caret-position="128">
+          <caret line="8" column="39" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/info.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit_light.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="30" column="22" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
+        <state relative-caret-position="112">
+          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
         </state>
       </provider>
-      <provider editor-type-id="android-manifest" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/GreenLand.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.viewpager/viewpager/1.0.0/db045f92188b9d247d5f556866f8861ab68528f0/viewpager-1.0.0-sources.jar!/androidx/viewpager/widget/PagerTitleStrip.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
-          <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <caret line="48" column="62" lean-forward="true" selection-start-line="48" selection-start-column="46" selection-end-line="48" selection-end-column="62" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-28/java/util/ArrayList.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.viewpager/viewpager/1.0.0/db045f92188b9d247d5f556866f8861ab68528f0/viewpager-1.0.0-sources.jar!/androidx/viewpager/widget/PagerAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="436" selection-start-line="436" selection-end-line="436" />
+        <state relative-caret-position="-3019">
+          <caret line="110" column="49" selection-start-line="110" selection-start-column="30" selection-end-line="110" selection-end-column="49" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-28/android/os/ResultReceiver.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/delete_button_style.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1024">
-          <caret line="80" column="54" selection-start-line="80" selection-start-column="44" selection-end-line="80" selection-end-column="54" />
+        <state relative-caret-position="32">
+          <caret line="2" column="37" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/ServiceDataReceiver.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/delete_button_style_selected.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="35" column="16" selection-start-line="35" selection-start-column="16" selection-end-line="35" selection-end-column="16" />
-          <folding>
-            <element signature="e#532#533#0" expanded="true" />
-            <element signature="e#556#557#0" expanded="true" />
-            <element signature="e#954#955#0" expanded="true" />
-            <element signature="e#980#981#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="32">
+          <caret line="2" column="41" selection-start-line="2" selection-start-column="41" selection-end-line="2" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/settings_body_for_page.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/widget_holder.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/right_border.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/rect_button_border.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/left_border.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-28/android/app/Dialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="702" column="26" selection-start-line="702" selection-start-column="21" selection-end-line="702" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/bottom_border.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="19" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/round_button.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/widget_icon.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/top_corner_only.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/arrow_style.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/rect_button_pressed.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-v27/activity_launch_screen.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="25" column="47" lean-forward="true" selection-end-line="572" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_launch_screen.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/dailog_shape.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="3" column="38" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/new_page_editor.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/watch.url">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/info_item.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_main.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/settings_body.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/popup_body_info2.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16">
+          <caret line="42" column="2" selection-start-line="42" selection-start-column="2" selection-end-line="42" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit_unfocused_dark.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/rect_text_edit_unfocused_light.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="5" column="42" selection-start-line="5" selection-start-column="42" selection-end-line="5" selection-end-column="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/WidgetItem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="64">
-          <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/Devices.java">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/google-services.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="41" selection-start-column="41" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/rect_button_disabled.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/rect_button_disabled_light.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/rect_button_border_v2.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/add_button.xml">
-      <provider editor-type-id="text-editor">
         <state relative-caret-position="112">
-          <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/thermometertemp.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/top_corner_only.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="13" column="10" selection-start-line="8" selection-start-column="5" selection-end-line="13" selection-end-column="10" />
+          <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/add_button_style.xml">
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
+        <state relative-caret-position="925">
+          <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/generated/source/apt/debug/io/realm/com_example_touch_me_pfe_project_DevicesRealmProxy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="286" selection-start-line="286" selection-end-line="286" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-28/android/os/ResultReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1072">
+          <caret line="83" column="29" selection-start-line="83" selection-start-column="25" selection-end-line="83" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-28/java/lang/Override.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="32" column="17" lean-forward="true" selection-start-line="32" selection-start-column="17" selection-end-line="32" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/ServiceDataReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="13" column="7" lean-forward="true" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/popup_body.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor">
-        <state relative-caret-position="655">
-          <caret line="177" column="46" selection-start-line="177" selection-start-column="46" selection-end-line="177" selection-end-column="46" />
+        <state relative-caret-position="208">
+          <caret line="13" column="27" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_welcome_screen.xml">
       <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor">
+        <state>
+          <caret column="38" selection-start-column="38" selection-end-column="38" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/popup_body_info.xml">
-      <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="7" column="32" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="32" />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="1744">
+          <caret line="109" column="45" selection-end-line="129" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/FirebasePullService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="47">
-          <caret line="180" selection-start-line="180" selection-end-line="180" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#handleActionBaz#0;class#FirebasePullService#0" />
-            <element signature="method#realmInflater#0;class#FirebasePullService#0" />
-            <element signature="method#firebaseStaticConfig#0;class#FirebasePullService#0" />
-            <marker date="1557016068037" expanded="true" signature="14014:23779" ph="..." />
-          </folding>
+        <state relative-caret-position="3024">
+          <caret line="214" column="33" selection-start-line="213" selection-start-column="31" selection-end-line="214" selection-end-column="33" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/left_border.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_launch_screen.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="561" column="25" lean-forward="true" selection-end-line="575" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/right_border.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/widget_holder.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/rect_button_border.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/info_item.xml">
-      <provider editor-type-id="text-editor" />
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/LaunchScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2281">
-          <caret line="199" column="144" selection-start-line="199" selection-start-column="144" selection-end-line="199" selection-end-column="144" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-v27/activity_launch_screen.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="9152">
-          <caret line="572" selection-start-line="572" selection-end-line="572" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/bottom_border.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_main.xml">
-      <provider editor-type-id="text-editor" />
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/constraintlayout-1.1.3.aar/d21e9ab41baa22536c4fa8401e3da069/jars/classes.jar!/androidx/constraintlayout/widget/ConstraintLayout.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1240">
-          <caret line="276" selection-start-line="276" selection-end-line="276" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-27/android/util/ArrayMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="496" selection-start-line="496" selection-end-line="496" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-27/android/app/Activity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="7000" selection-start-line="7000" selection-end-line="7000" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-27/android/app/Instrumentation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="1215" selection-start-line="1215" selection-end-line="1215" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-27/java/lang/ThreadGroup.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="1067" selection-start-line="1067" selection-end-line="1067" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-27/android/os/Binder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="772" column="26" selection-start-line="772" selection-start-column="26" selection-end-line="772" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-27/java/lang/StringBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="136" selection-start-line="136" selection-end-line="136" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-27/android/os/Looper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="156" selection-start-line="156" selection-end-line="156" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-27/android/os/Handler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="107" selection-start-line="107" selection-end-line="107" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-27/android/app/ActivityThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="2893" selection-start-line="2893" selection-end-line="2893" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.viewpager/viewpager/1.0.0/db045f92188b9d247d5f556866f8861ab68528f0/viewpager-1.0.0-sources.jar!/androidx/viewpager/widget/ViewPager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="414" column="66" selection-start-line="414" selection-start-column="66" selection-end-line="414" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-28/android/view/ViewGroup.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="4776" column="16" selection-start-line="4776" selection-start-column="16" selection-end-line="4776" selection-end-column="16" />
-          <folding>
-            <element signature="e#190323#190324#0" expanded="true" />
-            <element signature="e#190357#190358#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.viewpager/viewpager/1.0.0/db045f92188b9d247d5f556866f8861ab68528f0/viewpager-1.0.0-sources.jar!/androidx/viewpager/widget/PagerAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16">
-          <caret line="113" column="18" selection-start-line="113" selection-start-column="18" selection-end-line="113" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview/1.0.0/2151d26c3b241f0a887f2dadb9ab091649fcf020/recyclerview-1.0.0-sources.jar!/androidx/recyclerview/widget/RecyclerView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="6857" selection-start-line="6857" selection-end-line="6857" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_welcome_screen.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/CustomAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="596" column="51" selection-start-line="596" selection-start-column="51" selection-end-line="596" selection-end-column="51" />
+        <state relative-caret-position="10928">
+          <caret line="728" column="69" selection-start-line="728" selection-start-column="69" selection-end-line="728" selection-end-column="69" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1557345305641" expanded="true" signature="10709:17531" ph="..." />
-            <marker date="1557345305641" expanded="true" signature="17538:20324" ph="..." />
-            <marker date="1557345305641" expanded="false" signature="35914:38723" ph="..." />
+            <element signature="e#2670#2671#0" expanded="true" />
+            <element signature="e#2704#2705#0" expanded="true" />
+            <marker date="1558279658734" expanded="true" signature="10745:17571" ph="..." />
+            <marker date="1558279658734" expanded="true" signature="17578:20364" ph="..." />
+            <marker date="1558279658734" expanded="false" signature="42695:45504" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/Devices.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="10" column="40" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/LaunchScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/popup_body3.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="1680">
+          <caret line="105" column="11" selection-start-line="105" selection-start-column="11" selection-end-line="105" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/popup_body2.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="2320">
+          <caret line="145" column="39" selection-start-line="145" selection-start-column="39" selection-end-line="145" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/MyCustomObjectListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="15" column="7" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/WelcomeScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="188" column="47" selection-start-line="188" selection-start-column="47" selection-end-line="188" selection-end-column="47" />
+        <state relative-caret-position="468">
+          <caret line="438" column="45" selection-start-line="438" selection-start-column="45" selection-end-line="438" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1557406323848" expanded="false" signature="22228:31262" ph="..." />
-            <marker date="1557406323848" expanded="false" signature="42082:43038" ph="..." />
+            <element signature="e#63650#67586#0" expanded="true" />
+            <element signature="e#64977#65902#0" expanded="true" />
+            <element signature="e#65477#65740#0" expanded="true" />
+            <element signature="e#65739#65740#0" expanded="true" />
+            <element signature="e#65901#65902#0" expanded="true" />
+            <element signature="e#66849#67455#0" expanded="true" />
+            <element signature="e#67030#67293#0" expanded="true" />
+            <element signature="e#67292#67293#0" expanded="true" />
+            <element signature="e#67454#67455#0" expanded="true" />
+            <element signature="e#67585#67586#0" expanded="true" />
+            <element signature="e#68593#68778#0" expanded="true" />
+            <element signature="e#68777#68778#0" expanded="true" />
+            <element signature="e#69651#70363#0" expanded="true" />
+            <element signature="e#70362#70363#0" expanded="true" />
+            <element signature="e#70741#72051#0" expanded="true" />
+            <element signature="e#72050#72051#0" expanded="true" />
+            <element signature="e#73957#74142#0" expanded="true" />
+            <element signature="e#74141#74142#0" expanded="true" />
+            <element signature="e#74655#75372#0" expanded="true" />
+            <element signature="e#74888#75252#0" expanded="true" />
+            <element signature="e#75251#75252#0" expanded="true" />
+            <element signature="e#75371#75372#0" expanded="true" />
+            <element signature="e#75406#77010#0" expanded="true" />
+            <element signature="e#77009#77010#0" expanded="true" />
+            <element signature="e#81585#82205#0" expanded="true" />
+            <element signature="e#82204#82205#0" expanded="true" />
+            <element signature="e#82385#83084#0" expanded="true" />
+            <element signature="e#83083#83084#0" expanded="true" />
+            <marker date="1558362060458" expanded="false" signature="32041:41075" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/touch_me/pfe_project/CustomPagerAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="573">
-          <caret line="335" column="41" selection-start-line="335" selection-start-column="41" selection-end-line="335" selection-end-column="41" />
+        <state relative-caret-position="216">
+          <caret line="106" column="24" selection-start-line="106" selection-start-column="24" selection-end-line="106" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9688#9853#0" expanded="true" />
-            <element signature="e#9852#9853#0" expanded="true" />
-            <element signature="e#34333#34334#0" expanded="true" />
-            <element signature="e#34373#34374#0" expanded="true" />
-            <element signature="e#35026#35027#0" expanded="true" />
-            <element signature="e#35047#35048#0" expanded="true" />
-            <element signature="e#35164#35165#0" expanded="true" />
-            <element signature="e#35216#35217#0" expanded="true" />
+            <element signature="e#7412#7440#0" />
+            <marker date="1558363135321" expanded="false" signature="43469:46332" ph="..." />
           </folding>
         </state>
       </provider>

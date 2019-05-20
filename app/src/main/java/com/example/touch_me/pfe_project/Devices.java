@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 import io.realm.RealmObject;
 
-public class Devices extends RealmObject {
+public class Devices extends RealmObject{
   @PropertyName("Battery_Level")
   private Double batteryLevel;
   @PropertyName("Moisture")

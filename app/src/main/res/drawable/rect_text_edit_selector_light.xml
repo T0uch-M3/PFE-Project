@@ -3,7 +3,7 @@
 
   <item
     android:state_focused="true"
-    android:drawable="@drawable/rect_text_edit_unfocused_light"
+    android:drawable="@drawable/rect_text_edit_unfocused_dark"
     />
   <item
     android:drawable="@drawable/rect_text_edit_light"

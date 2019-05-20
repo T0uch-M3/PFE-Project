@@ -10,7 +10,10 @@ public interface MyCustomObjectListener {
 
   void onOptionButtonReady(View v, int position);
   void onObjectReady();
-  void notifyForRemove(CustomAdapter ca, WidgetItem wItem, boolean add, int dummiesToDelete);
+  void notifyForRemove(CustomAdapter ca, WidgetItem wItem, boolean add, int magicNumber);
+  void sendDataList(List list);
+  void sendDataListX2(List<List<String>> list);
+  void sendObjectData(List<Devices> list, int similarityCounter);
 
 }
 

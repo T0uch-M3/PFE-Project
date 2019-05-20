@@ -1,6 +1,7 @@
 package com.example.touch_me.pfe_project;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.TransitionDrawable;
@@ -26,7 +27,14 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -79,6 +87,7 @@ public class LaunchScreen extends AppCompatActivity {
   int wiidth;
   boolean availability;
   private boolean commit;
+  private FirebaseAuth mAuth;
 
 
   @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -87,6 +96,8 @@ public class LaunchScreen extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_launch_screen);
     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+
+    mAuth = FirebaseAuth.getInstance();
 
     final ViewGroup transitionsContainer = (ViewGroup) findViewById(R.id.transitions_container);
 
@@ -174,14 +185,38 @@ public class LaunchScreen extends AppCompatActivity {
     btnConLogIn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+//        Crashlytics.getInstance().crash();
 
         SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
         Boolean boo = mPrefs.getBoolean("offlineFunc", false);
         if (boo == true) {
           checkDataBaseConnection();
         }
+        /*************************************************/
+        mAuth.signInWithEmailAndPassword(et_Login.getText().toString(), et_Pwd.getText().toString())
+          .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+              if (task.isSuccessful()) {
+                // Sign in success, update UI with the signed-in user's information
+                Log.wtf("tag", "signInWithEmail:success");
 
-        startActivity(new Intent(LaunchScreen.this, WelcomeScreen.class));
+                FirebaseUser user = mAuth.getCurrentUser();
+//                updateUI(user);
+              } else {
+                // If sign in fails, display a message to the user.
+                Log.wtf("tag", "signInWithEmail:failure", task.getException());
+//                Toast.makeText(LaunchScreen., "Authentication failed.",
+//                  Toast.LENGTH_SHORT).show();
+//                updateUI(null);
+              }
+
+              // ...
+            }
+          });
+        /*****************************************/
+
+//        startActivity(new Intent(LaunchScreen.this, WelcomeScreen.class));
       }
     });
 
@@ -197,11 +232,11 @@ public class LaunchScreen extends AppCompatActivity {
     topbox_holder.setLayoutParams(new FrameLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
 
 
-    frameLayout.setLayoutParams(new FrameLayout.LayoutParams((int) outMetrics.widthPixels*2, (int) (outMetrics.heightPixels/1.7), Gravity.TOP));
-    FrameLayout.LayoutParams topPrams = new FrameLayout.LayoutParams((int) outMetrics.widthPixels, WRAP_CONTENT,/*, Gravity.END*/Gravity.BOTTOM|Gravity.END);
+    frameLayout.setLayoutParams(new FrameLayout.LayoutParams((int) outMetrics.widthPixels * 2, (int) (outMetrics.heightPixels / 1.7), Gravity.TOP));
+    FrameLayout.LayoutParams topPrams = new FrameLayout.LayoutParams((int) outMetrics.widthPixels, WRAP_CONTENT,/*, Gravity.END*/Gravity.BOTTOM | Gravity.END);
 //    topPrams.topMargin = (int) (dpHeight/2);
     topShelf.setLayoutParams(new FrameLayout.LayoutParams(topPrams));
-    FrameLayout.LayoutParams bottomParams = new FrameLayout.LayoutParams((int) outMetrics.widthPixels, (int) dpHeight+85,/*, Gravity.END*/Gravity.BOTTOM);
+    FrameLayout.LayoutParams bottomParams = new FrameLayout.LayoutParams((int) outMetrics.widthPixels, (int) dpHeight + 85,/*, Gravity.END*/Gravity.BOTTOM);
 //    bottomParams.bottomMargin=400;
     bottombox.setLayoutParams(bottomParams);
 //    bottombox.
@@ -213,6 +248,13 @@ public class LaunchScreen extends AppCompatActivity {
 
   }
 
+  @Override
+  public void onStart() {
+    super.onStart();
+    FirebaseUser currentUser = mAuth.getCurrentUser();
+//    Log.wtf("tag", "user name:" + currentUser.getDisplayName());
+  }
+
   public void checkDataBaseConnection() {
 
     DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
@@ -221,8 +263,10 @@ public class LaunchScreen extends AppCompatActivity {
       public void onDataChange(@NonNull DataSnapshot snapshot) {
         boolean connected = snapshot.getValue(Boolean.class);
         if (connected) {
+          Log.wtf("tag", "online detected from launcher");
           afterConfirmation(true);
         } else {
+          Log.wtf("tag", "offline detected from launcher");
           afterConfirmation(false);
         }
       }
@@ -301,7 +345,7 @@ public class LaunchScreen extends AppCompatActivity {
     animateIt(btnLogIn, 800, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
 //    animateIt(btnSignUp, 1000, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
 //    animateIt(tvNewUser, 1000, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
-    animateIt(topShelf, 800, tc, Gravity.END|Gravity.BOTTOM, Gravity.START|Gravity.BOTTOM);
+    animateIt(topShelf, 800, tc, Gravity.END | Gravity.BOTTOM, Gravity.START | Gravity.BOTTOM);
     animateIt(btnConLogIn, 800, tc, Gravity.BOTTOM | Gravity.CENTER, Gravity.TOP | Gravity.CENTER);
 //    theShower.setPadding(0,20,0,0);
     animateIt3(imageV, 500, tc, 120, 20);
@@ -456,7 +500,7 @@ public class LaunchScreen extends AppCompatActivity {
       animateIt(btnLogIn, 600, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
 //      animateIt(btnSignUp, 800, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
 //      animateIt(tvNewUser, 800, tc, Gravity.TOP | Gravity.CENTER, Gravity.BOTTOM | Gravity.CENTER);
-      animateIt(topShelf, 600, tc, Gravity.END|Gravity.BOTTOM, Gravity.START|Gravity.BOTTOM);
+      animateIt(topShelf, 600, tc, Gravity.END | Gravity.BOTTOM, Gravity.START | Gravity.BOTTOM);
       animateIt(btnConLogIn, 600, tc, Gravity.BOTTOM | Gravity.CENTER, Gravity.TOP | Gravity.CENTER);
 //      theShower.setPadding(0,100,0,0);
       animateIt3(imageV, 500, tc, 120, 20);

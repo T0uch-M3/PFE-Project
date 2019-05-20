@@ -9,16 +9,39 @@
   android:fitsSystemWindows="true"
   tools:openDrawer="left">
 
+  <View
+    android:id="@+id/backgroundTint"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:translationZ="0dp" />
+
   <ImageButton
-    android:id="@+id/imageButton"
+    android:id="@+id/pageAddBtn"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="16dp"
-    android:layout_marginEnd="24dp"
-    app:layout_constraintEnd_toEndOf="@+id/settingButon"
-    app:layout_constraintTop_toTopOf="parent"
+    android:layout_gravity="end"
+    android:layout_marginTop="32dp"
+    android:layout_marginEnd="5dp"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:contentDescription="TODO"
+    android:src="@drawable/ic_add_box_black_24dp"
+
     android:translationZ="1dp"
-    app:srcCompat="@drawable/add_img" />
+    app:layout_constraintEnd_toStartOf="@+id/settingButon"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <ImageButton
+    android:id="@+id/offlineAlert"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:layout_marginTop="32dp"
+    android:layout_marginEnd="8dp"
+    android:background="@color/transparent"
+    android:scaleType="fitCenter"
+    android:translationZ="1dp"
+    app:layout_constraintEnd_toStartOf="@+id/pageAddBtn"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="@drawable/offline_alert" />
 
   <ImageButton
     android:id="@+id/settingButon"
@@ -58,7 +81,8 @@
     app:layout_constraintTop_toTopOf="parent">
 
     <com.google.android.material.tabs.TabLayout
-      android:layout_width="313dp"
+      android:id="@+id/tabLayout"
+      android:layout_width="330dp"
       android:layout_height="wrap_content"
       android:layout_marginTop="24dp"
       android:layout_marginEnd="16dp"
@@ -68,8 +92,10 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       app:tabMode="scrollable"
+      app:tabRippleColor="@color/theNewDark"
       app:tabSelectedTextColor="@color/disabled"
-      app:tabTextColor="@color/lightBrown">
+      app:tabTextColor="@color/lightBrown"
+      app:tabUnboundedRipple="false">
 
       <com.google.android.material.tabs.TabItem
         android:id="@+id/tabItem5"

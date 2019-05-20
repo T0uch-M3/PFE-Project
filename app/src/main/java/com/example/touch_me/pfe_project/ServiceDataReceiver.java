@@ -31,7 +31,6 @@ public class ServiceDataReceiver extends ResultReceiver {
 
   @Override
   protected void onReceiveResult(int resultCode, Bundle resultData) {
-
     if (mReceiver != null) {
       mReceiver.onReceiveResult(resultCode, resultData);
     }

@@ -25,7 +25,7 @@
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_marginBottom="8dp"
-    android:paddingTop="0dp"
+    android:paddingTop="5dp"
     android:scrollbarSize="0dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -38,15 +38,16 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_marginStart="2dp"
-      android:layout_marginTop="5dp"
+      android:layout_marginTop="2dp"
       android:layout_marginEnd="2dp"
       android:orientation="vertical"
-      android:paddingBottom="40dp">
+      android:paddingBottom="47dp">
 
       <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
         android:layout_marginBottom="3dp"
+        android:layout_weight="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -55,10 +56,13 @@
 
         <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
           android:orientation="vertical"
           android:paddingLeft="8dp"
+          android:paddingTop="8dp"
           android:paddingRight="8dp"
+          android:paddingBottom="8dp"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent">
@@ -66,82 +70,61 @@
           <TextView
             android:id="@+id/textView23"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="UI"
-            android:textColor="@color/theNewDark" />
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:text="Page name"
+            android:textColor="@color/theNewDark"
+            android:textSize="18sp" />
 
           <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-              android:id="@+id/textView24"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:text="Background color"
-              android:textColor="@color/theNewDark"
-              android:textSize="12sp" />
-
-            <CheckBox
-              android:id="@+id/color1"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:buttonTint="@color/lightBrown"
-              android:layoutDirection="rtl"
-              android:scaleX=".8"
-              android:scaleY=".8" />
-
-            <CheckBox
-              android:id="@+id/color2"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:buttonTint="@color/red"
-              android:layoutDirection="rtl"
-              android:scaleX=".8"
-              android:scaleY=".8" />
-
-            <CheckBox
-              android:id="@+id/color3"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:buttonTint="@color/darkBlue"
-              android:layoutDirection="rtl"
-              android:scaleX=".8"
-              android:scaleY=".8" />
-
-            <CheckBox
-              android:id="@+id/color4"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:buttonTint="@color/semiPink"
-              android:layoutDirection="rtl"
-              android:scaleX=".8"
-              android:scaleY=".8" />
-          </LinearLayout>
-
-          <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="6.5"
             android:background="@color/lightBrown"
             android:orientation="vertical"></LinearLayout>
 
-          <CheckBox
-            android:id="@+id/check22"
+          <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layoutDirection="rtl"
-            android:text="TempHolder" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+
+            <TextView
+              android:id="@+id/textView26"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="3"
+              android:gravity="center|left"
+              android:text="Change page name"
+              android:textColor="@color/theNewDark" />
+
+            <EditText
+              android:id="@+id/pageName"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="3"
+              android:background="@drawable/rect_text_edit_unfocused_dark"
+              android:ems="10"
+              android:inputType="textPersonName"
+              android:paddingLeft="5dp"
+              android:text="Name"
+              android:textColor="@color/white_ish" />
+          </LinearLayout>
 
         </LinearLayout>
+
       </androidx.cardview.widget.CardView>
 
       <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp"
+        android:layout_weight="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -193,9 +176,10 @@
 
       <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp"
+        android:layout_weight="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -204,10 +188,12 @@
 
         <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="match_parent"
           android:orientation="vertical"
           android:paddingLeft="8dp"
+          android:paddingTop="8dp"
           android:paddingRight="8dp"
+          android:paddingBottom="8dp"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent">
@@ -215,73 +201,49 @@
           <TextView
             android:id="@+id/textView233"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="UI"
-            android:textColor="@color/theNewDark" />
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:text="Data"
+            android:textColor="@color/theNewDark"
+            android:textSize="18sp" />
 
           <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="6.5"
+            android:background="@color/lightBrown"
+            android:orientation="vertical"></LinearLayout>
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_weight="3"
             android:orientation="horizontal">
 
             <TextView
               android:id="@+id/textView243"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
               android:layout_weight="1"
-              android:text="Background color"
+              android:gravity="center|left"
+              android:text="Delete this page ?"
               android:textColor="@color/theNewDark"
               android:textSize="12sp" />
 
-            <CheckBox
-              android:id="@+id/color13"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:buttonTint="@color/lightBrown"
-              android:layoutDirection="rtl"
-              android:scaleX=".8"
-              android:scaleY=".8" />
+            <Button
+              android:id="@+id/deleteButton"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="3"
+              android:background="@drawable/delete_button_style"
+              android:text="DELETE"
+              android:textColor="@color/theNewDark" />
 
-            <CheckBox
-              android:id="@+id/color23"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:buttonTint="@color/red"
-              android:layoutDirection="rtl"
-              android:scaleX=".8"
-              android:scaleY=".8" />
-
-            <CheckBox
-              android:id="@+id/color33"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:buttonTint="@color/darkBlue"
-              android:layoutDirection="rtl"
-              android:scaleX=".8"
-              android:scaleY=".8" />
-
-            <CheckBox
-              android:id="@+id/color43"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:buttonTint="@color/semiPink"
-              android:layoutDirection="rtl"
-              android:scaleX=".8"
-              android:scaleY=".8" />
           </LinearLayout>
-
-          <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/lightBrown"
-            android:orientation="vertical"></LinearLayout>
-
-          <CheckBox
-            android:id="@+id/check223"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layoutDirection="rtl"
-            android:text="TempHolder" />
 
         </LinearLayout>
       </androidx.cardview.widget.CardView>
@@ -291,9 +253,9 @@
 
   <Button
     android:id="@+id/saveButton"
-    android:layout_width="63dp"
-    android:layout_height="29dp"
-    android:layout_marginBottom="16dp"
+    android:layout_width="80dp"
+    android:layout_height="40dp"
+    android:layout_marginBottom="14dp"
     android:background="@drawable/add_button_style"
     android:text="SAVE"
     android:textColor="@color/white_ish"

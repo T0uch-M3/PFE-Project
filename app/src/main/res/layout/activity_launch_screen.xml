@@ -468,13 +468,11 @@
       android:id="@+id/topShelf"
       android:layout_width="360dp"
       android:layout_height="match_parent"
-      android:layout_gravity="end"
-      android:layout_marginTop="300dp"
-      android:background="@color/semiPink">
+      android:layout_marginTop="300dp">
 
       <LinearLayout
         android:id="@+id/topbox_holder"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="10dp"
@@ -534,12 +532,11 @@
 
   <FrameLayout
     android:id="@+id/bottombox"
-    android:layout_width="348dp"
+    android:layout_width="match_parent"
     android:layout_height="362dp"
     android:layout_gravity="bottom|center"
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp"
-    android:background="@color/grey"
     android:visibility="visible">
 
     <Button

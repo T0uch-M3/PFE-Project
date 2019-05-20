@@ -199,6 +199,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return new ViewHolderDummy(viewGroup);
       }
       case 4: {/************************Info*/
+
         ln.setBackgroundColor(Color.GREEN);
         NestedScrollView devicesContainer = (NestedScrollView) LayoutInflater.from(parent.getContext()).inflate(R.layout.info_item, parent, false);
         ScrollView.LayoutParams listParams = new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -218,7 +219,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         final LinearLayout lnH = new LinearLayout(parent.getContext());
         LinearLayout lnV = null;
-        LinearLayout.LayoutParams paramsH = new LinearLayout.LayoutParams(((recyclerView.getWidth() / 3) * 2) - 23, 250);
+        LinearLayout.LayoutParams paramsH = new LinearLayout.LayoutParams(((recyclerView.getWidth() / 3) * 2) - 12, (recyclerView.getWidth() / 3) + 15);
 
 
         lnH.setLayoutParams(paramsH);
@@ -269,11 +270,11 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         fMenu.addButton(testButton);
         lnH.addView(optionButtonHolder);
 
-        lnH.setBackground(ln.getContext().getResources().getDrawable(R.drawable.rect_button_border));
+//        lnH.setBackground(ln.getContext().getResources().getDrawable(R.drawable.rect_button_border));
 
         viewGroup.addView(lnH);
 //      viewGroup.addView(ln);
-        Log.wtf("tag", "TESTiNG  CLICKING  ");
+//        Log.wtf("tag", "TESTiNG  CLICKING  ");
         return new ViewHolderDummy(viewGroup);
       }
       case 3: {/************************Thermometer*/
@@ -283,7 +284,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         TextView tv = new TextView(parent.getContext());
         final boolean[] textClicked1 = {false};
         final boolean[] textClicked2 = {false};
-        tv.setBackgroundColor(Color.YELLOW);
+//        tv.setBackgroundColor(Color.YELLOW);
         LinearLayout.LayoutParams paramsTV = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         paramsTV.gravity = Gravity.CENTER;
@@ -419,7 +420,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         fMenu.addButton(testButton2);
         fMenu.addButton(testButton);
         lnH.addView(optionButtonHolder);
-        lnH.setBackground(lnH.getContext().getResources().getDrawable(R.drawable.rect_button_border));
+//        lnH.setBackground(lnH.getContext().getResources().getDrawable(R.drawable.rect_button_border));
 
         viewGroup.addView(lnH);
         return new ViewHolderDummy(viewGroup);
@@ -488,7 +489,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return new ViewHolderBtn(viewGroup);
       }
       case 0: {/************************Dummy*/
-        ln.setBackgroundColor(Color.CYAN);
+//        ln.setBackgroundColor(Color.CYAN);
         ln.post(new Runnable() {
           @Override
           public void run() {
@@ -506,35 +507,47 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
   }
 
+
   @Override
   public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
 
 //    Log.wtf("tag", "inside onBINDVIRWHILDERRR");
     final Object nonCastObject = mListObjects.get(position);
-    Log.wtf("tag", "position ==>>==" + position + "===Item title HERE=>>=" + mListObjects.get(position).getTilte());
+//    Log.wtf("tag", "position ==>>==" + position + "===Item title HERE=>>=" + mListObjects.get(position).getTilte());
 
     if (nonCastObject == null) {
       Log.wtf("tag", "null cast object?");
     }
-    if (position == 1) {
+    if (position % 3 == 0 || position == 0) {
       try {
         ViewHolderDummy viewHolderDummy = (ViewHolderDummy) holder;
         final ViewGroup lvl1 = (ViewGroup) viewHolderDummy.getvGroup().getChildAt(0);
-//        Log.wtf("tag", "what is the class::" + lvl1.getClass());
-        lvl1.setBackgroundColor(Color.GREEN);
+        Log.wtf("tag", "position");
+        lvl1.setBackground(lvl1.getContext().getResources().getDrawable(R.drawable.right_border));
       } catch (Exception e) {
 
       }
     }
-    if (position == 0) {
+    if ((position - 1) % 3 == 0) {
       try {
         ViewHolderDummy viewHolderDummy = (ViewHolderDummy) holder;
         final ViewGroup lvl1 = (ViewGroup) viewHolderDummy.getvGroup().getChildAt(0);
-        Log.wtf("tag", "what is the class::" + lvl1.getClass());
-        lvl1.setBackgroundColor(Color.BLUE);
+        Log.wtf("tag", "position-1");
+        lvl1.setBackground(lvl1.getContext().getResources().getDrawable(R.drawable.bottom_border));
       } catch (Exception e) {
 
       }
+    }
+    if ((position - 2) % 3 == 0) {
+      try {
+        ViewHolderDummy viewHolderDummy = (ViewHolderDummy) holder;
+        final ViewGroup lvl1 = (ViewGroup) viewHolderDummy.getvGroup().getChildAt(0);
+        Log.wtf("tag", "position-2");
+        lvl1.setBackground(lvl1.getContext().getResources().getDrawable(R.drawable.left_border));
+      } catch (Exception e) {
+
+      }
+
     }
 
     final WidgetItem wi = (WidgetItem) nonCastObject;
@@ -556,6 +569,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
       }
       break;
       case "Widget_T": {
+        final boolean[] magicChecking = {true}; //this should be responsible of triggering the check through the magic method
         ViewHolderDummy viewHolder = (ViewHolderDummy) holder;
         //just to bypass an error i was getting
         if (wi.getWidget().getParent() != null)
@@ -598,19 +612,105 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         deleteButton.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {/*****Delete Button Click EVENT  ***/
+
             removeOneObject(position);
-            Log.wtf("tag", "should be TEMPHOLDER" + mListObjects.get(position + 1).getType());
 
+//            Log.wtf("tag", "pos    :: " + mListObjects.get(position).getType());
+//            Log.wtf("tag", "pos + 1:: " + mListObjects.get(position + 1).getType());
+//            Log.wtf("tag", "pos + 2:: " + mListObjects.get(position + 2).getType());
+//            Log.wtf("tag", "pos + 3:: " + mListObjects.get(position + 3).getType());
+
+//If we remove a widget and there's a tempHolder infront of  it
             if (mListObjects.get(position).getType() == "TempHolder") {//the item removed got a holder in front of it
-              removeOneObject(position);
-              listener.notifyForRemove(CustomAdapter.this, wi, false, 1);
+              List<Integer> posList = new ArrayList<>();
+              int jumpCounter = position;
+              int holderDeleted = 0;
+              Log.wtf("tag", "first if:: ");
+              Log.wtf("tag", "position of tempholdder:: " + position);
+
+
+              while ((mListObjects.get(jumpCounter).getType() == "TempHolder" || mListObjects.get(jumpCounter + 1).getType() == "TempHolder") && holderDeleted < 2) {
+                if (mListObjects.get(jumpCounter).getType() == "TempHolder") {
+                  removeOneObject(jumpCounter);
+                  listener.notifyForRemove(CustomAdapter.this, wi, false, 1);
+                  Log.wtf("tag", "FOUND  AND DELETE ");
+                  holderDeleted++;
+                }
+
+                if (mListObjects.get(jumpCounter + 1).getType() == "TempHolder") {
+                  removeOneObject(jumpCounter + 1);
+                  listener.notifyForRemove(CustomAdapter.this, wi, false, 1);
+                  Log.wtf("tag", "FOUND  AND DELETE + 1");
+                  holderDeleted++;
+                }
+
+                jumpCounter++;
+              }
             }
-            if (mListObjects.get(position + 1).getType() == "TempHolder") {//the item removed got a holder in front of the item next to it
-              removeOneObject(position + 1);
-              listener.notifyForRemove(CustomAdapter.this, wi, false, 1);//first check
+//            Log.wtf("tag", "pos    :: " + mListObjects.get(position).getType());
+
+            //If we remove a widget and there's a tempHolder infront of the widget after it
+            if (mListObjects.get(position + 1).getType() == "TempHolder" && mListObjects.get(position).getType() != "Info") {//the item removed got a holder in front of the item next to it
+              List<Integer> posList = new ArrayList<>();
+              int jumpCounter = position + 1;
+              int holderDeleted = 0;
+              Log.wtf("tag", "first if:: ");
+              Log.wtf("tag", "position of tempholdder:: " + position);
+
+
+              while ((mListObjects.get(jumpCounter).getType() == "TempHolder" || mListObjects.get(jumpCounter + 1).getType() == "TempHolder") && holderDeleted < 2) {
+                if (mListObjects.get(jumpCounter).getType() == "TempHolder") {
+                  removeOneObject(jumpCounter);
+                  listener.notifyForRemove(CustomAdapter.this, wi, false, 1);
+                  Log.wtf("tag", "FOUND  AND DELETE ");
+                  holderDeleted++;
+                }
+
+                if (mListObjects.get(jumpCounter + 1).getType() == "TempHolder") {
+                  removeOneObject(jumpCounter + 1);
+                  listener.notifyForRemove(CustomAdapter.this, wi, false, 1);
+                  Log.wtf("tag", "FOUND  AND DELETE + 1");
+                  holderDeleted++;
+                }
+
+                jumpCounter++;
+              }
             }
 
-            listener.notifyForRemove(CustomAdapter.this, wi, false, 1);//a second check won't hurt
+
+            int pos = 0;
+            boolean foundInfo = false;
+            Log.wtf("tag", "pos    :: " + mListObjects.get(position).getType());
+            Log.wtf("tag", "pos + 1:: " + mListObjects.get(position + 1).getType());
+            Log.wtf("tag", "pos + 2:: " + mListObjects.get(position + 2).getType());
+            do {
+              Log.wtf("tag", "pos:: " + pos);
+              Log.wtf("tag", "REQL  pos:: " + getAbsolutePosition(position));
+              Log.wtf("tag", "position:: " + position);
+
+              if (mListObjects.get(position + pos).getType() == "Info") {
+                if (getAbsolutePosition(position + pos) % 3 == 0) {
+                  Log.wtf("tag", "we got a boogy");
+                  magicChecking[0] = false;
+                  listener.notifyForRemove(CustomAdapter.this, wi, true, 1000 + position + pos);
+                }
+//                Log.wtf("tag", "found info at ::" + pos + " " + getAbsolutePosition(position + pos));
+                foundInfo = true;
+              }
+              pos++;
+            }
+            while (pos < 3 && !foundInfo);//As long as these conditions are met the loop will keep spinning
+            /***********************/
+
+            if (mListObjects.get(position).getType() == "Info") {
+              if (mListObjects.get(position + 1).getType() == "Info") {
+                listener.notifyForRemove(CustomAdapter.this, wi, true, 1000 + position + 1);
+                magicChecking[0] = false;
+              }
+            }
+
+            if (magicChecking[0])
+              listener.notifyForRemove(CustomAdapter.this, wi, false, 1);//a second check won't hurt (actually it can)
             optionBtn.collapse();
           }
         });
@@ -625,7 +725,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         ViewGroup downLvl4 = (ViewGroup) downLvl3.getChildAt(1);
         ViewGroup downLvl5 = (ViewGroup) downLvl4.getChildAt(0);
         ViewGroup downLvl6 = (ViewGroup) downLvl5.getChildAt(0);
-        Log.wtf("tag", "SHOULD  BE  TextVIEW::" + downLvl6.getChildAt(0));
+//        Log.wtf("tag", "SHOULD  BE  TextVIEW::" + downLvl6.getChildAt(0));
         final TextView upperText = (TextView) downLvl6.getChildAt(0);
       }
       break;
@@ -695,8 +795,19 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
       }
       break;
       case "Dummy": {
+//        Log.wtf("tag", "detected dummy::");
         ViewHolderDummy viewHolderDummy = (ViewHolderDummy) holder;
-//        viewHolderDummy.getHolder().setVisibility(View.INVISIBLE);
+        try {
+//          viewHolderDummy.getHolder().setVisibility(View.INVISIBLE);
+//          Log.wtf("tag", "detected dummy:2:");
+          final ViewGroup lvl1 = (ViewGroup) viewHolderDummy.getvGroup().getChildAt(0);
+//        Log.wtf("tag", "what is the class::" + lvl1.getClass());
+          lvl1.setBackground(null);
+          lvl1.setBackgroundColor(Color.RED);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+
       }
       break;
       case "Info": {
@@ -705,6 +816,55 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         final ViewHolderDummy viewHolder = (ViewHolderDummy) holder;
         final ViewGroup downLvl = (ViewGroup) viewHolder.getvGroup().getChildAt(0);
         ViewGroup downLvl2 = (ViewGroup) downLvl.getChildAt(0);
+        /********************************/
+        final FloatingActionsMenu optionBtn = ((ViewHolderDummy) holder).getOptionButton();
+
+        if (((ViewHolderDummy) holder).getOptionButton() != null) {
+          if (optionBtn != null) {/****Option Button Click  EVENT **/
+            optionBtn.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                optionBtn.expand();
+                listener.onOptionButtonReady(((ViewHolderDummy) holder).getOptionButton(), position);
+              }
+            });
+          }
+        }
+
+        ViewGroup underDogs = optionBtn;
+        FloatingActionButton deleteButton = (FloatingActionButton) underDogs.getChildAt(1);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {/*****Delete Button Click EVENT  ***/
+            removeOneObject(position);
+            listener.notifyForRemove(CustomAdapter.this, wi, false, 2);//a second check won't hurt
+//            Log.wtf("tag", "pos " + mListObjects.get(position).getType());
+//            Log.wtf("tag", "pos + 1 " + mListObjects.get(position +1).getType());
+//            Log.wtf("tag", "pos + 2 " + mListObjects.get(position + 2).getType());
+//            Log.wtf("tag", "pos + 3 " + mListObjects.get(position + 3).getType());
+
+            if (mListObjects.get(position).getType() == "TempHolder") {//the item removed got a holder in front of it
+              listener.notifyForRemove(CustomAdapter.this, mListObjects.get(position), false, 1);
+              removeOneObject(position);
+            }
+
+//            if (mListObjects.get(position + 1).getType() == "TempHolder") {//the item removed got a holder in front of the item next to it
+//              removeOneObject(position + 1);
+//              listener.notifyForRemove(CustomAdapter.this, wi, false, 1);//first check
+//            }
+
+
+            optionBtn.collapse();
+          }
+        });
+        FloatingActionButton infoButton = (FloatingActionButton) underDogs.getChildAt(0);
+        infoButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Log.wtf("tag", "INFO MOFO");
+          }
+        });
+        /*****************************************/
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, Gravity.CENTER);
         params.gravity = Gravity.BOTTOM;
@@ -716,21 +876,6 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         List<List<String>> bigDaddy = wi.getSelectedDevices();//TODO: The list is start with get filled gradually (1 then 2, 3...) due to being connected directly to db, change the input source to realm, than future update from firebase
 
-        final FloatingActionsMenu optionBtn = ((ViewHolderDummy) holder).getOptionButton();
-
-        if (((ViewHolderDummy) holder).getOptionButton() != null) {
-          if (optionBtn != null) {/****Option Button Click  EVENT **/
-            optionBtn.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                optionBtn.expand();
-                Log.wtf("tag", "OPTION BUTTON SELECTED");
-                listener.onOptionButtonReady(((ViewHolderDummy) holder).getOptionButton(), position);
-              }
-            });
-          }
-        }
-        /************************/
         Log.wtf("tag", "wi.getSelectedDevicesNumber" + wi.getSelectedDevicesNumber());
         if ((devicesHolder.getChildCount() + bigDaddy.size()) > wi.getSelectedDevicesNumber())
           devicesHolder.removeAllViews();
@@ -765,7 +910,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
 
 
-            if (bigDaddy.size() > 1)//for testing if the user worth of a gift or not (picking just one device)(tfw you are EA)
+            if (bigDaddy.size() > 2)//for testing if the user worth of a gift or not (picking just one device)(tfw you are EA)
               for (int i = 0; i < bigDaddy.size(); i++) {
 //                Log.wtf("tag", "number of devices detected under BigDaddy: " + i);
                 final String deviceName = bigDaddy.get(i).get(0);
@@ -781,12 +926,12 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                 final String date = splitter[3] + "/" + splitter[4] + "/" + splitter[5];
 
-                //Creating the textView's holder
+//Creating the textView's holder
                 final LinearLayout device = new LinearLayout(this.context);
                 device.setOrientation(LinearLayout.HORIZONTAL);
                 device.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-                //the textViews...
+//the textViews...
                 final TextView leftSide = new TextView(this.context);
                 final TextView rightSide = new TextView(this.context);
                 final TextView etc = new TextView(this.context);
@@ -882,7 +1027,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 rightSide.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View v) {
-                    for (int h=0;h<shapeSaverList.size();h++) {
+                    for (int h = 0; h < shapeSaverList.size(); h++) {
                       if (shapeSaverList.get(h).devicePos == holder.getAdapterPosition()) {
                         List l = shapeSaverList.get(h).shapeList;
                         if (l.get(rightSide.getId()).equals(0)) {
@@ -956,6 +1101,68 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
               devicesHolder.addView(nameText);
 
             }
+            if (bigDaddy.size() == 2) {
+              for (int i = 0; i < bigDaddy.size(); i++) {
+//                Log.wtf("tag", "number of devices detected under BigDaddy: " + i);
+                final String deviceName = bigDaddy.get(i).get(0);
+                final String timeAndDate = bigDaddy.get(i).get(1);
+                String[] splitter = timeAndDate.split(" ");
+                //Due to how cooperative the backend team was, i had to add the "0" in front of every one digit number
+                for (int h = 0; h < splitter.length; h++) {
+                  if (splitter[h].length() == 1) {
+                    splitter[h] = "0" + splitter[h];
+                  }
+                }
+                final String time = splitter[0] + " : " + splitter[1] + " : " + splitter[2];
+
+                final String date = splitter[3] + "/" + splitter[4] + "/" + splitter[5];
+
+//Creating the textView's holder
+                final LinearLayout firstHolder = new LinearLayout(this.context);
+                final LinearLayout secondHolder = new LinearLayout(this.context);
+                firstHolder.setOrientation(LinearLayout.HORIZONTAL);
+                firstHolder.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                firstHolder.setGravity(Gravity.CENTER);
+                secondHolder.setOrientation(LinearLayout.HORIZONTAL);
+                secondHolder.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                secondHolder.setGravity(Gravity.CENTER);
+
+//the textViews...
+                final TextView upperTextView = new TextView(this.context);
+                final TextView bottomTextViewL = new TextView(this.context);
+                final TextView bottomTextViewR = new TextView(this.context);
+
+                bottomTextViewL.setPadding(0, 0, 30, 0);
+                bottomTextViewR.setPadding(30, 0, 0, 0);
+
+                upperTextView.setTextSize(19);
+                bottomTextViewL.setTextSize(19);
+                bottomTextViewR.setTextSize(19);
+
+                upperTextView.setSingleLine(true);
+                bottomTextViewL.setSingleLine(true);
+                bottomTextViewR.setSingleLine(true);
+
+                upperTextView.setText(deviceName);
+                bottomTextViewL.setText(date);
+                bottomTextViewR.setText(time);
+
+//                leftSide.setBackgroundColor(Color.GREEN);
+//                rightSide.setBackgroundColor(Color.YELLOW);
+
+//                leftSide.setLayoutParams(new LinearLayout.LayoutParams(recyclerView.getWidth() / 3, ViewGroup.LayoutParams.WRAP_CONTENT));
+//                leftSide.setClickable(true);
+//                rightSide.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//                rightSide.setGravity(Gravity.RIGHT);
+//                rightSide.setId(i);
+                firstHolder.addView(upperTextView);
+                secondHolder.addView(bottomTextViewL);
+                secondHolder.addView(bottomTextViewR);
+
+                devicesHolder.addView(firstHolder);
+                devicesHolder.addView(secondHolder);
+              }
+            }
             //disable the scroll of the recyclerViw in favor of the scrollView inside the cards when the number of items is more than what the card can hold
             if (scrollViewList.getChildCount() > 4)
               scrollViewList.setOnTouchListener(new View.OnTouchListener() {
@@ -974,8 +1181,12 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
       }
       break;
-      case "tempHolder": {
+      case "TempHolder": {
         ViewHolderDummy viewHolderDummy = (ViewHolderDummy) holder;
+        final ViewGroup lvl1 = (ViewGroup) viewHolderDummy.getvGroup().getChildAt(0);
+//        Log.wtf("tag", "what is the class::" + lvl1.getClass());
+        lvl1.setBackground(null);
+        lvl1.setBackgroundColor(Color.BLACK);
       }
     }
 
@@ -986,7 +1197,9 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
   @Override
   public int getItemCount() {
 //    return 0;
-    return ((this.mListObjects == null) ? 0 : this.mListObjects.size());
+    int ss = (this.mListObjects == null) ? 0 : this.mListObjects.size();
+//    Log.wtf("tag", "ss:: " + ss);
+    return ss;
   }
 
   class ViewHolder extends RecyclerView.ViewHolder {
@@ -1072,8 +1285,11 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
   }
 
   public void setListObjects(List<WidgetItem> mListObjects) {
+//    Log.wtf("tag", "WE IN  BOYS");
+//    Log.wtf("tag", "mListObjects :before:" + mListObjects.size());
     recyclerView.getRecycledViewPool().clear();
     this.mListObjects = mListObjects;
+//    Log.wtf("tag", "mListObjects :before:" + mListObjects.size());
     this.notifyDataSetChanged();
   }
 
@@ -1109,5 +1325,17 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     int devicePos = 0;
 
   }
+
+  public int getAbsolutePosition(int filthyCasuals) {
+    int pos = 1;
+    for (int i = 0; i < filthyCasuals; i++) {
+      if (mListObjects.get(i).getType() != "Info")
+        pos++;
+      else
+        pos = pos + 2;
+    }
+    return pos;
+  }
+
 
 }

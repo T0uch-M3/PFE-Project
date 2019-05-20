@@ -14,10 +14,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,6 +42,7 @@ public class FirebasePullService extends IntentService {
   private List<String> deviceName = new ArrayList<>();
   private List<String> deviceDate = new ArrayList<>();
   private List<List<String>> dateAndNames = new ArrayList<>();
+  private List<Devices> devicesList = new ArrayList<>();
 
   // TODO: Rename parameters
   private static final String EXTRA_PARAM1 = "com.example.touch_me.pfe_project.extra.PARAM1";
@@ -96,6 +93,9 @@ public class FirebasePullService extends IntentService {
         Log.wtf("tag", "STATIC");
 //        new AsyncCaller().execute();
         Log.wtf("tag", "NETWORK  THREAD  JUST  STRATEEDDDD");
+
+//        /*
+
         Realm.init(FirebasePullService.this);
         final RealmConfiguration realmConfig = new RealmConfiguration.Builder()
           .name("test1.realm")
@@ -112,12 +112,16 @@ public class FirebasePullService extends IntentService {
         RealmResults<Devices> result3 = realm.where(Devices.class).equalTo("deviceName", "System_Room_SOFIA").findAll();
         RealmResults<Devices> result4 = realm.where(Devices.class).equalTo("deviceName", "Weather_Station_Final").findAll();
 
+//        for(Devices device : result4){
+//          Log.wtf("tag","date:: "+device.getTime());
+//        }
+
         Log.wtf("tag", "greendland size::::" + result.size());
         Log.wtf("tag", "system room 1 size::::" + result2.size());
         Log.wtf("tag", "system room 2 size::::" + result3.size());
         Log.wtf("tag", "weather station size::::" + result4.size());
 
-
+//*/
 //        firebaseStaticConfig();
 
 //        final ResultReceiver finalResRec = resRec;
@@ -138,8 +142,10 @@ public class FirebasePullService extends IntentService {
         Realm.setDefaultConfiguration(realmConfig);
         realm = Realm.getInstance(realmConfig);
         RealmResults<Devices> result = realm.where(Devices.class).findAll();
+
         for (Devices device : result) {
 //          Log.wtf("tag","devices name::"+device.getDeviceName());
+//          if(!devicesList.contains(device.getDeviceName()))
           if (!deviceName.contains(device.getDeviceName())) {
             deviceName.add(device.getDeviceName());
           }
@@ -158,7 +164,7 @@ public class FirebasePullService extends IntentService {
         for (String name : deviceName) {
           for (Devices device : result) {
             if (device.getDeviceName().equals(name)) {
-
+//              Log.wtf("tag", "name:: " + device.getDeviceName() + " time:: " + device.getTime());
               if (device.getTime() != null) {
 
                 String[] splitter = device.getTime().split(" ");
@@ -174,14 +180,14 @@ public class FirebasePullService extends IntentService {
                 for (List list : dateAndNames) {
                   if (list.get(0).equals(device.getDeviceName())) {
 
-                    if (list.size() == 1){
+                    if (list.size() == 1) {
 
                       list.add(00000000000000);
-                    }
-
-                    else {
-                      if (incoming > Long.valueOf(list.get(1).toString()))
+                    } else {
+                      if (incoming > Long.valueOf(list.get(1).toString())) {
                         list.set(1, incoming);
+                      }
+
                     }
                   }
                 }
@@ -204,12 +210,50 @@ public class FirebasePullService extends IntentService {
 //        Log.wtf("tag","NAMEs :::"+deviceName);
 //        Log.wtf("tag","Dates :::"+deviceDate);
 //        Log.wtf("tag", "devices list::" + dateAndNames);
-        Intent i = new Intent();
+
+//        Log.wtf("tag", "device name:" + deviceName);
+//        Log.wtf("tag", "device date:" + deviceDate);
 
         b.putStringArrayList("deviceNameList", (ArrayList<String>) deviceName);
         b.putStringArrayList("deviceDateList", (ArrayList<String>) deviceDate);
         resRec.send(0, b);
 
+        /********************************************************/
+
+        for (Devices device : result) {
+          Devices d = new Devices();
+          d = device;
+          for (String name : deviceName) {
+            if (d.getDeviceName().equals(name)) {
+
+              String[] splitter = d.getTime().split(" ");
+              for (int h = 0; h < splitter.length; h++) {
+                if (splitter[h].length() == 1) {
+                  splitter[h] = "0" + splitter[h];
+                }
+              }
+              String modified = splitter[0] + " " + splitter[1] + " " + splitter[2] + " " + splitter[3] + " " + splitter[4] + " " + splitter[5];
+//          Log.wtf("tag", "modified:: " + modified);
+              for (String date : deviceDate) {
+                if (modified.equals(date)) {
+                  devicesList.add(d);
+                }
+              }
+            }
+          }
+
+        }
+//        for (Devices device : devicesList)
+//          Log.wtf("tag", "deviceList::" + device.getTime());
+
+//        Intent i = new Intent();
+
+//        i.putExtra("devicesList", (Serializable) devicesList);
+//        b.putParcelable("deviceList", (Parcelable) devicesList.get(0));
+
+
+//        resRec.send(0, b);
+//        resRec.
 
       }
 
@@ -409,6 +453,7 @@ public class FirebasePullService extends IntentService {
 
         realm = Realm.getInstance(realmConfig);
 
+
 //        realm.executeTransaction(new Realm.Transaction() {
 //          @Override
 //          public void execute(Realm realm) {
@@ -443,24 +488,26 @@ public class FirebasePullService extends IntentService {
                   Log.wtf("tag", "TWO");
                   for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     try {
+        /*
                       realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(final Realm realm) {
-//                          Devices greenLand = new Devices();
-//
-//                          greenLand.setTime(snapshot.child("Time").getValue().toString());
-//                          greenLand.setTemperature(Float.valueOf(snapshot.child("Temperature").getValue().toString()));
-//                          greenLand.setBatteryLevel(Double.valueOf(snapshot.child("Battery_Level").getValue().toString()));
-//                          greenLand.setHumidity(Float.valueOf(snapshot.child("Humidity").getValue().toString()));
-//                          greenLand.setMoisture(Float.valueOf(snapshot.child("Moisture").getValue().toString()));
-//                          greenLand.setSoilTemperature(Float.valueOf(snapshot.child("soilTemperature").getValue().toString()));
-//                          greenLand.setWaterSensor(Float.valueOf(snapshot.child("WaterSensor").getValue().toString()));
-//                          greenLand.setDeviceName("Green_Land");
+                          Devices greenLand = new Devices();
+
+                          greenLand.setTime(snapshot.child("Time").getValue().toString());
+                          greenLand.setTemperature(Float.valueOf(snapshot.child("Temperature").getValue().toString()));
+                          greenLand.setBatteryLevel(Double.valueOf(snapshot.child("Battery_Level").getValue().toString()));
+                          greenLand.setHumidity(Float.valueOf(snapshot.child("Humidity").getValue().toString()));
+                          greenLand.setMoisture(Float.valueOf(snapshot.child("Moisture").getValue().toString()));
+                          greenLand.setSoilTemperature(Float.valueOf(snapshot.child("soilTemperature").getValue().toString()));
+                          greenLand.setWaterSensor(Float.valueOf(snapshot.child("WaterSensor").getValue().toString()));
+                          greenLand.setDeviceName("Green_Land");
 
 //                          realm.deleteAll();
-//                          realm.insertOrUpdate(greenLand);
+                          realm.insertOrUpdate(greenLand);
                         }
                       });
+          */
                     } catch (Exception e) {
                       e.printStackTrace();
                     }
@@ -477,23 +524,24 @@ public class FirebasePullService extends IntentService {
                 case "System_Room_SOFIA": {
                   for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     try {
+                 /*
                       realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(final Realm realm) {
-//                          Devices systemRoom1 = new Devices();
-//
-//                          systemRoom1.setTime(snapshot.child("Time").getValue().toString());
-//                          systemRoom1.settemperature(Float.valueOf(snapshot.child("temperature").getValue().toString()));
-//                          systemRoom1.setBattery(Double.valueOf(snapshot.child("battery").getValue().toString()));
-//                          systemRoom1.setPressure(Double.valueOf(snapshot.child("pressure").getValue().toString()));
-//                          systemRoom1.setHumidity(Float.valueOf(snapshot.child("humidity").getValue().toString()));
-//                          systemRoom1.setDeviceName("System_Room_SOFIA");
+                          Devices systemRoom1 = new Devices();
+
+                          systemRoom1.setTime(snapshot.child("Time").getValue().toString());
+                          systemRoom1.settemperature(Float.valueOf(snapshot.child("temperature").getValue().toString()));
+                          systemRoom1.setBattery(Double.valueOf(snapshot.child("battery").getValue().toString()));
+                          systemRoom1.setPressure(Double.valueOf(snapshot.child("pressure").getValue().toString()));
+                          systemRoom1.setHumidity(Float.valueOf(snapshot.child("humidity").getValue().toString()));
+                          systemRoom1.setDeviceName("System_Room_SOFIA");
 //                          realm.deleteAll();
-//                          realm.insertOrUpdate(systemRoom1);
+                          realm.insertOrUpdate(systemRoom1);
 
                         }
                       });
-
+      */
                     } catch (Exception e) {
 //                      e.printStackTrace();
                     }
@@ -508,23 +556,24 @@ public class FirebasePullService extends IntentService {
                 case "System_Room_SOFIA2": {
                   for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     try {
+           /*
                       realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(final Realm realm) {
-//                          Devices systemRoom2 = new Devices();
-//
-//                          systemRoom2.setTime(snapshot.child("Time").getValue().toString());
-//                          systemRoom2.settemperature(Float.valueOf(snapshot.child("temperature").getValue().toString()));
-//                          systemRoom2.setBattery(Double.valueOf(snapshot.child("battery").getValue().toString()));
-//                          systemRoom2.setPressure(Double.valueOf(snapshot.child("pressure").getValue().toString()));
-//                          systemRoom2.setHumidity(Float.valueOf(snapshot.child("humidity").getValue().toString()));
-//                          systemRoom2.setDeviceName("System_Room_SOFIA2");
-////                          realm.deleteAll();
-//                          realm.insertOrUpdate(systemRoom2);
+                          Devices systemRoom2 = new Devices();
+
+                          systemRoom2.setTime(snapshot.child("Time").getValue().toString());
+                          systemRoom2.settemperature(Float.valueOf(snapshot.child("temperature").getValue().toString()));
+                          systemRoom2.setBattery(Double.valueOf(snapshot.child("battery").getValue().toString()));
+                          systemRoom2.setPressure(Double.valueOf(snapshot.child("pressure").getValue().toString()));
+                          systemRoom2.setHumidity(Float.valueOf(snapshot.child("humidity").getValue().toString()));
+                          systemRoom2.setDeviceName("System_Room_SOFIA2");
+//                          realm.deleteAll();
+                          realm.insertOrUpdate(systemRoom2);
 
                         }
                       });
-
+*/
                     } catch (Exception e) {
 //                      e.printStackTrace();
                     }
@@ -538,26 +587,29 @@ public class FirebasePullService extends IntentService {
                 case "Weather_Station_Final": {
                   for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     try {
+       /*
                       realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(final Realm realm) {
-//                          Devices weatherStation = new Devices();
-//
-//                          weatherStation.setRelativeHumidity(Float.valueOf(snapshot.child("RH").getValue().toString()));
-//                          weatherStation.setTemperature(Float.valueOf(snapshot.child("Temperature").getValue().toString()));
-//                          weatherStation.setDirection(Integer.valueOf(snapshot.child("direction").getValue().toString()));
-//                          weatherStation.setRainFall(Double.valueOf(snapshot.child("rainfall").getValue().toString()));
-//                          weatherStation.setRainFall24(Double.valueOf(snapshot.child("rainfall24").getValue().toString()));
-//                          weatherStation.setSpeed(Float.valueOf(snapshot.child("speed").getValue().toString()));
-//                          weatherStation.setSpeed5(Float.valueOf(snapshot.child("speed5").getValue().toString()));
-//                          weatherStation.setDeviceName("Weather_Station_Final");
-//
-////                          realm.deleteAll();
-//                          realm.insertOrUpdate(weatherStation);
+                          Devices weatherStation = new Devices();
+
+                          weatherStation.setRelativeHumidity(Float.valueOf(snapshot.child("RH").getValue().toString()));
+                          weatherStation.setTemperature(Float.valueOf(snapshot.child("Temperature").getValue().toString()));
+                          weatherStation.setDirection(Integer.valueOf(snapshot.child("direction").getValue().toString()));
+                          weatherStation.setRainFall(Double.valueOf(snapshot.child("rainfall").getValue().toString()));
+                          weatherStation.setRainFall24(Double.valueOf(snapshot.child("rainfall24").getValue().toString()));
+                          weatherStation.setSpeed(Float.valueOf(snapshot.child("speed").getValue().toString()));
+                          weatherStation.setSpeed5(Float.valueOf(snapshot.child("speed5").getValue().toString()));
+                          weatherStation.setTime(snapshot.child("Time").getValue().toString());
+                          weatherStation.setDeviceName("Weather_Station_Final");
+
+//                          realm.deleteAll();
+                          realm.insertOrUpdate(weatherStation);
+                          Log.wtf("tag", "" + weatherStation.getTime());
 
                         }
                       });
-
+*/
                     } catch (Exception e) {
                       e.printStackTrace();
                     }

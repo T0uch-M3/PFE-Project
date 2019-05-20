@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,17 +14,21 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.CycleInterpolator;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.touch_me.pfe_project.helper.OnStartDragListener;
@@ -33,6 +38,8 @@ import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,6 +50,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 import com.transitionseverywhere.Rotate;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -64,12 +72,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.TransitionManager;
 import androidx.viewpager.widget.ViewPager;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import yalantis.com.sidemenu.util.ViewAnimator;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
 import static java.sql.Types.NULL;
 
@@ -95,6 +106,11 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   private FlexboxLayoutManager flexboxLayoutManager;
   RecyclerView.Adapter catAdapter;
   ViewPager viewPager;
+  TabLayout tabLayout;
+  MyCustomObjectListener myCustomObjectListener;
+  boolean longClicked = false;
+  ImageButton offlineAlert;
+  private FirebaseAuth mAuth;
   /**
    * <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
    */
@@ -111,7 +127,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   int testInt = 0;
   boolean firstTime = true;
   CustomAdapter ca2;
-  private List<List<String>> devicesNnT = new ArrayList<>();
+
   private int holyRow = 0;
   int nbrItems = 0; //number of items in the list (not counting button and dummies)
   boolean isRotated = false;
@@ -121,19 +137,32 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   boolean addButtonClicked = false;
   boolean settingsClicked = false;
   boolean saveClicked = false;
-  public ServiceDataReceiver mReceiver;
+  int deviceNbrFromLocal = 0;
+
   Dialog settingsDialog;
-  Boolean cantStopMeNow = true;
-  ScheduledThreadPoolExecutor scheduler;
-  Boolean startOffline = false;
-  List<String> checkedDevices = new ArrayList<>();
+  Boolean cantStopMeNow;
+
   boolean infoExist = false;
-  int devicesNumber = 0;
+
   List<String> listForPager;
   CustomPagerAdapter pagerAdapter = null;
   boolean runOnce = false;
-  ImageButton imageButton;
+  ImageButton pageAddButton;
+  View backgroundTint;
+  ViewGroup.LayoutParams tabParams;
+  List<Devices> devicesList = new ArrayList<>();
+  boolean pageAddState = true;
+  List<Devices> localDevicesList = new ArrayList<>();
 
+  /******for possible migration********/
+  Boolean startOffline = false;
+  private List<List<String>> devicesNnT = new ArrayList<>();
+  int devicesNumber = 0;
+  List<String> checkedDevices = new ArrayList<>();
+  ScheduledThreadPoolExecutor scheduler;
+  public ServiceDataReceiver mReceiver;
+  List<Devices> oldDeviceList = new ArrayList<>();
+  ;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -145,74 +174,67 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 //    setupWindowAnimations();
     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
-//    drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
     View portal = findViewById(R.id.portal);
-    bigdady = (LinearLayout) findViewById(R.id.big_dady);
-
-//    toolbar = (Toolbar) findViewById(R.id.toolbar);
-//    toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-
-    testTV = (TextView) findViewById(R.id.testTV);
-    recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-    btn_add = (Button) findViewById(R.id.btn_add);
-//    liveData = (TextView) findViewById(R.id.liveData);
-    btn_Settings = (ImageButton) findViewById(R.id.settingButon);
-    the_holder = (ViewGroup) findViewById(R.id.the_holder);
-    viewPager = (ViewPager) findViewById(R.id.viewPager);
-    imageButton = findViewById(R.id.imageButton);
-
+    bigdady = findViewById(R.id.big_dady);
+    testTV = findViewById(R.id.testTV);
+    recyclerView = findViewById(R.id.recyclerView);
+    btn_add = findViewById(R.id.btn_add);
+    btn_Settings = findViewById(R.id.settingButon);
+    the_holder = findViewById(R.id.the_holder);
+    viewPager = findViewById(R.id.viewPager);
+    pageAddButton = findViewById(R.id.pageAddBtn);
+    tabLayout = findViewById(R.id.tabLayout);
+    backgroundTint = findViewById(R.id.backgroundTint);
+    offlineAlert = findViewById(R.id.offlineAlert);
 
 /********************************************************/
-
     ca2 = new CustomAdapter(WelcomeScreen.this, recyclerView);
-//    ca2 = new CustomAdapter(this, recyclerView.getWidth());
-//
-//
+//    viewPager.setBackgroundColor(Color.DKGRAY);
+    /**
+     * Setting up the ViewPager
+     */
     listForPager = new ArrayList<>();
-//    pagerAdapter.addView (v0, 0);
-//    pagerAdapter.notifyDataSetChanged();
-//    listForPager.add("1");
-//    listForPager.add("2");
-//    listForPager.add("3");
+    pagerAdapter = new CustomPagerAdapter(this, viewPager, tabLayout);
 
-    pagerAdapter = new CustomPagerAdapter(this, listForPager);
+    tabParams = tabLayout.getLayoutParams();
+    the_holder.post(new Runnable() {
+      @Override
+      public void run() {
+        tabParams.width = (the_holder.getWidth() / 100) * 80;
+        tabParams.height = WRAP_CONTENT;
+      }
+    });
+    tabLayout.setLayoutParams(tabParams);
+
+
     viewPager.setAdapter(pagerAdapter);
     viewPager.setOffscreenPageLimit(5);
+
     viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
       @Override
       public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//        Log.wtf("tag", "Position::" + position);
-//        Log.wtf("tag", "PositionOffset::" + positionOffset);
-//        Log.wtf("tag", "positionOffsetPixels::" + positionOffsetPixels);
-//        Log.wtf("tag", "RUN AT  ONCE::" + runOnce);
         if (positionOffset != 0 && !runOnce) {
-//          Log.wtf("tag", "SAVE  THINGS  UP");
-          Log.wtf("tag", "Position source::" + pagerAdapter.currentPosition);
           pagerAdapter.manageObjectList("SAVE", pagerAdapter.currentPosition, null);
           runOnce = true;
         }
         if (positionOffset == 0) {
           runOnce = false;
         }
-
       }
 
       @Override
       public void onPageSelected(int position) {
-//        Log.wtf("tag", "PAGE SCROLLED::" + position);
         pagerAdapter.manageObjectList("SWIPE", position, null);
         pagerAdapter.notifyDataSetChanged();
-
       }
 
       @Override
       public void onPageScrollStateChanged(int state) {
-
       }
     });
 
-
-    flexlayout(ca2);
+//    flexlayout(ca2);
+    /**** For taking care of some low lvl settings****/
     demoHolder();
 
 
@@ -220,110 +242,222 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     mReceiver = new ServiceDataReceiver(new Handler());
     mReceiver.setReceiver(this);
 
+    //Just to make sure the_holder is already fully loaded before taking it's height and width
+    //Pop the first dialog
+    the_holder.post(new Runnable() {
+      @Override
+      public void run() {
+        newPagePopup();
+      }
+    });
 
-    firebaseStaticConfig();
-    firebaseConf();
-    final int[] recyclerCounter = {0};
+
+    /**
+     **********Page Add button***********
+     */
+
+    PushDownAnim.setPushDownAnimTo(pageAddButton).setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        the_holder.post(new Runnable() {
+          @Override
+          public void run() {
+            newPagePopup();
+
+          }
+        });
+      }
+    }).setScale(PushDownAnim.MODE_STATIC_DP, 1);
+
+
+    /**
+     **********Settings button***********
+     */
     btn_Settings.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        RecyclerView recyclerView = new RecyclerView(viewPager.getContext());
+        if (!longClicked) {
+          try {
+            Log.wtf("tag", "0 >> " + pagerAdapter.nameList.get(0));
+            Log.wtf("tag", "1 >> " + pagerAdapter.nameList.get(1));
+          } catch (Exception e) {
 
-        if (recyclerCounter[0] == 0){
-          recyclerView.setBackgroundColor(Color.BLACK);
-          recyclerView.setTag("BLACK");
+          }
+
+          Runnable r = new Runnable() {
+            @Override
+            public void run() {
+              TransitionManager.beginDelayedTransition(the_holder, new Rotate());
+              btn_Settings.setRotation(isRotated ? 0 : 50);
+              if (isRotated)
+                isRotated = false;
+              else
+                isRotated = true;
+            }
+          };
+
+          final Thread first = new Thread(r);
+          first.start();
+
+          Thread second = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+              try {
+                if (!settingsClicked) {
+                  first.join();
+                  toggleSettings(1);//for page settings
+                }
+
+
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
+            }
+          });
+          second.start();
         }
+      }
 
-        if (recyclerCounter[0] == 1){
-          recyclerView.setBackgroundColor(Color.GRAY);
-          recyclerView.setTag("GRAY");
-        }
+    });
 
-        if (recyclerCounter[0] == 2){
-          recyclerView.setBackgroundColor(Color.RED);
-          recyclerView.setTag("RED");
-        }
-
-        pagerAdapter.addView(recyclerView);
-
-//        pagerAdapter.manageObjectList("NEW", NULL);
-//        pagerAdapter.restoreState();
-        recyclerCounter[0]++;
-        pagerAdapter.notifyDataSetChanged();
-
-        Thread thread = new Thread(new Runnable() {
+    btn_Settings.setOnLongClickListener(new View.OnLongClickListener() {
+      @Override
+      public boolean onLongClick(View v) {
+        pagerAdapter.addingWidgetFromOutside();
+        longClicked = true;
+        Log.wtf("tag", "LONG CLICKED");
+        Runnable r = new Runnable() {
           @Override
           public void run() {
-            refreshConnection();
-
             TransitionManager.beginDelayedTransition(the_holder, new Rotate());
-            btn_Settings.setRotation(isRotated ? 0 : 50);
+            btn_Settings.setRotation(isRotated ? 0 : -50);
             if (isRotated)
               isRotated = false;
             else
               isRotated = true;
-            if (!settingsClicked)
-              toggleSettings();
+          }
+        };
+
+        final Thread first = new Thread(r);
+        first.start();
+
+        Thread second = new Thread(new Runnable() {
+
+          @Override
+          public void run() {
+            try {
+              if (!settingsClicked) {
+                first.join();
+                toggleSettings(2);//For general settings
+              }
+
+
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
           }
         });
-        thread.start();
+        second.start();
 
 
+        return false;
       }
     });
-    imageButton.setOnClickListener(new View.OnClickListener() {
+
+    /******************auto refresh*******************************/
+    refreshConnection();
+
+/**
+ *
+ * *******************Connectivity*************
+ */
+//    SharedPreferences peref = getSharedPreferences("forSettings", 0);
+//    Boolean boo = peref.getBoolean("startOffline", true);
+////    Log.wtf("tag", "boo::" + boo);
+//    if (boo) {//offline
+//      Intent networkIntent = new Intent(WelcomeScreen.this, FirebasePullService.class);
+//      Bundle b = new Bundle();
+//      b.putParcelable("offlineMode", mReceiver);
+//      b.putString("identifier", "deviceList");
+//      networkIntent.putExtras(b);
+//      WelcomeScreen.this.startService(networkIntent);
+//    } else {//online
+//      firebaseStaticConfig();
+//      firebaseConf();
+//    }
+
+    PushDownAnim.setPushDownAnimTo(offlineAlert).setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        for (CustomPagerAdapter.WidgetSettings ws : pagerAdapter.settingsList) {
-          Log.wtf("tag", "Position " + ws.position + " holyROW?? " + ws.holyRow);
-//          if(ws.position==pagerAdapter.currentPosition)
-//            pagerAdapter.rec
-//          Log.wtf("tag", "list size 1?? " + pagerAdapter.settingsList.get(1).CAT_IMAGE_IDS.size());
-        }
-        for(int h = 0; h<pagerAdapter.recyclerViewList.size();h++){
-          RecyclerView rv = (RecyclerView) pagerAdapter.recyclerViewList.get(h);
-          if(h==pagerAdapter.currentPosition)
-            rv.setBackgroundColor(Color.YELLOW);
-          Log.wtf("tag", "current position:: "+pagerAdapter.currentPosition+" holyRow::"+pagerAdapter.holyRow);
-        }
+        refreshConnection();
 
-        pagerAdapter.notifyDataSetChanged();
+
       }
-    });
-
-    //Will the app start with offline data or not
-    SharedPreferences peref = getSharedPreferences("forSettings", 0);
-    Boolean boo = peref.getBoolean("startOffline", true);
-    Log.wtf("tag", "boo::" + boo);
-    if (boo) {
-      startOffline = true;
-      Log.wtf("tag", "APP  STARTED OFFLINE");
-    } else {
-      startOffline = false;
-      Log.wtf("tag", "APP  STARTED ONLINE");
-    }
-
-
-    //======================OLD===================================
-//    ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-//
-//      @Override
-//      public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-//        moveItem(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-//        return true;
-//      }
-//
-//      @Override
-//      public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-//        deleteItem(viewHolder.getAdapterPosition());
-//      }
-//
-//    });
-//    itemTouchHelper.attachToRecyclerView(rvFoodItems);
-//=========================OLD===================================
+    }).setScale(PushDownAnim.MODE_STATIC_DP, 1);
 
 
   }
+
+  public void newPagePopup() {
+    final Dialog dialog = new Dialog(WelcomeScreen.this) {
+      //Triggering shake effect on outside clicking
+      @Override
+      public boolean onTouchEvent(MotionEvent ev) {
+        if (MotionEvent.ACTION_DOWN == ev.getAction()) {
+          Rect dialogBounds = new Rect();
+          getWindow().getDecorView().getHitRect(dialogBounds);
+          if (!dialogBounds.contains((int) ev.getX(), (int) ev.getY())) {
+            if (pagerAdapter.getCount() == 0) {
+              this.getWindow()
+                .getDecorView()
+                .animate()
+                .translationX(16f)
+                .setInterpolator(new CycleInterpolator(7f));
+              return false; // stop activity closing
+            } else
+              this.dismiss();
+
+          }
+        }
+        return super.onTouchEvent(ev);
+      }
+    };
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.transparent)));
+
+    dialog.getWindow().setContentView(R.layout.new_page_editor);
+
+    final EditText pageTile = dialog.findViewById(R.id.pageTitle);
+    pageTile.setText("Page " + pagerAdapter.getCount());
+    ImageButton pageConfirm = dialog.findViewById(R.id.pageConfirm);
+
+    PushDownAnim.setPushDownAnimTo(pageConfirm).setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        RecyclerView recyclerView = new RecyclerView(viewPager.getContext());
+//        recyclerView.setBackgroundColor(Color.BLACK);
+        recyclerView.setLayoutParams(new ViewGroup.LayoutParams(100, 100));
+        pagerAdapter.addView(recyclerView);
+        pagerAdapter.notifyDataSetChanged();
+        pagerAdapter.setPageTitle(pageTile.getText().toString());
+
+        dialog.dismiss();
+
+//        Log.wtf("tag", "page coujt :" + tabLayout.getTabCount());
+        if (tabLayout.getTabCount() == 5) {
+          pageAddState = false;
+          pageAddButton.setEnabled(false);
+          pageAddButton.setAlpha(.5f);
+        }
+      }
+    }).setScale(PushDownAnim.MODE_STATIC_DP, 1);
+
+    dialog.getWindow().setLayout((the_holder.getWidth() / 100) * 70, (the_holder.getHeight() / 100) * 20);
+    dialog.setCancelable(false);
+    dialog.show();
+  }
+
 
   public void refreshConnection() {
     DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
@@ -331,17 +465,27 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
       @Override
       public void onDataChange(@NonNull DataSnapshot snapshot) {
         boolean connected = snapshot.getValue(Boolean.class);
-        if (connected) {
+        if (connected) {//>>>>>>>>>>>>>>>online
           Log.wtf("tag", "Successfully connected \\o/");
-          SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
-          SharedPreferences.Editor editor = mPrefs.edit();
-          editor.putBoolean("startOffline", false);
+
+          firebaseStaticConfig();
+          firebaseConf();
+
+          offlineAlert.setEnabled(false);
+          offlineAlert.setVisibility(View.INVISIBLE);
           startOffline = false;
-        } else {
+        } else {//>>>>>>>>>>>>>>>>>>>>>offline
           Log.wtf("tag", "Still no connection :(");
-          SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
-          SharedPreferences.Editor editor = mPrefs.edit();
-          editor.putBoolean("startOffline", false);
+
+          Intent networkIntent = new Intent(WelcomeScreen.this, FirebasePullService.class);
+          Bundle b = new Bundle();
+          b.putParcelable("offlineMode", mReceiver);
+          b.putString("identifier", "deviceList");
+          networkIntent.putExtras(b);
+          WelcomeScreen.this.startService(networkIntent);
+
+          offlineAlert.setEnabled(true);
+          offlineAlert.setVisibility(View.VISIBLE);
           startOffline = true;
         }
       }
@@ -377,7 +521,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     recyclerView.post(new Runnable() {
       @Override
       public void run() {
-        Log.wtf("tag", "RECYCELER  LIST MOFO::" + recyclerView.getWidth());
+//        Log.wtf("tag", "RECYCELER  LIST MOFO::" + recyclerView.getWidth());
 
         if (firstTime)
           addingWidget(ca2, null);
@@ -385,12 +529,12 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
         ca2.setCustomObjectListener(new MyCustomObjectListener() {
           @Override
           public void onOptionButtonReady(View v, int position) {
-            Log.wtf("tag", "BUTTON PRESSED AT  POSITIoN::" + position);
+//            Log.wtf("tag", "BUTTON PRESSED AT  POSITIoN::" + position);
           }
 
           @Override
           public void onObjectReady() {
-            Log.wtf("tag", "INITIATE LISTENER ONCE???????????");
+//            Log.wtf("tag", "INITIATE LISTENER ONCE???????????");
             if (!addButtonClicked) {
               genesis(ca2);
               addButtonClicked = true;
@@ -400,43 +544,133 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 
           @Override
           public void notifyForRemove(CustomAdapter ca, WidgetItem wItem, boolean add, int dummiesToDelete) {
-            someMagic(ca, wItem, false, dummiesToDelete);
+            Log.wtf("tag", " notifyForRemove ???????????");
+//            someMagic(ca, wItem, false, dummiesToDelete);
+          }
+
+          @Override
+          public void sendDataList(List list) {
+            return;
+          }
+
+          @Override
+          public void sendDataListX2(List<List<String>> list) {
+            return;
+          }
+
+          @Override
+          public void sendObjectData(List<Devices> list, int counter) {
+
           }
         });
-
-
       }
-
-
     });
 
   }
 
+  /**
+   * This will be triggered the moment the pager adapter establish connection with this listener...
+   *
+   * @param listener
+   */
+  public void setCustomObjectListener(MyCustomObjectListener listener) {
+    this.myCustomObjectListener = listener;
+    if (startOffline) {
+
+      final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+      Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+          Log.wtf("tag", "run second part " + deviceNbrFromLocal);
+          if (localDevicesList.size() == deviceNbrFromLocal) {
+            Log.wtf("tag", "entered the if check in runnable");
+            myCustomObjectListener.sendObjectData(localDevicesList, 0);
+            scheduler.shutdown();
+          }
+        }
+      };
+      scheduler.scheduleAtFixedRate(runnable, 3, 1, TimeUnit.SECONDS);
+    } else {
+      Log.wtf("tag", "else");
+      myCustomObjectListener.sendObjectData(devicesList, 0);
+    }
+
+  }
+
+  public void removeCustomObjectListener() {
+    this.myCustomObjectListener = null;
+//    myCustomObjectListener.sendObjectData(devicesList);
+  }
+
   @Override
   public void onReceiveResult(int resultCode, Bundle resultData) {
-//    devicesNnT = resultData.getParcelableArrayList("search.resultset");
-//    Log.wtf("tag", "here we go:" + resultData.getStringArrayList("deviceNameList"));
-//    Log.wtf("tag", "here we go:" + resultData.getStringArrayList("deviceDateList"));
+    Log.wtf("tag", "onReceiveResult");
+    List<List<String>> listNnT = new ArrayList<>();
+
     List<String> list = resultData.getStringArrayList("deviceNameList");
     for (int i = 0; i < list.size(); i++) {
       List mainList = new ArrayList();
       mainList.add(list.get(i));
       mainList.add(resultData.getStringArrayList("deviceDateList").get(i));
-      devicesNnT.add(mainList);
+      listNnT.add(mainList);
     }
-//    Log.wtf("tag", "what we REALLLY got here::" + devicesNnT);
+//    pagerAdapter.devicesNnT = listNnT;
+//    Log.wtf("tag", "size from local ::" + listNnT.size());
+    deviceNbrFromLocal = listNnT.size();
+    extractObjects((listNnT));
+
   }
 
-  public void toggleSettings() {
+  public void extractObjects(List<List<String>> listNnT) {
+    Log.wtf("tag", "EXTRACTING");
+    Realm.init(WelcomeScreen.this);
+    final RealmConfiguration realmConfig = new RealmConfiguration.Builder()
+      .name("test1.realm")
+      .schemaVersion(0)
+//          .deleteRealmIfMigrationNeeded()
+      .build();
+    Realm.setDefaultConfiguration(realmConfig);
+    realm = Realm.getInstance(realmConfig);
+    RealmResults<Devices> result = realm.where(Devices.class).findAll();
+
+
+    for (Devices device : result) {
+      for (List underList : listNnT) {
+
+        if (device.getDeviceName().equals(underList.get(0).toString())) {
+
+          String[] splitter = device.getTime().split(" ");
+          for (int h = 0; h < splitter.length; h++) {
+            if (splitter[h].length() == 1) {
+              splitter[h] = "0" + splitter[h];
+            }
+          }
+          String modified = splitter[0] + " " + splitter[1] + " " + splitter[2] + " " + splitter[3] + " " + splitter[4] + " " + splitter[5];
+
+          if (modified.equals(underList.get(1).toString())) {
+
+            localDevicesList.add(device);
+            Log.wtf("tag", "localDevicesList size " + localDevicesList.size());
+          }
+        }
+      }
+    }
+  }
+
+  public void toggleSettings(final int type) {
+    final boolean[] undo = {false};
     new Handler(Looper.getMainLooper()).post(new Runnable() {
       @Override
       public void run() {
         settingsClicked = true;
-
         settingsDialog = new Dialog(WelcomeScreen.this);
         settingsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         settingsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.transparent)));
-        settingsDialog.setContentView(R.layout.settings_body);
+        if (type == 1)
+          settingsDialog.setContentView(R.layout.settings_body_for_page);
+        if (type == 2)
+          settingsDialog.setContentView(R.layout.settings_body);
+        settingsDialog.getWindow().setLayout(((the_holder.getWidth() / 100) * 80), ((the_holder.getHeight() / 100) * 50));
         settingsDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
           @Override
           public void onDismiss(DialogInterface dialog) {
@@ -450,55 +684,124 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
               isRotated = true;
             }
             settingsClicked = false;
+            if (type == 2)
+              longClicked = false;
 
+            saveClicked = false;
           }
         });
         settingsDialog.show();
-        final CheckBox offlineFunc = settingsDialog.findViewById(R.id.offlineFunc);
-        SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
-        Boolean boo = mPrefs.getBoolean("offlineFunc", false);
-        if (boo.equals(true)) {
-          offlineFunc.setChecked(true);
-        } else {
-          offlineFunc.setChecked(false);
-        }
-        final Button saveButton = settingsDialog.findViewById(R.id.saveButton);
-        final ViewGroup settingGroupView = (ViewGroup) saveButton.getParent();
+        if (type == 1) {
+          final Button saveButton = settingsDialog.findViewById(R.id.saveButton);
+          final EditText pageName = settingsDialog.findViewById(R.id.pageName);
+          final Button deleteButton = settingsDialog.findViewById(R.id.deleteButton);
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-//            if(!saveClicked){
-            Log.wtf("tag", "earth just got saved");
-            settingsClicked = false;
-            if (offlineFunc.isChecked()) {
-              SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
-              SharedPreferences.Editor editor = mPrefs.edit();
-              editor.putBoolean("offlineFunc", true);
-              editor.commit();
-              //handling intent for Firebase service
-              Intent networkIntent = new Intent(WelcomeScreen.this, FirebasePullService.class);
-              Bundle b = new Bundle();
-              b.putParcelable("offlineMode", mReceiver);
-              b.putString("identifier", "static");
+          PushDownAnim.setPushDownAnimTo(deleteButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//              if(pagerAdapter.getCount()>1){
+              if (!undo[0]) {
+                deleteButton.setBackground(deleteButton.getContext().getResources().getDrawable(R.drawable.delete_button_style_selected));
+                deleteButton.setText("Undo!");
+                deleteButton.setTextColor(getResources().getColor(R.color.orange));
+                undo[0] = true;
+              } else {
+                deleteButton.setBackground(deleteButton.getContext().getResources().getDrawable(R.drawable.delete_button_style));
+                deleteButton.setText("Delete");
+                deleteButton.setTextColor(getResources().getColor(R.color.theNewDark));
+                undo[0] = false;
+              }
+//              }
 
-              networkIntent.putExtras(b);
-
-              WelcomeScreen.this.startService(networkIntent);
-
-              cantStopMeNow = false;
-              saveClicked = true;
-              colorChange(settingGroupView, saveButton);
-              saveButton.setClickable(false);
-            } else {
-              SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
-              SharedPreferences.Editor editor = mPrefs.edit();
-              editor.putBoolean("offlineFunc", false);
-              editor.commit();
             }
+          }).setScale(PushDownAnim.MODE_STATIC_DP, 1);
+
+          pageName.setText(pagerAdapter.getPageTitle(pagerAdapter.currentPosition));
+          settingsDialog.getWindow().setLayout(((the_holder.getWidth() / 100) * 80), ((the_holder.getHeight() / 100) * 45));
+          PushDownAnim.setPushDownAnimTo(saveButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              the_holder.post(new Runnable() {
+                @Override
+                public void run() {
+                  pagerAdapter.changePageTitle(pageName.getText().toString());
+                  if (undo[0]) {
+                    pagerAdapter.removeCurrentPage();
+                    pagerAdapter.notifyDataSetChanged();
+                    pageAddState = true;
+                    pageAddButton.setEnabled(true);
+                    pageAddButton.setAlpha(1f);
+
+                    if (pagerAdapter.getCount() == 0)
+                      newPagePopup();
+                  }
+
+                  settingsDialog.dismiss();
+                }
+              });
+            }
+          }).setScale(PushDownAnim.MODE_STATIC_DP, 1);
+        }
+        /*********************************main settings******************/
+        if (type == 2) {
+          final CheckBox offlineFunc = settingsDialog.findViewById(R.id.offlineFunc);
+          SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
+          Boolean boo = mPrefs.getBoolean("offlineFunc", false);
+          if (boo.equals(true)) {
+            offlineFunc.setChecked(true);
+          } else {
+            offlineFunc.setChecked(false);
           }
-//          }
-        });
+          final Button saveButton = settingsDialog.findViewById(R.id.saveButton);
+          final ViewGroup settingGroupView = (ViewGroup) saveButton.getParent();
+          CheckBox color1 = settingsDialog.findViewById(R.id.color1);
+
+          color1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+              if (isChecked) {
+                backgroundTint.setBackgroundColor(backgroundTint.getContext().getResources().getColor(R.color.testColor));
+              } else {
+                backgroundTint.setBackgroundColor(NULL);
+              }
+            }
+          });
+
+          saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              if (!saveClicked) {
+                Log.wtf("tag", "earth just got saved");
+                settingsClicked = false;
+                if (offlineFunc.isChecked()) {
+                  SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
+                  SharedPreferences.Editor editor = mPrefs.edit();
+                  editor.putBoolean("offlineFunc", true);
+                  editor.commit();
+                  //handling intent for Firebase service
+                  Intent networkIntent = new Intent(WelcomeScreen.this, FirebasePullService.class);
+                  Bundle b = new Bundle();
+                  b.putParcelable("offlineMode", mReceiver);
+                  b.putString("identifier", "static");
+
+                  networkIntent.putExtras(b);
+
+                  WelcomeScreen.this.startService(networkIntent);
+
+                  cantStopMeNow = false;
+                  saveClicked = true;
+                  colorChange(1, saveButton);
+                  saveButton.setClickable(false);
+                } else {
+                  SharedPreferences mPrefs = getSharedPreferences("forSettings", 0);
+                  SharedPreferences.Editor editor = mPrefs.edit();
+                  editor.putBoolean("offlineFunc", false);
+                  editor.commit();
+                }
+              }
+            }
+          });
+        }
 
 
       }
@@ -997,9 +1300,147 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     Log.wtf("tag", "number of dummies needed::" + neededDummies);
   }
 
+  public void fromSnapshotToArray(DataSnapshot snap, String deviceName) {
+    boolean obliterate = false;
+//    Log.wtf("tag", "name::" + deviceName + " DATA:: " + snap.getValue());
+//    Log.wtf("tag", "inside:fromSnapshotToArray");
+    Devices device = new Devices();
+    switch (deviceName) {
+      case "Green_Land": {
+        Log.wtf("tag", "inside:1");
+        device.setTime(snap.child("Time").getValue().toString());
+        device.setTemperature(Float.valueOf(snap.child("Temperature").getValue().toString()));
+        device.setBatteryLevel(Double.valueOf(snap.child("Battery_Level").getValue().toString()));
+        device.setHumidity(Float.valueOf(snap.child("Humidity").getValue().toString()));
+        device.setMoisture(Float.valueOf(snap.child("Moisture").getValue().toString()));
+        device.setSoilTemperature(Float.valueOf(snap.child("soilTemperature").getValue().toString()));
+        device.setWaterSensor(Float.valueOf(snap.child("WaterSensor").getValue().toString()));
+        device.setDeviceName("Green_Land");
+      }
+      break;
+      case "System_Room_SOFIA": {
+        Log.wtf("tag", "inside:2");
+        device.setTime(snap.child("Time").getValue().toString());
+        device.settemperature(Float.valueOf(snap.child("temperature").getValue().toString()));
+        device.setBattery(Double.valueOf(snap.child("battery").getValue().toString()));
+        device.setPressure(Double.valueOf(snap.child("pressure").getValue().toString()));
+        device.setHumidity(Float.valueOf(snap.child("humidity").getValue().toString()));
+        device.setDeviceName("System_Room_SOFIA");
+      }
+      break;
+      case "System_Room_SOFIA2": {
+        Log.wtf("tag", "inside:3");
+        device.setTime(snap.child("Time").getValue().toString());
+        device.settemperature(Float.valueOf(snap.child("temperature").getValue().toString()));
+        device.setBattery(Double.valueOf(snap.child("battery").getValue().toString()));
+        device.setPressure(Double.valueOf(snap.child("pressure").getValue().toString()));
+        device.setHumidity(Float.valueOf(snap.child("humidity").getValue().toString()));
+        device.setDeviceName("System_Room_SOFIA2");
+      }
+      break;
+      case "Weather_Station_Final": {
+        Log.wtf("tag", "inside:4");
+        device.setRelativeHumidity(Float.valueOf(snap.child("RH").getValue().toString()));
+        device.setTemperature(Float.valueOf(snap.child("Temperature").getValue().toString()));
+        device.setDirection(Integer.valueOf(snap.child("direction").getValue().toString()));
+        device.setRainFall(Double.valueOf(snap.child("rainfall").getValue().toString()));
+        device.setRainFall24(Double.valueOf(snap.child("rainfall24").getValue().toString()));
+        device.setSpeed(Float.valueOf(snap.child("speed").getValue().toString()));
+        device.setSpeed5(Float.valueOf(snap.child("speed5").getValue().toString()));
+        device.setTime(snap.child("Time").getValue().toString());
+        device.setDeviceName("Weather_Station_Final");
+      }
+      break;
+    }
+
+    for (int i = 0; i < devicesList.size(); i++) {
+//      Log.wtf("tag", "device.getDeviceName(): " + i);
+//      Log.wtf("tag", "remove: " + i);
+      if (device.getDeviceName().equals(devicesList.get(i).getDeviceName())) {
+//        Log.wtf("tag", "remove: "+i);
+        devicesList.remove(i);
+        i--;
+      }
+    }
+    devicesList.add(device);
+//    Log.wtf("tag", "devicesList size: " + devicesList.size());
+
+
+    if (devicesList.size() == devicesNumber) {
+      if (oldDeviceList.isEmpty()) {
+        oldDeviceList.clear();
+        oldDeviceList.addAll(devicesList);
+      }
+
+
+      for (Devices newDevice : devicesList) {
+        for (Devices oldDevice : oldDeviceList) {
+//
+          if (newDevice.getDeviceName().equals(oldDevice.getDeviceName())) {
+            if (!newDevice.getTime().equals(oldDevice.getTime())) {
+              Log.wtf("tag", " newDevice.getDeviceName() " + newDevice.getDeviceName() + " / oldDevice.getDeviceName() " + oldDevice.getDeviceName());
+              Log.wtf("tag", " newDevice.getTime() " + newDevice.getTime() + " / oldDevice.getTime() " + oldDevice.getTime());
+
+              obliterate = true;
+
+
+              myCustomObjectListener.sendObjectData(devicesList, 0);
+            }
+          }
+        }
+      }
+      if (obliterate) {
+        oldDeviceList.clear();
+        oldDeviceList.addAll(devicesList);
+      }
+//        Log.wtf("tag", "new Time:: " + newDevice.getTime());
+//
+//        Log.wtf("tag", "old Time:: " + oldDevice.getTime());
+
+    }
+
+
+//  }
+
+
+////    Log.wtf("tag", "devicesNumber" + devicesNumber);
+////    Log.wtf("tag", "devicesList.size()" + devicesList.size());
+//    if (devicesNumber == devicesList.size()) {
+////      Log.wtf("tag", "1");
+//      if (oldDeviceList.size() > 0) {
+////        Log.wtf("tag", "2");
+//        for (Devices oldDevice : oldDeviceList) {
+//          for (Devices newDevice : devicesList) {
+//            if (oldDevice.getDeviceName().equals(newDevice.getDeviceName())) {
+//              Log.wtf("tag", "oldDevice.getDeviceName() " + oldDevice.getDeviceName() + " /newDevice.getDeviceName() " + newDevice.getDeviceName());
+//              Log.wtf("tag", "oldDevice.getTime() " + oldDevice.getTime() + " /newDevice.getTime() " + newDevice.getTime());
+//              if (!oldDevice.getTime().equals(newDevice.getTime())) {
+//                Log.wtf("tag", "preparing to send data " + devicesList.size());
+//                myCustomObjectListener.sendObjectData(devicesList, 0);
+//              }
+//            }
+//          }
+//        }
+//      } else {
+//        Log.wtf("tag", "ENTEREEEED  TTTHHE  ELSE ########");
+//        oldDeviceList.addAll(devicesList);
+//        Log.wtf("tag", "preparing to send first data " + devicesList.size());
+//        myCustomObjectListener.sendObjectData(devicesList, 0);
+//      }
+////      oldDeviceList = devicesList;
+//      oldDeviceList.clear();
+//      oldDeviceList.addAll(devicesList);
+
+//}
+    Log.wtf("tag", "**************************************");
+  }
+
+
   public void firebaseStaticConfig() {
+    Log.wtf("tag", "RUN STATIC");
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     Query query = database.getReference();
+    final List<List<String>> biggerList = new ArrayList<>();
 
     query.addListenerForSingleValueEvent(new ValueEventListener() {
       @Override
@@ -1008,25 +1449,33 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
         devicesNumber = (int) dataSnapshotTop.getChildrenCount();
 
         for (final DataSnapshot childNode : dataSnapshotTop.getChildren()) {
-//          Log.wtf("tag", "it's children count::" + dataSnapshotTop.getChildrenCount());
           DatabaseReference childRef = FirebaseDatabase.getInstance().getReference().child(childNode.getKey());
           final Query query = childRef.limitToLast(1);
 
           query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
 //              Log.wtf("tag", "main Node::" + childNode.getKey());
               try {
                 for (DataSnapshot dataSnapshotChild : dataSnapshot.getChildren()) {
-//                  for (DataSnapshot dataSnapshotChild2 : dataSnapshotChild.getChildren())
-//                    Log.wtf("tag", "it's children time::" + dataSnapshotChild2.getKey());// yes it's working
+//                  Log.wtf("tag", "it's children time::" + childNode.getKey());// yes it's working
+                  fromSnapshotToArray(dataSnapshotChild, childNode.getKey());
+
                   List<String> list = new ArrayList<>();
-                  List<List<String>> biggerList = new ArrayList<>();
+
                   list.add(childNode.getKey());
                   list.add(dataSnapshotChild.child("Time").getValue().toString());
                   biggerList.add(list);
-                  if (dataSnapshotTop.getChildrenCount() == biggerList.size())
-                    devicesNnT = biggerList;
+//                  Log.wtf("tag", "dataSnapshotTop.getChildrenCount()::"+dataSnapshotTop.getChildrenCount());
+//                  Log.wtf("tag", "biggerList.size()::"+biggerList.size());
+
+                  if (dataSnapshotTop.getChildrenCount() == biggerList.size()) {
+                    devicesNnT = biggerList;//now the this list will be sent to the pager adapter
+//                    myCustomObjectListener.sendDataListX2(devicesNnT);
+                    Log.wtf("tag", "deviceNnT from STATIC:INSIDE:" + devicesNnT);
+                  }
+
                   Log.wtf("tag", "deviceNnT from STATIC::" + devicesNnT);
                 }
               } catch (Exception e) {
@@ -1062,88 +1511,6 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 
     Query query1 = ref_GreenLand.limitToLast(1);
 
-
-//    Log.wtf("tag", "size::" + myRef.getKey());
-
-
-//    myRef.addValueEventListener(new ValueEventListener() {
-
-//    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//      @Override
-//      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//          Log.wtf("tag", "keyValue::" + snapshot.getKey());
-//          try{
-//          String time = snapshot.child("rxInfo/0/time").getValue().toString();
-//
-//          Log.wtf("tag", "time ::" + "" + "::" + time);
-//          }catch (NullPointerException e){
-//            Log.wtf("tag","NUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUULLLLLLLLLLLLLLLL"+snapshot.getKey());
-//          }
-////          i++;
-//        }
-//      }
-//
-//      @Override
-//      public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//      }
-//    });
-
-
-//    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//        @Override
-//        public void onDataChange(DataSnapshot dataSnapshot) {
-//          int i = 0;
-//*************************************************************************
-//        GreenLand wo = dataSnapshot.getValue(GreenLand.class);
-//        Log.wtf("tag", "something???"+wo.getHumidity());
-//        for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-//          childDataSnapshot.child("object");
-//          GreenLand wo = dataSnapshot.getValue(GreenLand.class);
-//          Log.wtf("tag","something:battery:"+wo.getBattery());
-//          Log.wtf("tag","something::"+childDataSnapshot.child("-LayOAdQUV042yC6hfPE").child("object").getKey());
-//        }
-//*************************************************************************
-//          Log.wtf("tag", "size:OLD WAYAAAA:" + dataSnapshot.getChildrenCount());
-//          for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//            Log.wtf("tag", "keyValue:OLD WAYAAAA:" + snapshot.getKey());
-//            GreenLand wo = snapshot.child("object").getValue(GreenLand.class);
-//            Log.wtf("tag", "humidity:OLD WAYAAAA:" + i + "::" + wo.getHumidity());
-//            i++;
-//          }
-//
-//        }
-//
-//        @Override
-//        public void onCancelled(DatabaseError databaseError) {
-//          Log.wtf("tag", "CANCELLLED"+databaseError.getMessage());
-//        }
-//      });
-
-    /*myRef.addValueEventListener(new ValueEventListener() {
-      @Override
-      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-        Log.wtf("tag","NUMBEEEEEEEEEEEEEEEEER ONE????????????????????????????????????????????????????????????????????????????????????????????????");
-//        Log.wtf("tag","count"+dataSnapshot.getChildrenCount());
-//        GreenLand wo = dataSnapshot.getValue(GreenLand.class);
-        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//            Log.wtf("tag", "count and it should be 4::" + snapshot.child("object").getChildrenCount());
-
-          Log.wtf("tag", "time::" + snapshot.child("rxInfo/0/time").getValue());
-//            GreenLand wo = snapshot.child("object").getValue(GreenLand.class);
-//            Log.wtf("tag", "humidity::" +   "::" + wo.getHumidity());
-
-        }
-      }
-
-      @Override
-      public void onCancelled(@NonNull DatabaseError databaseError) {
-
-      }
-    });*/
-
-
     /**
      * For retrieving date+time data from each device
      */
@@ -1153,18 +1520,14 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
         Log.wtf("tag", "it should be 4::" + dataSnapshotTop.getChildrenCount());
         devicesNumber = (int) dataSnapshotTop.getChildrenCount();
 
-        for (final DataSnapshot childNode : dataSnapshotTop.getChildren()) {
+        for (final DataSnapshot childNode : dataSnapshotTop.getChildren()) {//going through each of the main devices
 
           DatabaseReference childRef = FirebaseDatabase.getInstance().getReference().child(childNode.getKey());
-          final Query query = childRef.limitToLast(1);
+          final Query query = childRef.limitToLast(1);//picking the last one of this device (childnode)
 
           query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//              if(infoExist){
-              Log.wtf("tag", "REFERENCE  NAME****" + query.getRef().toString());
-//              }
-              Log.wtf("tag", "what deviceNnT has inside" + devicesNnT);
               try {
                 //for the sake of maintaining only one copy of each of the devices inside the list, the old value must be removed
                 for (int i = 0; i < devicesNnT.size(); i++) {
@@ -1172,6 +1535,8 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
                     devicesNnT.remove(i);
                   }
                 }
+//                Log.wtf("tag", "********************************");
+                fromSnapshotToArray(dataSnapshot, childNode.getKey());
 
                 //creating a list each time new data get added, therefore the newly created list will contain the node's name and the "Time" value inside of it
                 List<String> listQuery = new ArrayList<>();
@@ -1191,7 +1556,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 
                     List<String> newNnTList = new ArrayList<>();
 
-                    for (List list : wi.getSelectedDevices()) {
+                    for (List list : wi.getSelectedDevices()) {//fill newNnTList with the names of the checked devices
                       newNnTList.add(list.get(0).toString());
                     }
                     Log.wtf("tag", "new newNnTList" + removeUnnecessaryData(newNnTList));
@@ -1211,6 +1576,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 
               } catch (NullPointerException e) {
                 Log.wtf("tag", "NO TIME  DATA");
+                e.printStackTrace();
               }
             }
 
@@ -1315,39 +1681,6 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   }
 
 
-  public void popup(WidgetItem wi, CatAdapter ca) {
-    int existingDummies = 0;
-    ca.dammyFirst = false;
-    Log.wtf("tag", "size in meth launch::" + ca.CAT_IMAGE_IDS.size());
-//    CatAdapter ca = (CatAdapter) catAdapter;
-//    ca.CAT_IMAGE_IDS.add(R.drawable.ic_menu_camera);
-//    if (tempCounter == 0) {
-//      ca.CAT_IMAGE_IDS.add(0, wi);
-//      Log.wtf("tag", "size after adding in i==0::" + ca.CAT_IMAGE_IDS.size());
-//    }
-//    if (tempCounter == 1) {
-//      ca.CAT_IMAGE_IDS.add(0,wi);
-//      Log.wtf("tag", "size after adding in i==1::" + ca.CAT_IMAGE_IDS.size());
-//    }
-//    if (tempCounter == 2) {
-//      ca.CAT_IMAGE_IDS.add(0,wi);
-//      Log.wtf("tag", "size after adding in i==2::" + ca.CAT_IMAGE_IDS.size());
-//    }
-    ca.CAT_IMAGE_IDS.add(0, wi);
-    tempCounter++;
-    for (int i = 0; i < ca.CAT_IMAGE_IDS.size(); i++) {
-
-      if (ca.CAT_IMAGE_IDS.get(0).getDummy())
-        existingDummies++;
-      if (existingDummies > 2)
-        existingDummies = existingDummies - 2;
-    }
-    Log.wtf("tag", "nbr OF DUMMMMMMMMMMMMIESSS::" + existingDummies);
-//    Log.wtf("tag", "is 1 a dummy::" + ca.CAT_IMAGE_IDS.get(1).getDummy());
-//    dummyNbr(ca);
-    ca.notifyItemInserted(ca.CAT_IMAGE_IDS.size());
-  }
-
   public void createCard(final CatAdapter ca) {
     int i = 0;
 
@@ -1385,7 +1718,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     final boolean[] exitLoop = {false};
     dialog.setContentView(R.layout.popup_body);
 
-    Thermometer th = dialog.findViewById(R.id.thermo);
+//    Thermometer th = dialog.findViewById(R.id.thermo);
     final CardView card1 = dialog.findViewById(R.id.card1);
     final CardView card2 = dialog.findViewById(R.id.card2);
     final CardView card3 = dialog.findViewById(R.id.card3);
@@ -1492,7 +1825,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     card3.setOnClickListener(clickAble);
     card4.setOnClickListener(clickAble);
 
-    th.noAnimation();
+//    th.noAnimation();
   }
 
   public void graphDialogLayout(final Dialog dialog, final CustomAdapter ca) {
@@ -1755,7 +2088,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   }
 
 
-  //***************************OLD ERA*********************
+//***************************OLD ERA*********************
 
   public void flexlayout(CustomAdapter ca2) {
     flexboxLayoutManager = new FlexboxLayoutManager(WelcomeScreen.this);
@@ -1789,7 +2122,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
 
 
       //Handle a successful response//
-      //      public void onResponse(Call<List<GreenLand>> call, Response<List<GreenLand>> response) {
+//      public void onResponse(Call<List<GreenLand>> call, Response<List<GreenLand>> response) {
       @Override
       public void onResponse(Call<GreenLand> call, Response<GreenLand> response) {
         if (response.isSuccessful()) {
@@ -1824,15 +2157,19 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
   public void demoHolder() {
     //make the status bar text color grey(to be visible with light background)
     if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      Log.wtf("tag", "ENTERED DEMOHOLDER");
       getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.grey));
       getWindow().setNavigationBarColor(getResources().getColor(R.color.darkBlue));
-      getWindow().getDecorView().setSystemUiVisibility(FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS /*| View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR */ | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+      getWindow().getDecorView().setSystemUiVisibility(FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
 
     }
 
     if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//      getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+//      getWindow().getDecorView().setSystemUiVisibility(View.);
 
+    }
+    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.orange));
     }
 
 //    setSupportActionBar(toolbar);
@@ -1869,29 +2206,62 @@ public class WelcomeScreen extends AppCompatActivity implements OnStartDragListe
     Log.wtf("tag", "detect clickkkkkkkkkkkkkkkkkkkkkkkkkk");
   }
 
-  public void colorChange(final ViewGroup tc, final Button btn) {
+  public void colorChange(int picker, final View view) {
+    final Boolean[] cantStopMeNow = {true};
+    Runnable runnable = null;
 
-    btn.setText("SAVING");
-    Runnable runnable = new Runnable() {
-      @Override
-      public void run() {
-        if (cantStopMeNow) {
-          btn.setTextColor(btn.getResources().getColor(R.color.white_ish));
-          btn.setBackground(new ColorDrawable(btn.getResources().getColor(R.color.orange)));
-          cantStopMeNow = false;
-        } else {
-          btn.setTextColor(btn.getResources().getColor(R.color.orange));
-          btn.setBackground(new ColorDrawable(btn.getResources().getColor(R.color.white_ish)));
-          cantStopMeNow = true;
+    if (picker == 1) {
+      final Button btn = (Button) view;
+      btn.setText("SAVING");
+      runnable = new Runnable() {
+        @Override
+        public void run() {
+          if (cantStopMeNow[0]) {
+            btn.setTextColor(btn.getResources().getColor(R.color.white_ish));
+            btn.setBackground(new ColorDrawable(btn.getResources().getColor(R.color.orange)));
+            cantStopMeNow[0] = false;
+//            Log.wtf("tag", "praise the sun true");
+          } else {
+            btn.setTextColor(btn.getResources().getColor(R.color.orange));
+            btn.setBackground(new ColorDrawable(btn.getResources().getColor(R.color.white_ish)));
+            cantStopMeNow[0] = true;
+          }
+
         }
+      };
+    }
+/***********didn't wonna work***/
+    if (picker == 2) {
+//      Log.wtf("tag", "praise the sun true");
+      final ImageView imgAlert = (ImageView) view;
+      runnable = new Runnable() {
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        @Override
+        public void run() {
+//          Log.wtf("tag", "praise the sun true2");
+          if (cantStopMeNow[0]) {
+            Log.wtf("tag", "1");
+//            imgAlert.setVisibility(View.VISIBLE);
+            imgAlert.setTranslationZ(1f);
+//            imgAlert.setBackgroundColor(Color.RED);
+            cantStopMeNow[0] = false;
 
-      }
-    };
+          } else {
+//            the_holder.setBackgroundColor(Color.YELLOW);
+            Log.wtf("tag", "2");
+//            imgAlert.setVisibility(View.INVISIBLE);
+            imgAlert.setTranslationZ(0f);
+            cantStopMeNow[0] = true;
+          }
+        }
+      };
+    }
 
+//    if (scheduler != null)
+//      scheduler.shutdown();
     scheduler = new ScheduledThreadPoolExecutor(1);
-    scheduler.scheduleAtFixedRate(runnable, 0, 1, TimeUnit.SECONDS);
+    scheduler.scheduleAtFixedRate(runnable, 1, 1, TimeUnit.SECONDS);
   }
-
 
 }
 

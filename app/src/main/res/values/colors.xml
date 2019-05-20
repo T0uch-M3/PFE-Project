@@ -21,4 +21,6 @@
   <color name="orange">#FF5151</color>
   <color name="semiPink">#fe5e7a</color>
   <color name="semiWhite">#C2C2C2</color>
+  <color name="theNewDark">#565656</color>
+  <color name="testColor">#3BFF5151</color>
 </resources>
